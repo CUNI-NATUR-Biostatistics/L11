@@ -1,48 +1,41 @@
-<!--
-Po vytvoření nového lekčního repozitáře:
-1. Nahraďte všechny výskyty LXX skutečným číslem lekce.
-2. Doplňte název, podnázev, veřejný přehled lekce a ověřené výsledky učení.
-3. Zkontrolujte všechny odkazy a názvy souborů podle website-release.yml.
-4. Odstraňte tento komentář a všechny zbývající texty DOPLŇTE.
-5. Běžné odstavce v Markdownu ručně nezalamujte na pevnou šířku.
--->
+# L11 — Hierarchická data a náhodné efekty
 
-# LXX — DOPLŇTE název lekce
+**Kolik nezávislých odpovědí dává 485 žabek z 16 pokusných nádrží?**
 
-**DOPLŇTE stručný podnázev lekce**
-
-Tento repozitář obsahuje DOPLŇTE pořadí lekce kurzu [Biostatistika a plánování ekologických pokusů (MB120P163)](https://cuni-natur-biostatistics.github.io/) vyučovaného na Přírodovědecké fakultě Univerzity Karlovy.
+Tento repozitář obsahuje jedenáctou lekci kurzu [Biostatistika a plánování ekologických pokusů (MB120P163)](https://cuni-natur-biostatistics.github.io/) vyučovaného na Přírodovědecké fakultě Univerzity Karlovy.
 
 Úplný přehled kurzu, rozvrh, pravidla hodnocení a materiály ostatních lekcí najdete na [veřejném HUBu kurzu](https://cuni-natur-biostatistics.github.io/).
 
 ## O této lekci
 
-DOPLŇTE hlavní biologickou nebo ekologickou otázku, kterou lekce řeší, a jednou větou vysvětlete její místo v návaznosti kurzu.
+Vylézají z tůní, které vyschly a znovu se naplnily, menší žabky? A kolik nezávislých odpovědí na tuto otázku nám vlastně dává tabulka se stovkami změřených žabek? Lekce navazuje na lineární modely z předchozích lekcí a ukazuje, co se stane, když řádky tabulky nejsou navzájem nezávislé.
 
-DOPLŇTE dva až tři krátké odstavce srozumitelné i člověku, který tento repozitář našel samostatně na internetu. Představte hlavní dataset nebo datový příběh, statistické pojmy a způsob uvažování, kterými lekce prochází. Nepopisujte historii vývoje repozitáře, interní větve, schvalovací stav ani nahrazené datasety.
+Výuková data pocházejí z pokusu, ve kterém pulci skokana *Lithobates blairi* vyrůstali v 16 venkovních nádržích: osm z nich před pokusem vyschlo a bylo znovu napuštěno, osm nevyschlo. U 485 žabek byla po metamorfóze změřena délka těla a hmotnost. Vyschnutí se ale týkalo celých nádrží, takže žabky z jedné nádrže nejsou nezávislá opakování. Studenti určují hierarchii dat a jednotku nezávislé replikace, porovnávají jednoduchý lineární model se všemi řádky s modelem průměrů nádrží a vysvětlují, proč pseudoreplikace podhodnocuje nejistotu odhadu. Potom rozšíří lineární model o náhodný intercept, který dává každé nádrži vlastní výchozí úroveň, a rozlišují pevné a náhodné faktory podle otázky, kterou si klademe.
 
-DOPLŇTE závěrečnou větu vysvětlující, proč je lekce důležitá pro další části kurzu nebo pro práci s biologickými daty.
+Důraz je na interpretaci: jak velký je rozdíl mezi žabkami z vyschlých a nevyschlých nádrží, jak přesně ho data určují a co ze závěru vyplývá pro tůně v krajině.
+
+Opakovaná měření, lokality a bloky jsou v biologických datech běžné. Rozpoznat je a zohlednit v modelu je nutné pro poctivý odhad nejistoty a připravuje půdu pro zobecněné modely s hierarchickou strukturou.
 
 ## Výsledky učení
 
 Po prostudování této lekce dokážete:
 
-- DOPLŇTE pozorovatelnou studentskou činnost;
-- DOPLŇTE pozorovatelnou studentskou činnost;
-- DOPLŇTE pozorovatelnou studentskou činnost;
-- DOPLŇTE pozorovatelnou studentskou činnost;
-- DOPLŇTE pozorovatelnou studentskou činnost.
+- pojmenovat hierarchii v datech (opakovaná měření, lokality, bloky) a určit, na které úrovni se mění zkoumaný prediktor;
+- určit jednotku nezávislé replikace a vysvětlit, jak pseudoreplikace zkresluje standardní chybu, intervaly spolehlivosti a p-hodnoty;
+- rozhodnout, zda má být skupinová proměnná pevným, nebo náhodným faktorem, a zdůvodnit volbu biologickou otázkou;
+- fitovat lineární model s náhodným interceptem, interpretovat jeho pevný efekt a porovnat variabilitu mezi skupinami a uvnitř skupin;
+- popsat, kdy je potřeba model s náhodnými efekty místo jednoduchého `lm`, a kdy stačí jednodušší řešení.
 
 ## Materiály pro studenty
 
-Následující odkazy vedou vždy na nejnovější schválené vydání LXX. Rozpracovaná verze ve větvi `main` může být novější, ale není určena jako závazná studijní verze.
+Následující odkazy vedou vždy na nejnovější schválené vydání L11. Rozpracovaná verze ve větvi `main` může být novější, ale není určena jako závazná studijní verze.
 
 | Materiál | Online verze | PDF |
 | --- | --- | --- |
-| Skripta | [Číst online](https://cuni-natur-biostatistics.github.io/LXX/current/learning/) | [Stáhnout PDF](https://cuni-natur-biostatistics.github.io/LXX/current/learning/skripta.pdf) |
-| Prezentace | [Otevřít slidy](https://cuni-natur-biostatistics.github.io/LXX/current/presentation/) | [Stáhnout PDF](https://cuni-natur-biostatistics.github.io/LXX/current/presentation/presentation.pdf) |
+| Skripta | [Číst online](https://cuni-natur-biostatistics.github.io/L11/current/learning/) | [Stáhnout PDF](https://cuni-natur-biostatistics.github.io/L11/current/learning/skripta.pdf) |
+| Prezentace | [Otevřít slidy](https://cuni-natur-biostatistics.github.io/L11/current/presentation/) | [Stáhnout PDF](https://cuni-natur-biostatistics.github.io/L11/current/presentation/presentation.pdf) |
 
-Pro navazující praktické cvičení je připraven [R skript ke stažení](https://cuni-natur-biostatistics.github.io/LXX/current/code/cviceni.R). Skript obsahuje úlohy a kód, se kterými budete pracovat během praktika.
+Pro navazující praktické cvičení je připraven [R skript ke stažení](https://cuni-natur-biostatistics.github.io/L11/current/code/cviceni.R). Skript obsahuje úlohy a kód, se kterými budete pracovat během praktika.
 
 - [HUB kurzu](https://cuni-natur-biostatistics.github.io/) je hlavní vstup ke všem veřejným studijním materiálům.
 - [Moodle kurzu](https://dl2.cuni.cz/course/view.php?id=106) slouží zapsaným studentům pro oznámení, testy, zadání, odevzdávání a individuální výsledky.
@@ -54,7 +47,7 @@ Pro navazující praktické cvičení je připraven [R skript ke stažení](http
 - `Learning_materials/skripta.qmd` je zdroj skript; výsledky jsou `Learning_materials/skripta.html` a `Learning_materials/skripta.pdf`.
 - `Presentation/presentation.qmd` je zdroj slidů; výsledky jsou `Presentation/presentation.html` a `Presentation/presentation.pdf`.
 - `Exercises/cviceni.R` je studentský R skript pro praktické cvičení.
-- `data/` obsahuje datové soubory specifické pro tuto lekci.
+- `data/` obsahuje datové soubory specifické pro tuto lekci a popis jejich původu; `R/prepare_frog_data.R` je reprodukovatelně připravuje ze zveřejněného zdroje.
 - `R/` obsahuje podporované renderovací a tematické nástroje.
 - `theme/` obsahuje synchronizovanou lokální kopii společné vizuální identity kurzu.
 - `pollslive/` obsahuje neaktivní šablonu pro pozdější zapojení schváleného opakovacího kvízu; bez souborů `pollslive/config.json` a `pollslive/quiz.json` nijak nemění render lekce.
@@ -62,7 +55,7 @@ Pro navazující praktické cvičení je připraven [R skript ke stažení](http
 
 ### Reprodukovatelné prostředí
 
-Repozitář používá `renv`. Po klonování otevřete `LXX.Rproj` a v čerstvé R relaci spusťte:
+Repozitář používá `renv`. Po klonování otevřete `L11.Rproj` a v čerstvé R relaci spusťte:
 
 ```r
 renv::restore()
@@ -79,7 +72,7 @@ Samostatně lze použít `R/render_skripta.R` nebo `R/render_presentation.R`. P�
 
 ### Publikování
 
-`website-release.yml` je explicitní seznam souborů povolených ve veřejném balíčku. Větev `main` vytváří veřejný náhled, zatímco stabilní tag `LXX-vMAJOR.MINOR.PATCH-YYYYMMDD` vytváří neměnné vydání a aktualizuje cestu `/LXX/current/`. Před prvním vydáním nahraďte v manifestu i v tomto README všechny zástupné údaje skutečnými hodnotami.
+`website-release.yml` je explicitní seznam souborů povolených ve veřejném balíčku. Větev `main` vytváří veřejný náhled, zatímco stabilní tag `L11-vMAJOR.MINOR.PATCH-YYYYMMDD` vytváří neměnné vydání a aktualizuje cestu `/L11/current/`.
 
 Podrobný publikační postup je v [`WEBSITE_RELEASES.md`](WEBSITE_RELEASES.md). Postup tvorby a kontroly lekce je v [`Workflow/README.md`](Workflow/README.md).
 
@@ -87,4 +80,4 @@ Před vydáním je nutné zkontrolovat vyrenderované HTML a PDF, úplnost manif
 
 ## Licence
 
-Původní výukový obsah je licencován pod CC BY 4.0 a software pod licencí MIT. Přesné vymezení, doporučená citace a výjimky pro převzatá data, média, fonty, loga a další položky jsou v [`LICENSE.md`](LICENSE.md).
+Původní výukový obsah je licencován pod CC BY 4.0 a software pod licencí MIT. Přesné vymezení, doporučená citace a výjimky pro převzatá data, média, fonty, loga a další položky jsou v [`LICENSE.md`](LICENSE.md). Výuková data o žabkách z pokusných nádrží mají vlastní původ a podmínky popsané v [`data/README.md`](data/README.md).
