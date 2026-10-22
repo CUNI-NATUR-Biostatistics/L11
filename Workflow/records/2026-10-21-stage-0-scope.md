@@ -167,7 +167,7 @@ Výstupy z učení:
 - Risk: too few groups for a random effect in the chosen data. Mitigation: Stage 1 requires at least about 10 groups; the 5-level rule of thumb is taught explicitly.
 - Dependency: L10 approved, merged, released (`L10-v1.0.0-20261015`, satisfied). The L11 PollsLive retrieval quiz retrieves L10 and waits for Stage 4.
 - Dependency: new glossary terms via the `slovnik` workflow (separate repository change).
-- Dependency: the revised `osnova_lekci.md` entry is an uncommitted `_internal` edit with its own commit authorization.
+- Dependency: the revised `osnova_lekci.md` entry, committed to `_internal` `main` as `dd3ffda` on 2026-10-21.
 - Dependency: the one-time repository setup items 2-6 require separate authorization.
 - Dependency: the Moodle knowledge file `moodle/knowledge/L11.yaml` is built only after the lesson release; its `readable_output` will need a new entry type for mixed-model output.
 
@@ -182,7 +182,7 @@ Výstupy z učení:
    - With few groups, Wald z intervals and p-values are somewhat optimistic; Stage 1 should prefer data with about 15 or more groups; an internal (not student-facing) simulation may check how optimistic the Wald intervals are for the chosen number of groups.
    - Default estimation is ML (`REML = FALSE`); whether to set `REML = TRUE` for the variance components is a Stage 1 probe and stays out of student-facing explanation beyond one sentence if needed.
    - `confint()` works on the fitted object, so the familiar interval reading from L04-L05 carries over.
-3. Revised `osnova_lekci.md` L11 entry (new title, seven-item model core including the `glmmTMB` model line, five outcomes) approved by Ondřej Mottl, 2026-10-21, and applied to `_internal/osnova_lekci.md` exactly as proposed above; the `_internal` change is uncommitted and needs its own commit authorization. The five outcomes in that entry are now the canonical L11 outcomes. Note: its model-core item on pseudoreplication mentions more frequent false alarms "v nulovém světě"; after resolved decision 6 this is stated in words with the L05 vocabulary, without a simulation.
+3. Revised `osnova_lekci.md` L11 entry (new title, seven-item model core including the `glmmTMB` model line, five outcomes) approved by Ondřej Mottl, 2026-10-21, and applied to `_internal/osnova_lekci.md` exactly as proposed above; committed to `_internal` `main` as `dd3ffda` on 2026-10-21. The five outcomes in that entry are now the canonical L11 outcomes. Note: its model-core item on pseudoreplication mentions more frequent false alarms "v nulovém světě"; after resolved decision 6 this is stated in words with the L05 vocabulary, without a simulation.
 4. Dataset rule: Ondřej Mottl requested a full Stage 1 search (2026-10-21). The individual L05 crab data (`L05/data/pie_crab.csv`, 13 salt marshes, latitude varying only between sites) are an **eligible candidate on equal terms**; the comparison decides. If not selected, they may still appear as a callback to the L05 promise.
 5. Random slope: an Extra box in the written materials only (one figure and one formula line, no interpretation of the slope variance). Approved by Ondřej Mottl, 2026-10-21.
 6. Null-world simulation of false alarms: **left out** of the lesson. Decided by Ondřej Mottl, 2026-10-21, against the recommendation to include it; the side-by-side comparison of SE and intervals carries the pseudoreplication argument.
@@ -207,4 +207,4 @@ Výstupy z učení:
 - [ ] One-time repository setup items 2-6 completed
 - [x] Scope locked for implementation
 - [x] Continue Stage 1 research on the planning branch
-- Notes: Drafted on 2026-10-21 before the L11 repository existed. Ondřej Mottl decided the random-effects scope and `glmmTMB`, approved and applied the revised `osnova_lekci.md` entry, resolved decisions 4-6 and locked the scope on 2026-10-21. The `_internal/osnova_lekci.md` change still needs its own commit authorization.
+- Notes: Drafted on 2026-10-21 before the L11 repository existed. Ondřej Mottl decided the random-effects scope and `glmmTMB`, approved and applied the revised `osnova_lekci.md` entry, resolved decisions 4-6 and locked the scope on 2026-10-21. The `_internal/osnova_lekci.md` change was committed as `dd3ffda` the same day.
