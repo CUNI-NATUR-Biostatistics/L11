@@ -1,6 +1,6 @@
 ---
-title: "TODO: Název přednášky"
-subtitle: "Podkladové čtenářské materiály k přednášce"
+title: "Vylézají z tůní, které vyschly, menší žabky?"
+subtitle: "Hierarchická data a náhodné efekty — podkladové čtenářské materiály k přednášce"
 lang: cs
 filters:
   - ../theme/semantic-boxes.lua
@@ -27,7 +27,7 @@ format:
       - "skripta_theme.typ"
       - "skripta-logo.typ"
     date: last-modified
-date: 2026/02/26
+date: 2026/10/21
 date-format: long
 date-modified: last-modified
 ---
@@ -40,47 +40,99 @@ if (!require("here")) install.packages("here")
 here::i_am("Learning_materials/skripta.qmd")
 
 if (!require("tidyverse")) install.packages("tidyverse")
-if (!require("ggbeeswarm")) install.packages("ggbeeswarm")
-if (!require("palmerpenguins")) install.packages("palmerpenguins")
+if (!require("glmmTMB")) install.packages("glmmTMB")
 if (!require("glossary")) install.packages("glossary")
 
 library(tidyverse)
-library(ggbeeswarm)
-library(palmerpenguins)
 library(glossary)
 
-# Glossary: point to the canonical slovnik pojmy.yaml hosted on GitHub.
-# Terms are looked up by slug ID (e.g. "histogram", "median", "boxplot").
+# Síťové doplňky nesmějí při renderování blokovat lokální výstup.
+options(timeout = 15)
+
+# Glossary: prefer the canonical local slovnik copy in the course workspace.
 # Usage in text: `r render_glossary_term("slug", display = "Czech term")`
-# The glossary_style() call applies brand colours to the hover tooltip (HTML only).
-local_pojmy <- tempfile(fileext = ".yaml")
-tryCatch(
-  {
-    download.file(
-      url = "https://raw.githubusercontent.com/CUNI-NATUR-Biostatistics/slovnik/main/pojmy.yaml",
-      destfile = local_pojmy,
-      quiet = TRUE
-    )
-    glossary::glossary_path(local_pojmy)
-  },
-  error = function(e) {
-    message("Glossary YAML unavailable: ", conditionMessage(e))
-  }
-)
-tryCatch(
-  {
-    source(
-      paste0(
-        "https://raw.githubusercontent.com/",
-        "CUNI-NATUR-Biostatistics/slovnik/main/",
-        "R/Functions/render_glossary_term.R"
+local_pojmy <-
+  here::here(
+    "..",
+    "slovnik",
+    "pojmy.yaml"
+  )
+
+if (!file.exists(local_pojmy)) {
+  local_pojmy <- tempfile(fileext = ".yaml")
+
+  tryCatch(
+    {
+      download.file(
+        url = paste0(
+          "https://raw.githubusercontent.com/",
+          "CUNI-NATUR-Biostatistics/slovnik/main/pojmy.yaml"
+        ),
+        destfile = local_pojmy,
+        quiet = TRUE,
+        mode = "wb"
       )
-    )
-  },
-  error = function(e) {
-    source(here::here("R/Functions/render_glossary_term.R"))
-  }
-)
+    },
+    error = function(e) {
+      message("Glossary YAML unavailable: ", conditionMessage(e))
+    }
+  )
+}
+
+if (file.exists(local_pojmy)) {
+  glossary::glossary_path(local_pojmy)
+}
+
+local_glossary_helper <-
+  here::here(
+    "..",
+    "slovnik",
+    "R",
+    "Functions",
+    "render_glossary_term.R"
+  )
+
+if (file.exists(local_glossary_helper)) {
+  source(local_glossary_helper)
+} else {
+  tryCatch(
+    {
+      source(
+        paste0(
+          "https://raw.githubusercontent.com/",
+          "CUNI-NATUR-Biostatistics/slovnik/main/",
+          "R/Functions/render_glossary_term.R"
+        )
+      )
+    },
+    error = function(e) {
+      source(here::here("R/Functions/render_glossary_term.R"))
+    }
+  )
+}
+
+source(here::here("R", "Functions", "format_cz.R"))
+source(here::here("R", "Functions", "format_cz_math.R"))
+
+# Společné barvy grafů v celé lekci: šedá data, fialový model,
+#    oranžová jako zvýraznění; úpravy nádrží mají vlastní barvy.
+barva_data <- "#8C8C8C"
+barva_model <- "#5D2890"
+barva_zvyrazneni <- "#F3A712"
+barva_text <- "#2E2E2E"
+
+barvy_vyschnuti <-
+  c(
+    "nevyschla" = "#3A7DB8",
+    "vyschla" = "#B5651D"
+  )
+
+# Cesta ke složce s ilustracemi pro skripta
+cesta_obrazky <-
+  here::here(
+    "Learning_materials",
+    "images"
+  )
 ```
 
 ```{r}
@@ -119,66 +171,2642 @@ if (knitr::is_html_output()) {
 }
 ```
 
-## Úvod
-
-TODO: Stručný úvod do tématu přednášky. Vysvětlete biologický kontext a motivaci.
-
-## TODO: Hlavní část
-
-TODO: Obsah hlavní části skripta. Používejte podnadpisy (###) pro strukturování textu.
-
-### TODO: Podkapitola
-
-TODO: Text podkapitoly s biologickými příklady a R kódem.
-
 ```{r}
-#| label: demo
-#| echo: true
-# TODO: ukázka kódu v R
+#| label: zobrazit-vysychajici-tun
+#| echo: false
+#| eval: !expr file.exists(file.path(cesta_obrazky, "zabky_vysychajici_tun.png"))
+#| out-width: "80%"
+#| fig-align: center
+#| fig-cap: "Tůň, která vyschla a znovu se naplnila. Ilustrace vytvořená pomocí AI."
+#| fig-alt: "Malá tůň na louce po opětovném napuštění, obklopená pruhem rozpraskaného vyschlého bahna. Z vody vylézají drobné žabky po metamorfóze; na kameni je pozoruje žába s polním zápisníkem a pravítkem a vedle ní poletuje vážka. Ilustrace vytvořená pomocí AI."
+knitr::include_graphics(
+  path = file.path(cesta_obrazky, "zabky_vysychajici_tun.png")
+)
 ```
 
-## Ukázka sémantických boxů
+Mělké tůně, louže v kolejích a malé mokřady jsou pro obojživelníky nenahraditelné: kladou do nich vajíčka a pulci v nich rostou, dokud se nepromění v malé žabky. Za suchých let ale mnoho takových tůní vyschne a po deštích se znovu naplní. Voda se vrátí, jenže dno, řasy a drobní živočichové, kterými se pulci živí, už nemusejí být stejné jako v tůni, která nikdy nevyschla.
 
-Při přípravě lekce nahraďte následující ukázky konkrétním obsahem, nebo nepoužité typy odstraňte.
+Ekologové proto zkusili v pokusu napodobit tůně, které vyschly a znovu se naplnily, a porovnat je s tůněmi, které nevyschly. Sledovali, jak velké žabky z nich nakonec vylezou. Velikost na konci metamorfózy je u žab důležitá: větší žabky obvykle lépe přežívají první měsíce na souši.
 
-::: {.box-question title="Než zobrazíte výsledek"}
-TODO: Krátká otázka, předpověď nebo interpretační úkol pro studenty.
+::: {.box-question title="Hlavní otázka"}
+Vylézají z tůní, které vyschly a znovu se naplnily, menší žabky? A jak jistě to můžeme z naměřených dat tvrdit?
 :::
 
-::: {.box-result title="Co ukázala analýza"}
-TODO: Hlavní výsledek nebo závěr v biologicky smysluplných jednotkách.
+Na první část otázky odpoví graf a známý lineární model. Druhá část je zrádnější a celá tato lekce se točí kolem ní.
+
+# Co zůstalo otevřené u krabů a u ostrovů?
+
+S podobnou otázkou jsme se už dvakrát setkali, ale pokaždé jsme ji odložili.
+
+Při hledání odpovědi, zda jsou krabi houslisti na severnějších slaniskách větší, jsme nepracovali s jednotlivými kraby. Každý řádek tabulky představoval jedno slanisko a v modelu byly `r render_glossary_term("prumer", display = "průměry")` krabů z jednotlivých slanisek. Tehdy jsme si slíbili, že důvod vysvětlíme později, až se budeme zabývat `r render_glossary_term("hierarchicka-data", display = "hierarchickými daty")`.
+
+V předchozí lekci jsme zase modelovali počty druhů na třiceti ostrovech Galapág. Na konci jsme se ptali, zda je třicet ostrovů jednoho souostroví opravdu třicet nezávislých kousků informace, když si sousední ostrovy vyměňují semena a sdílejí podnebí.
+
+::: {.box-question title="Zkuste odpovědět dřív, než budete číst dál"}
+Proč jsme u krabů modelovali průměry slanisek, a ne všechny změřené kraby? Co by se mohlo pokazit, kdybychom každého kraba počítali jako samostatné pozorování?
 :::
 
-::: {.box-data title="Doplňující: původ dat" collapse="true"}
-TODO: Původ dat, způsob měření nebo volitelný technický detail.
+Odpověď nebudeme hledat u krabů, ale v pokusu s žabkami. Ke krabům se vrátíme, až budeme mít v ruce potřebné nástroje.
+
+# Co se v této lekci naučíte
+
+Po prostudování lekce budete umět:
+
+- pojmenovat hierarchii v datech (opakovaná měření, lokality, bloky) a určit, na které úrovni se mění zkoumaný `r render_glossary_term("prediktor", display = "prediktor")`;
+- určit, které jednotky v datech představují nezávislá opakování, a vysvětlit, jak `r render_glossary_term("pseudoreplikace", display = "pseudoreplikace")` zkresluje `r render_glossary_term("standardni-chyba", display = "standardní chybu")`, `r render_glossary_term("interval-spolehlivosti", display = "intervaly spolehlivosti")` a `r render_glossary_term("p-hodnota", display = "p-hodnoty")`;
+- rozhodnout, zda má být skupinová proměnná `r render_glossary_term("pevny-faktor", display = "pevným")`, nebo `r render_glossary_term("nahodny-faktor", display = "náhodným faktorem")`, a zdůvodnit volbu biologickou otázkou;
+- odhadnout lineární model s náhodným interceptem, interpretovat jeho výsledek a porovnat variabilitu mezi skupinami a uvnitř skupin;
+- popsat, kdy je potřeba model s náhodnými efekty místo jednoduchého `lm()`, a kdy stačí jednodušší řešení.
+
+Kromě toho si postupně navrhnete vlastní terénní studii, ve které se stejné otázky objeví ještě před prvním měřením.
+
+```{r}
+#| label: nacist-data-zabek-skryte
+#| echo: false
+#| message: false
+#| warning: false
+# Hidden copy of the lesson table, loaded before the Part A heading
+#    because the section heading itself states the number of tanks.
+data_zabky_skryte <-
+  readr::read_csv(
+    file = here::here("data", "zabky_nadrze.csv"),
+    show_col_types = FALSE
+  ) |>
+  dplyr::mutate(
+    vyschnuti = factor(
+      .data$vyschnuti,
+      levels = c("nevyschla", "vyschla")
+    )
+  )
+
+data_nadrze_skryte <-
+  data_zabky_skryte |>
+  dplyr::group_by(.data$nadrz, .data$vyschnuti) |>
+  dplyr::summarise(
+    pocet_zabek = dplyr::n(),
+    prumerna_delka_mm = mean(.data$delka_tela_mm),
+    .groups = "drop"
+  )
+
+pocet_nadrzi <- nrow(data_nadrze_skryte)
+pocet_zabek <- nrow(data_zabky_skryte)
+vec_upravy_nadrzi <- dplyr::pull(data_nadrze_skryte, .data$vyschnuti)
+pocet_nadrzi_vyschlych <- sum(vec_upravy_nadrzi == "vyschla")
+pocet_nadrzi_nevyschlych <- sum(vec_upravy_nadrzi == "nevyschla")
+```
+
+# Žabky z pokusných nádrží
+
+## Pokus se `r pocet_nadrzi` nádržemi
+
+```{r}
+#| label: zobrazit-pokusne-nadrze
+#| echo: false
+#| eval: !expr file.exists(file.path(cesta_obrazky, "zabky_pokusne_nadrze.png"))
+#| out-width: "80%"
+#| fig-align: center
+#| fig-cap: "Venkovní pokusné nádrže. Ilustrace vytvořená pomocí AI."
+#| fig-alt: "Louka terénní stanice s několika velkými kulatými nádržemi s vodou, částečně zakrytými stínicí sítí. Na okraji nejbližší nádrže sedí žába se zápisníkem a na síti odpočívá vážka. Ilustrace vytvořená pomocí AI."
+knitr::include_graphics(
+  path = file.path(cesta_obrazky, "zabky_pokusne_nadrze.png")
+)
+```
+
+Pokus provedli K. J. Ward, S. E. M. Burkhead, E. A. Stybr-Burrus a T. M. Luhring v roce 2021 na terénní stanici Wichita State University v Kansasu (Ward et al. 2023, *Freshwater Biology*). Na louce rozmístili 64 velkých plastových nádrží na vodu pro dobytek, každou o objemu 1 000 litrů, a udělali z nich malé umělé tůně. Polovina nádrží před začátkem pokusu vyschla a byla znovu napuštěna, druhá polovina zůstala celou dobu plná. Do části nádrží potom vysadili po 50 pulcích severoamerického skokana *Lithobates blairi*.
+
+Malé žabky po dokončení metamorfózy vylezly jen z nádrží, ve kterých byli pulci bez dravých ryb. Takových nádrží bylo `r pocet_nadrzi` a s nimi budeme pracovat. Jakmile žabka vylezla z vody, výzkumníci jí změřili délku těla a zvážili ji.
+
+```{r}
+#| label: zobrazit-usporadani-pokusu
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 7
+#| fig-height: 3.2
+#| fig-cap: "Uspořádání pokusu. Každý kruh je jedna nádrž; číslo uvnitř je číslo nádrže, číslo pod kruhem počet žabek, které z ní vylezly. O vyschnutí se rozhodovalo vždy pro celou nádrž."
+#| fig-alt: "Dvě řady po osmi kruzích. Horní řada modrých kruhů představuje nádrže, které nevyschly, dolní řada hnědých kruhů nádrže, které vyschly a byly znovu napuštěny. V každém kruhu je číslo nádrže a pod ním počet žabek."
+data_schema <-
+  data_nadrze_skryte |>
+  dplyr::arrange(.data$vyschnuti, .data$nadrz) |>
+  dplyr::group_by(.data$vyschnuti) |>
+  dplyr::mutate(
+    poradi = dplyr::row_number()
+  ) |>
+  dplyr::ungroup() |>
+  dplyr::mutate(
+    radek = dplyr::if_else(
+      condition = .data$vyschnuti == "nevyschla",
+      true = 2,
+      false = 1
+    ),
+    popis_upravy = dplyr::if_else(
+      condition = .data$vyschnuti == "nevyschla",
+      true = "nevyschla",
+      false = "vyschla a byla\nznovu napuštěna"
+    )
+  )
+
+data_schema_popisky <-
+  data_schema |>
+  dplyr::distinct(
+    .data$radek,
+    .data$popis_upravy
+  )
+
+ggplot2::ggplot(
+  data = data_schema,
+  mapping = ggplot2::aes(
+    x = .data$poradi,
+    y = .data$radek
+  )
+) +
+  ggplot2::scale_fill_manual(
+    values = barvy_vyschnuti,
+    guide = "none"
+  ) +
+  ggplot2::scale_x_continuous(
+    limits = c(-1.6, 8.6)
+  ) +
+  ggplot2::scale_y_continuous(
+    limits = c(0.45, 2.45)
+  ) +
+  ggplot2::theme_void(base_size = 12) +
+  ggplot2::geom_point(
+    mapping = ggplot2::aes(fill = .data$vyschnuti),
+    shape = 21,
+    size = 13,
+    color = barva_text
+  ) +
+  ggplot2::geom_text(
+    mapping = ggplot2::aes(label = .data$nadrz),
+    color = "white",
+    fontface = "bold",
+    size = 4
+  ) +
+  ggplot2::geom_text(
+    mapping = ggplot2::aes(
+      y = .data$radek - 0.38,
+      label = .data$pocet_zabek
+    ),
+    color = barva_text,
+    size = 3.4
+  ) +
+  ggplot2::geom_text(
+    data = data_schema_popisky,
+    mapping = ggplot2::aes(
+      x = -0.6,
+      y = .data$radek,
+      label = .data$popis_upravy
+    ),
+    hjust = 0.5,
+    size = 3.6,
+    color = barva_text
+  )
+```
+
+Nejdůležitější vlastnost tohoto pokusu je vidět už na schématu: **vyschnutí se týkalo vždy celé nádrže**, nikoli jednotlivých žabek. Všechny žabky z jedné nádrže vyrůstaly ve stejné vodě, se stejnou potravou a se stejnou historií nádrže.
+
+::: {.box-data title="Doplňující: původ dat a příprava tabulky" collapse="true"}
+Původní data jsou zveřejněna v repozitáři Dryad ([doi:10.5061/dryad.hx3ffbgkn](https://doi.org/10.5061/dryad.hx3ffbgkn)) pod licencí CC0. Výsledky pokusu popisuje článek Ward et al. (2023), *Freshwater Biology*, [doi:10.1111/fwb.14157](https://doi.org/10.1111/fwb.14157). V tabulce, se kterou pracujeme, jsou jen žabky z `r pocet_nadrzi` nádrží bez ryb. Názvy sloupců jsme přeložili do češtiny, vynechali jsme pomocné hmotnosti vážicích kelímků a suchou hmotnost jsme zaokrouhlili na tisíciny gramu, s jakou přesností se vážilo.
+
+Následující kód stáhne původní soubor ze zrcadla repozitáře Dryad v repozitáři Zenodo, ověří jeho otisk SHA-256 a uloží výukovou tabulku. Potřebuje balíčky `readxl` a `digest`.
+
+```{r}
+#| label: reprodukovat-data-zabek
+#| echo: true
+#| eval: false
+
+# Stáhneme původní soubor z repozitáře Zenodo
+cesta_zdroj <-
+  tempfile(fileext = ".xlsx")
+
+download.file(
+  url = paste0(
+    "https://zenodo.org/api/records/8083635/files/",
+    "Frog_Metamorph_Data_Dryad.xlsx/content"
+  ),
+  destfile = cesta_zdroj,
+  mode = "wb"
+)
+
+# Ověříme, že jsme stáhli přesně očekávaný soubor
+stopifnot(
+  digest::digest(
+    object = cesta_zdroj,
+    algo = "sha256",
+    file = TRUE
+  ) == paste0(
+    "cc879383de5a35a7ee57c9e6b446bb9c",
+    "364bc9fd7007452e55ba39ea06f2fef4"
+  )
+)
+
+# Načteme list s údaji o žabkách
+data_zdroj <-
+  as.data.frame(
+    readxl::read_excel(
+      path = cesta_zdroj,
+      sheet = "Sheet1"
+    )
+  )
+
+# Sestavíme výukovou tabulku s českými názvy proměnných
+data_zabky_priprava <-
+  data.frame(
+    nadrz = as.integer(data_zdroj$Tank),
+    vyschnuti = ifelse(
+      test = data_zdroj$Treatment == "A:DR",
+      yes = "vyschla",
+      no = "nevyschla"
+    ),
+    poradi_zabky = as.integer(data_zdroj$Indiv),
+    datum_metamorfozy = as.Date(data_zdroj$Date),
+    den_pokusu = as.integer(data_zdroj$Day),
+    delka_tela_mm = data_zdroj$SVL,
+    hmotnost_mokra_g = data_zdroj$Wet_Mass,
+    hmotnost_sucha_g = round(data_zdroj$Dry_Mass, digits = 3)
+  )
+
+# Seřadíme řádky podle nádrže a pořadí žabky
+vec_poradi_radku <-
+  order(
+    data_zabky_priprava$nadrz,
+    data_zabky_priprava$poradi_zabky
+  )
+
+data_zabky_serazene <-
+  data_zabky_priprava[vec_poradi_radku, ]
+
+# Uložíme výukovou tabulku
+write.csv(
+  x = data_zabky_serazene,
+  file = here::here("data", "zabky_nadrze.csv"),
+  row.names = FALSE
+)
+```
+
+Stejný postup obsahuje skript `R/prepare_frog_data.R` v repozitáři lekce.
 :::
 
-::: {.box-extra title="Doplňující: dlouhý technický postup" collapse="true"}
-TODO: Delší volitelný technický nebo reprodukční postup. V HTML zůstává sbalený; v PDF se obsah přirozeně rozloží přes více stran.
+## Jeden řádek tabulky představuje jednu žabku
+
+Každý řádek tabulky popisuje jednu žabku, takže `r render_glossary_term("jednotka-pozorovani", display = "jednotkou pozorování")` je žabka. Pro každou žabku známe:
+
+| Proměnná | Význam | Jednotka |
+|---|---|---|
+| `nadrz` | číslo nádrže, ze které žabka vylezla | — |
+| `vyschnuti` | zda nádrž před pokusem vyschla (`vyschla`), nebo ne (`nevyschla`) | — |
+| `poradi_zabky` | pořadové číslo žabky v rámci nádrže | — |
+| `datum_metamorfozy` | datum, kdy žabka vylezla z vody | datum |
+| `den_pokusu` | počet dní od začátku pokusu | den |
+| `delka_tela_mm` | délka těla od špičky čenichu ke kloace | mm |
+| `hmotnost_mokra_g` | hmotnost živé žabky | g |
+| `hmotnost_sucha_g` | hmotnost žabky po vysušení | g |
+
+: Proměnné ve výukové tabulce žabek z pokusných nádrží.
+
+Hlavní `r render_glossary_term("odezva", display = "odezvou")` bude délka těla. Hlavním `r render_glossary_term("prediktor", display = "prediktorem")` bude vyschnutí nádrže, tedy `r render_glossary_term("kategoricka-promenna", display = "kategoriální proměnná")` se dvěma úrovněmi.
+
+Soubor [zabky_nadrze.csv](../data/zabky_nadrze.csv) je součástí materiálů. Pro následující kód jej uložte do složky `data` ve svém projektu v R. Načteme ho a nastavíme, že `r render_glossary_term("referencni-skupina", display = "referenční skupinou")` budou nádrže, které nevyschly:
+
+```{r}
+#| label: nacist-data-zabek
+#| echo: true
+#| eval: true
+
+# Načteme tabulku s jedním řádkem pro každou žabku
+data_zabky <-
+  read.csv(
+    file = here::here("data", "zabky_nadrze.csv")
+  )
+
+# Nádrže, které nevyschly, budou referenční skupinou
+data_zabky$vyschnuti <-
+  factor(
+    x = data_zabky$vyschnuti,
+    levels = c("nevyschla", "vyschla")
+  )
+```
+
+Než začneme cokoli modelovat, tabulku prohlédneme: strukturu, chybějící hodnoty a rozsahy hodnot.
+
+```{r}
+#| label: prohlednout-data-zabek
+#| echo: true
+#| eval: true
+
+# Ověříme datové typy proměnných
+str(object = data_zabky)
+
+# Minimum, kvartily, průměr a maximum vybraných numerických proměnných
+summary(
+  object = data_zabky[
+    ,
+    c("den_pokusu", "delka_tela_mm", "hmotnost_sucha_g")
+  ]
+)
+
+# Spočítáme chybějící hodnoty v každém sloupci
+colSums(x = is.na(data_zabky))
+```
+
+```{r}
+#| label: shrnout-rozsahy-zabek
+#| echo: false
+vec_delka <- dplyr::pull(data_zabky_skryte, .data$delka_tela_mm)
+vec_hmotnost <- dplyr::pull(data_zabky_skryte, .data$hmotnost_sucha_g)
+delka_min <- min(vec_delka)
+delka_max <- max(vec_delka)
+hmotnost_median <- median(vec_hmotnost)
+hmotnost_max <- max(vec_hmotnost)
+pocet_chybejicich <- sum(is.na(data_zabky_skryte))
+
+delka_median <- median(vec_delka)
+```
+
+Tabulka má `r pocet_zabek` řádků a `r if (pocet_chybejicich == 0) "žádné chybějící hodnoty" else paste(pocet_chybejicich, "chybějících hodnot")`. Délka těla se pohybuje od `r delka_min` do `r delka_max` mm a výzkumníci ji zapisovali na celé milimetry. To odpovídá velikosti žabek krátce po metamorfóze. Suchá hmotnost má `r render_glossary_term("median", display = "medián")` `r format_cz(hmotnost_median, 3)` g, ale největší žabka vážila `r format_cz(hmotnost_max, 3)` g: `r render_glossary_term("rozdeleni", display = "rozdělení")` hmotnosti má dlouhý chvost vpravo, podobně jako mnoho velikostí z předchozí lekce.
+
+## Kolik žabek vylezlo z které nádrže?
+
+Pro tuto lekci je důležité ještě jedno ověření: kolik řádků patří ke každé nádrži.
+
+```{r}
+#| label: spocitat-zabky-v-nadrzich
+#| echo: true
+#| eval: true
+
+# Počet žabek z každé nádrže
+table(data_zabky$nadrz)
+
+# Počet žabek z vyschlých a nevyschlých nádrží
+table(data_zabky$vyschnuti)
+```
+
+```{r}
+#| label: shrnout-pocty-v-nadrzich
+#| echo: false
+vec_pocty_v_nadrzich <- dplyr::pull(data_nadrze_skryte, .data$pocet_zabek)
+vec_upravy_zabek <- dplyr::pull(data_zabky_skryte, .data$vyschnuti)
+pocet_v_nadrzi_min <- min(vec_pocty_v_nadrzich)
+pocet_v_nadrzi_max <- max(vec_pocty_v_nadrzich)
+pocet_zabek_vyschla <- sum(vec_upravy_zabek == "vyschla")
+pocet_zabek_nevyschla <- sum(vec_upravy_zabek == "nevyschla")
+```
+
+Z nádrží vylezlo nestejně mnoho žabek: nejméně `r pocet_v_nadrzi_min`, nejvíce `r pocet_v_nadrzi_max`. Z vyschlých nádrží pochází `r pocet_zabek_vyschla` žabek, z nevyschlých jen `r pocet_zabek_nevyschla`, přestože do každé nádrže bylo na začátku vysazeno stejně pulců.
+
+## Jak velké jsou žabky z vyschlých a nevyschlých nádrží?
+
+Začneme `r render_glossary_term("houslovy-graf", display = "houslovým grafem (violin plot)")` délky těla pro obě skupiny nádrží. Šířka „houslí" ukazuje, kolik žabek mělo danou délku; uvnitř je úzký `r render_glossary_term("boxplot", display = "krabicový graf (boxplot)")` s mediánem a body jsou jednotlivé žabky.
+
+```{r}
+#| label: nakreslit-delku-podle-vyschnuti
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 6.5
+#| fig-height: 4.5
+#| fig-cap: "Délka těla žabek z nevyschlých a z vyschlých nádrží. Houslový graf ukazuje rozdělení délek, úzký krabicový graf medián a kvartily, body jednotlivé žabky."
+#| fig-alt: "Dva houslové grafy délky těla žabek, modrý pro nevyschlé a hnědý pro vyschlé nádrže, s úzkými krabicovými grafy a jednotlivými žabkami jako body. Žabky z vyschlých nádrží jsou v průměru zřetelně menší."
+set.seed(900723)
+
+ggplot2::ggplot(
+  data = data_zabky_skryte,
+  mapping = ggplot2::aes(
+    x = .data$vyschnuti,
+    y = .data$delka_tela_mm,
+    fill = .data$vyschnuti,
+    color = .data$vyschnuti
+  )
+) +
+  ggplot2::scale_fill_manual(
+    values = barvy_vyschnuti,
+    guide = "none"
+  ) +
+  ggplot2::scale_color_manual(
+    values = barvy_vyschnuti,
+    guide = "none"
+  ) +
+  ggplot2::labs(
+    x = "Nádrž před pokusem",
+    y = "Délka těla (mm)"
+  ) +
+  ggplot2::theme_bw(base_size = 13) +
+  ggplot2::geom_violin(
+    alpha = 0.25,
+    adjust = 1.4,
+    linewidth = 0.6
+  ) +
+  ggplot2::geom_jitter(
+    width = 0.12,
+    height = 0.25,
+    alpha = 0.45,
+    size = 1.4
+  ) +
+  ggplot2::geom_boxplot(
+    width = 0.12,
+    fill = "white",
+    color = barva_text,
+    outlier.shape = NA,
+    alpha = 0.9
+  )
+```
+
+::: {.box-extra title="Doplňující: jak nakreslit houslový graf v R" collapse="true"}
+Základní grafika v R houslový graf nenabízí, a proto použijeme balíček `ggplot2`. Vrstvy se přidávají znaménkem `+`: housle, jednotlivé body a úzký krabicový graf.
+
+```{r}
+#| label: ukazat-kod-houslovy-graf
+#| echo: true
+#| eval: false
+
+# Houslový graf délky těla podle vyschnutí nádrže
+ggplot2::ggplot(
+  data = data_zabky,
+  mapping = ggplot2::aes(
+    x = vyschnuti,
+    y = delka_tela_mm,
+    fill = vyschnuti
+  )
+) +
+  # Housle: rozdělení délek v každé skupině
+  ggplot2::geom_violin(alpha = 0.3) +
+  # Jednotlivé žabky s malým náhodným posunem do stran
+  ggplot2::geom_jitter(
+    width = 0.1,
+    alpha = 0.4
+  ) +
+  # Úzký krabicový graf s mediánem a kvartily
+  ggplot2::geom_boxplot(
+    width = 0.1,
+    fill = "white",
+    outlier.shape = NA
+  ) +
+  ggplot2::labs(
+    x = "Nádrž před pokusem",
+    y = "Délka těla (mm)"
+  ) +
+  ggplot2::theme_bw(base_size = 14)
+```
 :::
 
-::: {.box-rule title="Pravidlo pro interpretaci"}
-TODO: Definice, rozhodovací pravidlo nebo dlouhodobě použitelná pomůcka.
+::: {.box-question title="Co vidíte?"}
+Jak velký je rozdíl mezi žabkami z vyschlých a nevyschlých nádrží? Překrývají se obě skupiny?
 :::
 
-::: {.box-warning title="Pozor na častou chybu"}
-TODO: Mylná interpretace nebo metodologické varování.
+```{r}
+#| label: spocitat-prumery-skupin
+#| echo: false
+prumery_skupin <-
+  data_zabky_skryte |>
+  dplyr::group_by(.data$vyschnuti) |>
+  dplyr::summarise(
+    prumer = mean(.data$delka_tela_mm),
+    .groups = "drop"
+  )
+
+prumer_nevyschla <-
+  prumery_skupin |>
+  dplyr::filter(.data$vyschnuti == "nevyschla") |>
+  dplyr::pull(.data$prumer)
+
+prumer_vyschla <-
+  prumery_skupin |>
+  dplyr::filter(.data$vyschnuti == "vyschla") |>
+  dplyr::pull(.data$prumer)
+```
+
+Žabky z vyschlých nádrží měřily v `r render_glossary_term("prumer", display = "průměru")` `r format_cz(prumer_vyschla, 1)` mm, žabky z nevyschlých `r format_cz(prumer_nevyschla, 1)` mm. Rozdíl kolem `r format_cz(prumer_nevyschla - prumer_vyschla, 1)` mm je u žabek, které typicky měří `r delka_median` mm, velký. Obě skupiny se sice překrývají, ale na první pohled to vypadá jako jasný výsledek.
+
+## Stejné žabky rozdělené podle nádrží
+
+Stejná data můžeme rozdělit podle nádrží. Každý sloupec bodů v grafu je jedna nádrž; barva ukazuje, zda nádrž vyschla.
+
+```{r}
+#| label: nakreslit-zabky-podle-nadrzi
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 7.5
+#| fig-height: 4.2
+#| fig-cap: "Délka těla žabek v jednotlivých nádržích. Nádrže jsou seřazené podle průměrné délky žabek; černá vodorovná čárka ukazuje průměr nádrže."
+#| fig-alt: "Graf jednotlivých hodnot délky těla žabek pro všechny nádrže seřazené podle průměru. Modré nádrže, které nevyschly, mají vyšší průměry než hnědé nádrže, které vyschly. Žabky z jedné nádrže mají podobné délky a průměry nádrží se liší i v rámci stejné úpravy."
+set.seed(900723)
+
+data_poradi_nadrzi <-
+  data_nadrze_skryte |>
+  dplyr::arrange(.data$prumerna_delka_mm) |>
+  dplyr::mutate(
+    nadrz_popis = factor(
+      as.character(.data$nadrz),
+      levels = as.character(.data$nadrz)
+    )
+  )
+
+data_zabky_graf <-
+  data_zabky_skryte |>
+  dplyr::left_join(
+    dplyr::select(data_poradi_nadrzi, "nadrz", "nadrz_popis"),
+    by = dplyr::join_by(nadrz),
+    multiple = "error",
+    unmatched = "error"
+  )
+
+ggplot2::ggplot(
+  data = data_zabky_graf,
+  mapping = ggplot2::aes(
+    x = .data$nadrz_popis,
+    y = .data$delka_tela_mm,
+    color = .data$vyschnuti
+  )
+) +
+  ggplot2::scale_color_manual(
+    values = barvy_vyschnuti,
+    name = "Nádrž"
+  ) +
+  ggplot2::labs(
+    x = "Číslo nádrže",
+    y = "Délka těla (mm)"
+  ) +
+  ggplot2::theme_bw(base_size = 12) +
+  ggplot2::theme(legend.position = "top") +
+  ggplot2::geom_jitter(
+    width = 0.2,
+    height = 0.25,
+    alpha = 0.55,
+    size = 1.6
+  ) +
+  ggplot2::geom_point(
+    data = data_poradi_nadrzi,
+    mapping = ggplot2::aes(
+      x = .data$nadrz_popis,
+      y = .data$prumerna_delka_mm
+    ),
+    inherit.aes = FALSE,
+    shape = 95,
+    size = 9,
+    color = barva_text
+  )
+```
+
+::: {.box-question title="Co mají společného žabky z jedné nádrže?"}
+Podívejte se na jednu nádrž a porovnejte ji s ostatními. Jsou si žabky z jedné nádrže podobnější než žabky z různých nádrží? Liší se od sebe i nádrže se stejnou úpravou?
 :::
 
-## Shrnutí
+```{r}
+#| label: shrnout-prumery-nadrzi
+#| echo: false
+rozsah_nevyschla <-
+  data_nadrze_skryte |>
+  dplyr::filter(.data$vyschnuti == "nevyschla") |>
+  dplyr::pull(.data$prumerna_delka_mm) |>
+  range()
 
-TODO: Klíčové body k zapamatování.
+rozsah_vyschla <-
+  data_nadrze_skryte |>
+  dplyr::filter(.data$vyschnuti == "vyschla") |>
+  dplyr::pull(.data$prumerna_delka_mm) |>
+  range()
+```
 
-- TODO: bod 1
-- TODO: bod 2
-- TODO: bod 3
+Žabky z jedné nádrže mají často podobné délky a nádrže se od sebe liší, i když měly stejnou úpravu. `r render_glossary_term("prumer", display = "Průměry")` nevyschlých nádrží se pohybují od `r format_cz(rozsah_nevyschla[1], 1)` do `r format_cz(rozsah_nevyschla[2], 1)` mm, průměry vyschlých od `r format_cz(rozsah_vyschla[1], 1)` do `r format_cz(rozsah_vyschla[2], 1)` mm. Každá nádrž měla svou vlastní vodu, své řasy a svou hustotu pulců, a to se na všech jejích žabkách projevilo společně.
 
-## Slovníček pojmů {.unnumbered}
+::: {.box-question title="Vaše vlastní studie: otázka a měření"}
+V této lekci si krok za krokem navrhnete vlastní studii. Vymyslete ekologickou otázku, na kterou byste chtěli odpovědět měřením v terénu. Zapište si:
+
+1. jaký organismus budete měřit a jakou veličinu (s jednotkou);
+2. co budete porovnávat (dvě prostředí, gradient, ošetření);
+3. kde a jak byste organismy sbírali.
+
+:::: {.box-result title="Ukázka: larvy vážek v tůních" collapse="true"}
+1. Larvy vážek; délka těla larvy v mm.
+2. Tůně obklopené lesem a tůně mezi poli: mají larvy v lesních tůních jinou velikost?
+3. V několika oblastech vybereme lesní a polní tůně a v každé tůni odchytíme síťkou několik larev.
+
+Jde o vymyšlený příklad pro plánování; data k němu nemáme.
+::::
+:::
+
+# Kolik nezávislých odpovědí máme?
+
+## Žabky v nádržích, nádrže v pokusu
+
+Data mají dvě úrovně: žabky jsou seskupené v nádržích a teprve nádrže dostaly úpravu, tedy vyschly, nebo nevyschly. Takovým datům říkáme `r render_glossary_term("hierarchicka-data", display = "hierarchická data")`.
+
+```{r}
+#| label: nakreslit-hierarchii
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 7
+#| fig-height: 3
+#| fig-cap: "Hierarchie dat v pokusu: úprava (vyschnutí) byla přidělena nádržím, žabky jsou seskupené v nádržích. Schéma ukazuje jen několik nádrží a žabek."
+#| fig-alt: "Schéma ve třech řádcích. Nahoře dvě úpravy, nevyschla a vyschla. Pod každou úpravou vedou čáry ke čtyřem nádržím a od každé nádrže tři čáry k jednotlivým žabkám."
+data_uroven_uprava <-
+  tibble::tibble(
+    x = c(2.5, 7.5),
+    y = 3,
+    popis = c("nevyschla", "vyschla")
+  )
+
+data_uroven_nadrz <-
+  tibble::tibble(
+    x = c(1, 2, 3, 4, 6, 7, 8, 9),
+    y = 2,
+    rodic_x = rep(c(2.5, 7.5), each = 4)
+  )
+
+data_uroven_zabka <-
+  tidyr::expand_grid(
+    data_uroven_nadrz,
+    posun = c(-0.25, 0, 0.25)
+  ) |>
+  dplyr::mutate(
+    rodic_x = .data$x,
+    x = .data$x + .data$posun,
+    y = 1
+  )
+
+ggplot2::ggplot() +
+  ggplot2::scale_x_continuous(limits = c(-1.2, 10)) +
+  ggplot2::scale_y_continuous(limits = c(0.7, 3.3)) +
+  ggplot2::theme_void(base_size = 12) +
+  ggplot2::geom_segment(
+    data = data_uroven_nadrz,
+    mapping = ggplot2::aes(
+      x = .data$rodic_x,
+      y = 3,
+      xend = .data$x,
+      yend = 2
+    ),
+    color = barva_data
+  ) +
+  ggplot2::geom_segment(
+    data = data_uroven_zabka,
+    mapping = ggplot2::aes(
+      x = .data$rodic_x,
+      y = 2,
+      xend = .data$x,
+      yend = 1
+    ),
+    color = barva_data
+  ) +
+  ggplot2::geom_label(
+    data = data_uroven_uprava,
+    mapping = ggplot2::aes(
+      x = .data$x,
+      y = .data$y,
+      label = .data$popis
+    ),
+    size = 3.8
+  ) +
+  ggplot2::geom_point(
+    data = data_uroven_nadrz,
+    mapping = ggplot2::aes(x = .data$x, y = .data$y),
+    shape = 21,
+    size = 7,
+    fill = "grey85",
+    color = barva_text
+  ) +
+  ggplot2::geom_point(
+    data = data_uroven_zabka,
+    mapping = ggplot2::aes(x = .data$x, y = .data$y),
+    size = 2,
+    color = barva_text
+  ) +
+  ggplot2::annotate(
+    geom = "text",
+    x = -0.6,
+    y = c(3, 2, 1),
+    label = c("úprava", "nádrž", "žabka"),
+    size = 3.8,
+    color = barva_text
+  )
+```
+
+Hierarchie vzniká způsobem sběru dat a v biologii je velmi častá:
+
+- `r render_glossary_term("opakovana-mereni", display = "opakovaná měření")`: stejného jedince měříme několikrát, například ve více dnech;
+- lokality: na jedné lokalitě změříme mnoho organismů;
+- bloky: plochu rozdělíme na části s podobnými podmínkami a v každé části srovnáme několik ošetření.
+
+Ve všech těchto případech jsou si pozorování ze stejné skupiny podobnější než pozorování z různých skupin.
+
+## Na které úrovni se rozhodovalo o vyschnutí?
+
+::: {.box-question title="Kolik nezávislých odpovědí máme?"}
+Kolik nezávislých odpovědí na otázku „mění vyschnutí tůně velikost žabek?" nám tento pokus dává? Je to `r pocet_zabek`, nebo jiné číslo?
+:::
+
+O vyschnutí se rozhodovalo pro celou nádrž. Pokud by vyschnutí na žabky nemělo žádný vliv, mohlo by se stát, že v nádržích určených k vyschnutí byla shodou okolností horší voda nebo méně potravy. Takovou náhodu může vyrovnat jen víc nádrží, ne víc žabek z téže nádrže.
+
+Proto rozlišujeme dvě různé jednotky:
+
+- **`r render_glossary_term("jednotka-pozorovani", display = "jednotka pozorování")`** je to, co popisuje jeden řádek tabulky, tady žabka;
+- **jednotka nezávislé replikace** je nejmenší jednotka, které byla úprava přidělena nezávisle na ostatních, tady nádrž. <!-- TODO: add slug jednotka-nezavisle-replikace to pojmy.yaml -->
+
+Na otázku o vyschnutí tedy máme `r pocet_nadrzi` nezávislých odpovědí: `r pocet_nadrzi_vyschlych` vyschlých a `r pocet_nadrzi_nevyschlych` nevyschlých nádrží. Díky `r pocet_zabek` žabkám přesně víme, jak velké žabky byly v každé nádrži, ale počet nezávislých opakování úpravy se tím nezvyšuje.
+
+Se stejnou situací jsme se už setkali. U krabů houslistů se zeměpisná šířka měnila jen mezi slanisky, u křídlatky se teplota místa původu měnila jen mezi populacemi. V obou případech jsme si poradili tak, že jsme jednotlivé kraby a rostliny zprůměrovali a v modelu měl každý řádek jedno slanisko nebo jednu populaci. Tehdy jsme to udělali bez vysvětlení. Na žabkách ukážeme, proč bylo průměrování správné, co by se stalo bez něj a jaký model umí s takovými daty pracovat jinak: zachová všechna pozorování, a přesto počítá nezávislé skupiny.
+
+## Model, který počítá každou žabku zvlášť
+
+Co se stane, když rozdíl mezi žabkami a nádržemi nebudeme brát v úvahu? Odhadneme známý `r render_glossary_term("linearni-model", display = "lineární model")` s kategoriálním `r render_glossary_term("prediktor", display = "prediktorem")`, ve kterém je každá žabka samostatné pozorování.
+
+```{r}
+#| label: odhadnout-model-vsech-zabek
+#| echo: true
+#| eval: true
+
+# Každá žabka je v modelu samostatným pozorováním
+mod_vsechny_zabky <-
+  lm(
+    formula = delka_tela_mm ~ vyschnuti,
+    data = data_zabky
+  )
+
+# Zobrazíme tabulku koeficientů
+summary(object = mod_vsechny_zabky)
+
+# 95% intervaly spolehlivosti koeficientů
+confint(object = mod_vsechny_zabky)
+```
+
+```{r}
+#| label: vytahnout-vysledky-vsech-zabek
+#| echo: false
+souhrn_vsechny <- stats::coef(summary(mod_vsechny_zabky))
+r2_vsechny <- summary(mod_vsechny_zabky) |> purrr::chuck("r.squared")
+odhad_vsechny <- souhrn_vsechny["vyschnutivyschla", "Estimate"]
+se_vsechny <- souhrn_vsechny["vyschnutivyschla", "Std. Error"]
+p_vsechny <- souhrn_vsechny["vyschnutivyschla", "Pr(>|t|)"]
+ci_vsechny <- stats::confint(mod_vsechny_zabky)["vyschnutivyschla", ]
+df_vsechny <- stats::df.residual(mod_vsechny_zabky)
+```
+
+`r render_glossary_term("intercept", display = "Intercept")` je průměrná délka žabek z nevyschlých nádrží a koeficient `vyschnutivyschla` rozdíl vyschlých nádrží oproti `r render_glossary_term("referencni-skupina", display = "referenční skupině")`. Podle modelu jsou žabky z vyschlých nádrží v průměru o `r format_cz(abs(odhad_vsechny), 2)` mm menší, se `r render_glossary_term("standardni-chyba", display = "standardní chybou")` `r format_cz(se_vsechny, 3)` mm. 95% `r render_glossary_term("interval-spolehlivosti", display = "interval spolehlivosti")` sahá od `r format_cz(ci_vsechny[1], 2)` do `r format_cz(ci_vsechny[2], 2)` mm. Model má `r df_vsechny` residuálních `r render_glossary_term("stupne-volnosti", display = "stupňů volnosti")` a `r render_glossary_term("p-hodnota", display = "p-hodnota")` je `r if (p_vsechny < 0.001) "mnohem menší než 0,001" else format_cz(p_vsechny, 3)`. Výsledek vypadá velmi jistě. `r render_glossary_term("r2", display = "Koeficient determinace R²")` je `r format_cz(r2_vsechny, 2)`: vyschnutí zachycuje asi `r format_cz(100 * r2_vsechny, 0)` % variability v délce žabek.
+
+Jako u každého lineárního modelu zkontrolujeme `r render_glossary_term("residuum", display = "residua")`: jejich histogram a `r render_glossary_term("graf-residui", display = "graf residuí")` proti odhadnutým hodnotám.
+
+```{r}
+#| label: zkontrolovat-residua-vsech-zabek
+#| echo: true
+#| eval: true
+#| fig-width: 6
+#| fig-height: 4.5
+#| fig-alt: "Histogram residuí modelu se všemi žabkami. Většina residuí leží kolem nuly, napravo je delší chvost."
+
+# Residua modelu, který počítá každou žabku zvlášť
+vec_residua_vsechny <-
+  residuals(object = mod_vsechny_zabky)
+
+# Histogram residuí
+hist(
+  x = vec_residua_vsechny,
+  breaks = 20,
+  main = "Residua modelu se všemi žabkami",
+  xlab = "Residuum (mm)",
+  ylab = "Četnost",
+  cex.lab = 1.2
+)
+```
+
+```{r}
+#| label: nakreslit-residua-proti-odhadu-vsech-zabek
+#| echo: true
+#| eval: true
+#| fig-width: 6
+#| fig-height: 4.5
+#| fig-alt: "Graf residuí proti odhadnutým hodnotám. Residua tvoří dva svislé sloupce, jeden pro každou skupinu nádrží, s podobným rozptýlením kolem nuly."
+
+# Residua proti odhadnutým hodnotám
+plot(
+  x = fitted(object = mod_vsechny_zabky),
+  y = vec_residua_vsechny,
+  xlab = "Odhadnutá délka (mm)",
+  ylab = "Residuum (mm)",
+  pch = 16,
+  col = "#8C8C8C66",
+  cex.lab = 1.2
+)
+
+abline(
+  h = 0,
+  lty = 2
+)
+```
+
+Histogram je mírně pravostranně šikmý a residua mají v obou skupinách podobné rozptýlení. Protože prediktor má jen dvě hodnoty, tvoří body v grafu residuí dva svislé sloupce. Z těchto grafů se zdá, že model je v pořádku. Jak jsme ale viděli u přímky pro kosatce, graf residuí sám nepozná, že několik měření pochází ze stejné skupiny. Musíme residua seřadit podle nádrží:
+
+```{r}
+#| label: nakreslit-residua-podle-nadrzi
+#| echo: true
+#| eval: true
+#| fig-width: 7
+#| fig-height: 4.5
+#| fig-alt: "Residua modelu se všemi žabkami rozdělená podle nádrží. Residua některých nádrží leží převážně nad nulou, jiných převážně pod nulou."
+
+# Residua rozdělená podle nádrží
+stripchart(
+  x = vec_residua_vsechny ~ data_zabky$nadrz,
+  vertical = TRUE,
+  method = "jitter",
+  jitter = 0.2,
+  pch = 16,
+  col = "#8C8C8C88",
+  xlab = "Číslo nádrže",
+  ylab = "Residuum (mm)",
+  cex.lab = 1.2
+)
+
+abline(
+  h = 0,
+  lty = 2
+)
+```
+
+```{r}
+#| label: spocitat-posunute-nadrze
+#| echo: false
+# Teaching threshold: tanks whose mean residual is further than 1 mm from 0.
+prah_posun_residui_mm <- 1
+
+vec_prumerna_residua_nadrzi <-
+  tibble::tibble(
+    nadrz = dplyr::pull(data_zabky_skryte, .data$nadrz),
+    residuum = stats::residuals(mod_vsechny_zabky)
+  ) |>
+  dplyr::group_by(.data$nadrz) |>
+  dplyr::summarise(
+    prumer_residui = mean(.data$residuum),
+    .groups = "drop"
+  ) |>
+  dplyr::pull(.data$prumer_residui)
+
+pocet_posunutych_nadrzi <-
+  sum(abs(vec_prumerna_residua_nadrzi) > prah_posun_residui_mm)
+```
+
+Residua žabek z jedné nádrže leží často společně nad nulou, nebo společně pod nulou. U `r pocet_posunutych_nadrzi` z `r pocet_nadrzi` nádrží se průměrné residuum liší od nuly o více než `r prah_posun_residui_mm` mm. Model tedy u celých nádrží systematicky přeceňuje nebo podceňuje délku žabek. **Residua nejsou nezávislá**: žabky z jedné nádrže se od modelu odchylují podobně.
+
+## Model, který počítá každou nádrž jednou
+
+Druhá možnost je postup, který jsme použili u krabů: spočítáme `r render_glossary_term("prumer", display = "průměr")` každé nádrže a model odhadneme z průměrů. Každá nádrž tak bude v modelu jen jednou.
+
+```{r}
+#| label: spocitat-prumery-nadrzi
+#| echo: true
+#| eval: true
+
+# Průměrná délka žabek v každé nádrži
+data_nadrze <-
+  aggregate(
+    x = delka_tela_mm ~ nadrz + vyschnuti,
+    data = data_zabky,
+    FUN = mean
+  )
+
+# Tabulka má jeden řádek pro každou nádrž
+nrow(x = data_nadrze)
+```
+
+```{r}
+#| label: odhadnout-model-prumeru-nadrzi
+#| echo: true
+#| eval: true
+
+# Každá nádrž je v modelu jedním pozorováním
+mod_prumery_nadrzi <-
+  lm(
+    formula = delka_tela_mm ~ vyschnuti,
+    data = data_nadrze
+  )
+
+# Zobrazíme tabulku koeficientů a intervaly spolehlivosti
+summary(object = mod_prumery_nadrzi)
+confint(object = mod_prumery_nadrzi)
+```
+
+```{r}
+#| label: vytahnout-vysledky-prumeru-nadrzi
+#| echo: false
+souhrn_prumery <- stats::coef(summary(mod_prumery_nadrzi))
+r2_prumery <- summary(mod_prumery_nadrzi) |> purrr::chuck("r.squared")
+odhad_prumery <- souhrn_prumery["vyschnutivyschla", "Estimate"]
+se_prumery <- souhrn_prumery["vyschnutivyschla", "Std. Error"]
+ci_prumery <- stats::confint(mod_prumery_nadrzi)["vyschnutivyschla", ]
+df_prumery <- stats::df.residual(mod_prumery_nadrzi)
+pomer_se <- se_prumery / se_vsechny
+```
+
+V modelu z průměrů nádrží je rozdíl vyschlých nádrží `r format_cz(odhad_prumery, 2)` mm se `r render_glossary_term("standardni-chyba", display = "standardní chybou")` `r format_cz(se_prumery, 3)` mm a modelu zbývá jen `r df_prumery` `r render_glossary_term("stupne-volnosti", display = "stupňů volnosti")`. Koeficient determinace je `r format_cz(r2_prumery, 2)`. S hodnotou `r format_cz(r2_vsechny, 2)` z modelu se všemi žabkami ho ale porovnat nemůžeme: podobně jako u porovnávání modelů pomocí AIC platí, že R² lze srovnávat jen mezi modely se stejnou odezvou a stejnými pozorováními. Tady model popisuje průměry nádrží, a ty kolísají méně než jednotlivé žabky.
+
+Residua tohoto modelu jsou odchylky průměrů nádrží od průměru jejich skupiny. Je jich jen `r pocet_nadrzi`, proto stačí jeden graf:
+
+```{r}
+#| label: nakreslit-residua-prumeru-nadrzi
+#| echo: true
+#| eval: true
+#| fig-width: 6
+#| fig-height: 4.5
+#| fig-alt: "Graf residuí modelu z průměrů nádrží proti odhadnutým hodnotám: dva sloupce po osmi bodech s podobným rozptýlením kolem nuly."
+
+# Residua proti odhadnutým hodnotám pro model z průměrů nádrží
+plot(
+  x = fitted(object = mod_prumery_nadrzi),
+  y = residuals(object = mod_prumery_nadrzi),
+  xlab = "Odhadnutá průměrná délka v nádrži (mm)",
+  ylab = "Residuum (mm)",
+  pch = 16,
+  cex.lab = 1.2
+)
+
+abline(
+  h = 0,
+  lty = 2
+)
+```
+
+Obě skupiny nádrží mají podobné rozptýlení residuí a žádná nádrž nevybočuje. Každý bod je teď jedna nezávislá nádrž, takže problém s podobností žabek z jedné nádrže tento model nemá.
+
+## Který model je přesnější: všechny žabky, nebo průměry nádrží?
+
+::: {.box-question title="Než se podíváte na srovnání"}
+Který z obou modelů dá podle vás širší `r render_glossary_term("interval-spolehlivosti", display = "interval spolehlivosti")` pro rozdíl mezi vyschlými a nevyschlými nádržemi? Proč?
+:::
+
+```{r}
+#| label: srovnat-dva-modely-tabulka
+#| echo: false
+tabulka_dva_modely <-
+  tibble::tibble(
+    Model = c(
+      "Každá žabka zvlášť",
+      "Každá nádrž jednou"
+    ),
+    `Počet pozorování` = c(pocet_zabek, pocet_nadrzi),
+    `Rozdíl (mm)` = format_cz(c(odhad_vsechny, odhad_prumery), 2),
+    `SE (mm)` = format_cz(c(se_vsechny, se_prumery), 3),
+    `95% CI (mm)` = c(
+      stringr::str_glue(
+        "[{format_cz(ci_vsechny[1], 2)}; {format_cz(ci_vsechny[2], 2)}]"
+      ),
+      stringr::str_glue(
+        "[{format_cz(ci_prumery[1], 2)}; {format_cz(ci_prumery[2], 2)}]"
+      )
+    ),
+    `df` = c(df_vsechny, df_prumery)
+  )
+
+knitr::kable(
+  x = tabulka_dva_modely,
+  caption = stringr::str_c(
+    "Stejná otázka, dva modely: rozdíl délky žabek ",
+    "z vyschlých nádrží oproti nevyschlým."
+  )
+)
+```
+
+```{r}
+#| label: nakreslit-dva-intervaly
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 7
+#| fig-height: 2.6
+#| fig-cap: "Odhad rozdílu délky žabek z vyschlých nádrží a jeho 95% interval spolehlivosti podle dvou modelů."
+#| fig-alt: !expr 'stringr::str_glue("Dva vodorovné intervaly spolehlivosti kolem podobného odhadu přibližně {format_cz(odhad_vsechny, 1)} mm. Interval modelu, který počítá každou žabku zvlášť, je úzký; interval modelu z průměrů nádrží je přibližně {format_cz(pomer_se, 0)}krát širší.")'
+data_dva_intervaly <-
+  tibble::tibble(
+    model = factor(
+      c("Každá žabka zvlášť", "Každá nádrž jednou"),
+      levels = c("Každá nádrž jednou", "Každá žabka zvlášť")
+    ),
+    odhad = c(odhad_vsechny, odhad_prumery),
+    lwr_95 = c(ci_vsechny[1], ci_prumery[1]),
+    upr_95 = c(ci_vsechny[2], ci_prumery[2])
+  )
+
+ggplot2::ggplot(
+  data = data_dva_intervaly,
+  mapping = ggplot2::aes(
+    x = .data$odhad,
+    y = .data$model
+  )
+) +
+  ggplot2::labs(
+    x = "Rozdíl délky žabek z vyschlých nádrží (mm)",
+    y = NULL
+  ) +
+  ggplot2::theme_bw(base_size = 12) +
+  ggplot2::geom_vline(
+    xintercept = 0,
+    linetype = "dashed",
+    color = barva_text
+  ) +
+  ggplot2::geom_errorbar(
+    mapping = ggplot2::aes(
+      xmin = .data$lwr_95,
+      xmax = .data$upr_95
+    ),
+    orientation = "y",
+    width = 0.2,
+    color = barva_model,
+    linewidth = 1
+  ) +
+  ggplot2::geom_point(
+    size = 3,
+    color = barva_model
+  )
+```
+
+Odhad rozdílu se mezi oběma modely téměř nezměnil. **`r render_glossary_term("standardni-chyba", display = "Standardní chyba")` je ale v modelu průměrů nádrží `r format_cz(pomer_se, 1)`krát větší a interval spolehlivosti je odpovídajícím způsobem širší.** `r render_glossary_term("stupne-volnosti", display = "Stupně volnosti")` klesly z `r df_vsechny` na `r df_prumery`. Rozdíl mezi vyschlými a nevyschlými nádržemi zůstal jasný i v poctivém modelu, jen víme méně přesně, jak je velký.
+
+## Proč `r pocet_nadrzi` nádrží nevydá za `r pocet_zabek` žabek
+
+Při práci s nejistotou odhadu jsme viděli, že `r render_glossary_term("standardni-chyba", display = "standardní chyba")` se zmenšuje s počtem nezávislých pozorování. Model, který počítá každou žabku zvlášť, předpokládá, že každá z `r pocet_zabek` žabek přináší novou, nezávislou informaci o vlivu vyschnutí. Žabky z jedné nádrže si ale jsou podobné: sdílejí vodu, potravu i hustotu pulců. Druhá žabka ze stejné nádrže proto o vyschnutí neřekne skoro nic nového, co by už neřekla první.
+
+Model se všemi žabkami tak „vidí" mnohem víc nezávislé informace, než ve skutečnosti máme. Důsledkem je **příliš malá standardní chyba, příliš úzký `r render_glossary_term("interval-spolehlivosti", display = "interval spolehlivosti")`, příliš mnoho `r render_glossary_term("stupne-volnosti", display = "stupňů volnosti")` a příliš malá `r render_glossary_term("p-hodnota", display = "p-hodnota")`.** Tuto chybu nazýváme `r render_glossary_term("pseudoreplikace", display = "pseudoreplikace")`: závislá pozorování analyzujeme, jako by byla nezávislá opakování.
+
+Pseudoreplikace má praktický důsledek, který známe z testování hypotéz. Když je standardní chyba příliš malá, `r render_glossary_term("testova-statistika", display = "testová statistika")` vychází příliš velká a model častěji ohlásí efekt i tam, kde žádný není. `r render_glossary_term("chyba-i-typu", display = "Chyba I. typu")` (falešný poplach) je pak mnohem pravděpodobnější, než udává zvolená `r render_glossary_term("hladina-vyznamnosti", display = "hladina významnosti")`.
+
+::: {.box-rule title="Pravidlo pro analýzu"}
+Počet nezávislých odpovědí na otázku určuje úroveň, na které se mění zkoumaný prediktor. Když se prediktor mění jen mezi skupinami, rozhoduje počet skupin, ne počet řádků.
+:::
+
+## Pomůže změřit víc žabek z každé nádrže?
+
+::: {.box-question title="Co by pomohlo víc?"}
+Představte si, že pokus opakujete a chcete rozdíl mezi vyschlými a nevyschlými nádržemi odhadnout přesněji. Co pomůže nejvíc?
+
+a) Změřit v každé z `r pocet_nadrzi` nádrží dvakrát víc žabek.
+b) Použít dvakrát víc nádrží a v každé změřit stejný počet žabek jako dosud.
+c) Měřit žabky přesněji, na desetiny milimetru.
+d) Obě možnosti a) a b) pomohou stejně.
+
+:::: {.box-result title="Řešení" collapse="true"}
+**Správně je b).**
+
+- a) Víc žabek z jedné nádrže zpřesní odhad `r render_glossary_term("prumer", display = "průměru")` této nádrže. Nádrže se ale od sebe liší i bez ohledu na vyschnutí a tuto `r render_glossary_term("variabilita", display = "variabilitu")` víc žabek z téže nádrže nezmenší. Od určitého počtu žabek už přesnost téměř neroste.
+- b) Každá nová nádrž je nová nezávislá odpověď na otázku o vyschnutí. Právě jejich počet rozhoduje o přesnosti odhadu.
+- c) Přesnější měření zmenší jen malou část variability mezi žabkami; rozdíly mezi nádržemi zůstanou.
+- d) Obě možnosti nepomohou stejně, viz a) a b).
+::::
+:::
+
+::: {.box-warning title="Častá chyba: víc řádků znamená víc informace"}
+Velký počet řádků v tabulce neznamená velký počet nezávislých opakování. Rozhoduje, kolik jednotek dostalo zkoumanou úpravu nebo se liší zkoumaným prediktorem nezávisle na ostatních.
+:::
+
+## Proč jsme u krabů a křídlatky pracovali s průměry
+
+```{r}
+#| label: spocitat-kraby
+#| echo: false
+#| message: false
+#| warning: false
+data_kraby <-
+  readr::read_csv(
+    file = here::here("data", "pie_crab.csv"),
+    show_col_types = FALSE
+  )
+
+data_kraby_slaniska <-
+  data_kraby |>
+  dplyr::group_by(.data$kod_lokality, .data$zemepisna_sirka) |>
+  dplyr::summarise(
+    sirka_krunyre_mm = mean(.data$sirka_krunyre_mm),
+    .groups = "drop"
+  )
+
+mod_kraby_vsichni <-
+  stats::lm(
+    formula = sirka_krunyre_mm ~ zemepisna_sirka,
+    data = data_kraby
+  )
+
+mod_kraby_slaniska <-
+  stats::lm(
+    formula = sirka_krunyre_mm ~ zemepisna_sirka,
+    data = data_kraby_slaniska
+  )
+
+se_kraby_vsichni <-
+  stats::coef(summary(mod_kraby_vsichni))["zemepisna_sirka", "Std. Error"]
+
+se_kraby_slaniska <-
+  stats::coef(summary(mod_kraby_slaniska))["zemepisna_sirka", "Std. Error"]
+
+pocet_krabu <- nrow(data_kraby)
+pocet_slanisek <- nrow(data_kraby_slaniska)
+```
+
+Stejná úvaha odpovídá na otázku, kterou jsme si položili u krabů. Zeměpisná šířka se mění jen mezi slanisky: všichni krabi z jednoho slaniska mají stejnou zeměpisnou šířku. Na otázku, zda jsou krabi na severu větší, tedy máme `r pocet_slanisek` nezávislých odpovědí, ne `r pocet_krabu`. Kdybychom do modelu dali všechny kraby, `r render_glossary_term("standardni-chyba", display = "standardní chyba")` `r render_glossary_term("sklon", display = "sklonu")` by vyšla `r format_cz(se_kraby_vsichni, 3)` mm na stupeň. Z `r render_glossary_term("prumer", display = "průměrů")` slanisek vychází `r format_cz(se_kraby_slaniska, 3)` mm na stupeň, tedy zhruba `r format_cz(se_kraby_slaniska / se_kraby_vsichni, 1)`krát víc. Průměry slanisek byly poctivé řešení.
+
+Stejně jsme postupovali u křídlatky: tloušťku listů jednotlivých rostlin jsme zprůměrovali za každou populaci, protože teplota místa původu se mění jen mezi populacemi.
+
+## Co průměry nádrží zahodí
+
+Model z `r render_glossary_term("prumer", display = "průměrů")` je poctivý, ale má svou cenu:
+
+- nádrž s `r pocet_v_nadrzi_min` žabkami a nádrž se `r pocet_v_nadrzi_max` žabkami se v něm počítají stejně, ačkoli průměr větší nádrže je mnohem přesnější;
+- ztratíme informaci o rozdílech mezi žabkami uvnitř nádrže;
+- nemůžeme použít `r render_glossary_term("prediktor", display = "prediktory")`, které se mění u jednotlivých žabek, například den, kdy žabka vylezla z vody.
+
+Zůstává tedy otázka: dá se sestavit model, který zachová každou žabku, a přesto bude počítat nezávislé nádrže, a ne nezávislé žabky?
+
+```{r}
+#| label: navrh-vazky-vstupy
+#| echo: false
+# Teaching inputs of the hypothetical dragonfly design, used in the design
+#    thread and in Part F.
+pocet_oblasti <- 6L
+tuni_typu_v_oblasti <- 2L
+larev_v_tuni <- 10L
+pocet_tuni_navrh <- pocet_oblasti * 2L * tuni_typu_v_oblasti
+larev_celkem <- pocet_tuni_navrh * larev_v_tuni
+tuni_maly_navrh <- 4L
+larev_v_tuni_maly <- larev_celkem / tuni_maly_navrh
+```
+
+::: {.box-question title="Vaše vlastní studie: kolik nezávislých odpovědí?"}
+Vraťte se ke své studii. Na které úrovni se mění prediktor, který vás zajímá? Co je ve vaší studii jednotkou nezávislé replikace? Kolik takových jednotek byste reálně zvládli prozkoumat a kolik měření byste udělali v každé z nich?
+
+:::: {.box-result title="Ukázka: larvy vážek v tůních" collapse="true"}
+Okolí tůně (les nebo pole) se mění mezi tůněmi, ne mezi larvami. Jednotkou nezávislé replikace je proto tůň. Raději prozkoumáme víc tůní s menším počtem larev, například `r pocet_tuni_navrh` tůní po `r larev_v_tuni` larvách, než `r tuni_maly_navrh` tůně po `r larev_v_tuni_maly` larvách.
+::::
+:::
+
+# Nádrž jako další prediktor?
+
+## Co se stane, když přidáme nádrž do modelu?
+
+Z předchozích lekcí víme, že do modelu můžeme přidat další `r render_glossary_term("prediktor", display = "prediktor")`. Nabízí se tedy přidat číslo nádrže jako kategoriální prediktor, aby model věděl, která žabka je z které nádrže.
+
+::: {.box-question title="Předpovězte výsledek"}
+Co podle vás model vypíše pro rozdíl mezi vyschlými a nevyschlými nádržemi, když do něj přidáme nádrž jako kategoriální prediktor?
+:::
+
+```{r}
+#| label: odhadnout-model-s-nadrzi
+#| echo: true
+#| eval: true
+
+# Nádrž přidáme jako kategoriální prediktor před vyschnutí
+mod_nadrz_pevne <-
+  lm(
+    formula = delka_tela_mm ~ factor(nadrz) + vyschnuti,
+    data = data_zabky
+  )
+
+# Zobrazíme celý souhrn modelu
+summary(object = mod_nadrz_pevne)
+```
+
+```{r}
+#| label: odhadnout-model-s-nadrzi-obracene
+#| echo: false
+mod_nadrz_obracene <-
+  stats::lm(
+    formula = delka_tela_mm ~ vyschnuti + factor(nadrz),
+    data = data_zabky_skryte
+  )
+
+koeficient_obracene <- stats::coef(mod_nadrz_obracene)[["vyschnutivyschla"]]
+
+koeficienty_obracene <- stats::coef(mod_nadrz_obracene)
+
+nadrz_vynechana <-
+  names(koeficienty_obracene)[is.na(koeficienty_obracene)] |>
+  stringr::str_remove(pattern = "factor\\(nadrz\\)") |>
+  as.integer()
+
+nadrz_reference <-
+  data_zabky_skryte |>
+  dplyr::pull(.data$nadrz) |>
+  min()
+
+prumer_nadrz_reference <-
+  data_nadrze_skryte |>
+  dplyr::filter(.data$nadrz == nadrz_reference) |>
+  dplyr::pull(.data$prumerna_delka_mm)
+
+prumer_nadrz_vynechana <-
+  data_nadrze_skryte |>
+  dplyr::filter(.data$nadrz == nadrz_vynechana) |>
+  dplyr::pull(.data$prumerna_delka_mm)
+```
+
+Tabulka koeficientů má pro každou nádrž kromě referenční vlastní řádek: rozdíl průměru této nádrže oproti nádrži `r min(dplyr::pull(data_zabky_skryte, .data$nadrz))`. V posledním řádku, u vyschnutí, ale místo čísel stojí `NA` a nad tabulkou R upozorňuje `(1 not defined because of singularities)`: jeden koeficient nešel odhadnout. Rozdíl mezi vyschlými a nevyschlými nádržemi model neodhadl.
+
+::: {.box-data title="Doplňující: co se stane s opačným pořadím prediktorů" collapse="true"}
+Když v zápisu modelu uvedeme vyschnutí před nádrží (`delka_tela_mm ~ vyschnuti + factor(nadrz)`), R vypíše pro vyschnutí číslo `r format_cz(koeficient_obracene, 2)` mm a místo toho vynechá nádrž `r nadrz_vynechana`. Toto číslo ale není vliv vyschnutí. Je to jen rozdíl mezi průměrem nádrže `r nadrz_reference` (`r format_cz(prumer_nadrz_reference, 2)` mm) a nádrže `r nadrz_vynechana` (`r format_cz(prumer_nadrz_vynechana, 2)` mm). Podle toho, kterou nádrž R vynechá, by vyšlo pokaždé jiné číslo.
+:::
+
+## Vyschnutí a nádrž nesou stejnou informaci
+
+Proč model selhal? Každá nádrž buď vyschla, nebo nevyschla. Jakmile má každá nádrž v modelu vlastní koeficient, je v nich zahrnuto i vyschnutí: `r render_glossary_term("prumer", display = "průměr")` vyschlých nádrží je jen průměr několika nádrží. Pro samostatný koeficient vyschnutí už v datech nezbývá žádná informace.
+
+Nádrž jsme tu použili jako `r render_glossary_term("pevny-faktor", display = "pevný faktor")`: kategoriální prediktor, jehož každá úroveň má v modelu vlastní koeficient a jehož konkrétní úrovně nás zajímají. Z toho plyne obecné pravidlo:
+
+::: {.box-rule title="Pravidlo pro analýzu"}
+Prediktor, který se mění jen mezi skupinami, nemůže být v modelu zároveň se skupinou jako pevným faktorem. Skupina by „spotřebovala" všechnu informaci, ze které by se jeho vliv dal odhadnout.
+:::
+
+## Souvisí den metamorfózy s délkou žabky?
+
+```{r}
+#| label: spocitat-rozsah-dnu
+#| echo: false
+den_min <-
+  data_zabky_skryte |>
+  dplyr::pull(.data$den_pokusu) |>
+  min()
+
+den_max <-
+  data_zabky_skryte |>
+  dplyr::pull(.data$den_pokusu) |>
+  max()
+```
+
+Nádrž jako `r render_glossary_term("pevny-faktor", display = "pevný faktor")` ale v jiné situaci velmi pomůže. Žabky z jedné nádrže nevylezly z vody najednou: první vylezly po `r den_min` dnech od začátku pokusu, poslední po `r den_max` dnech. Den metamorfózy se tedy mění **uvnitř** nádrží, u jednotlivých žabek. Jsou žabky, které vylezly později, větší, nebo menší?
+
+::: {.box-question title="Předpovězte směr vztahu"}
+Pulec, který zůstane ve vodě déle, má víc času růst. Čekali byste, že žabky, které vylezly později, budou větší? Co asi ukáže model, který nádrže nebere v úvahu?
+:::
+
+```{r}
+#| label: odhadnout-modely-dne
+#| echo: true
+#| eval: true
+
+# Vztah délky ke dni metamorfózy bez ohledu na nádrže
+mod_den <-
+  lm(
+    formula = delka_tela_mm ~ den_pokusu,
+    data = data_zabky
+  )
+
+# Stejný vztah uvnitř nádrží: nádrž jako kategoriální prediktor
+mod_den_nadrz <-
+  lm(
+    formula = delka_tela_mm ~ den_pokusu + factor(nadrz),
+    data = data_zabky
+  )
+
+# Porovnáme odhad sklonu dne v obou modelech (zaokrouhleno)
+round(
+  x = coef(summary(mod_den))["den_pokusu", ],
+  digits = 3
+)
+
+round(
+  x = coef(summary(mod_den_nadrz))["den_pokusu", ],
+  digits = 3
+)
+```
+
+```{r}
+#| label: vytahnout-sklony-dne
+#| echo: false
+sklon_den <- coef(summary(mod_den))["den_pokusu", "Estimate"]
+p_den <- coef(summary(mod_den))["den_pokusu", "Pr(>|t|)"]
+sklon_den_nadrz <- coef(summary(mod_den_nadrz))["den_pokusu", "Estimate"]
+se_den_nadrz <- coef(summary(mod_den_nadrz))["den_pokusu", "Std. Error"]
+```
+
+```{r}
+#| label: nakreslit-den-a-nadrze
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 4
+#| fig-cap: "Délka žabky podle dne, kdy vylezla z vody. Vlevo jedna přímka pro všechny žabky, vpravo stejná data s přímkami uvnitř jednotlivých nádrží z modelu s nádrží jako kategoriálním prediktorem."
+#| fig-alt: "Dva bodové grafy délky těla proti dni metamorfózy. Vlevo je jedna téměř vodorovná fialová přímka. Vpravo jsou rovnoběžné rostoucí přímky, jedna pro každou nádrž; hnědé přímky vyschlých nádrží leží níž a víc vpravo než modré přímky nevyschlých nádrží."
+set.seed(900723)
+
+urovne_panelu <-
+  c("Jedna přímka pro všechny žabky", "Přímky uvnitř nádrží")
+
+data_den_predikce <-
+  data_zabky_skryte |>
+  dplyr::group_by(.data$nadrz, .data$vyschnuti) |>
+  dplyr::reframe(
+    den_pokusu = range(.data$den_pokusu)
+  ) |>
+  dplyr::mutate(
+    delka_odhad = stats::predict(
+      mod_den_nadrz,
+      newdata = data.frame(
+        den_pokusu = .data$den_pokusu,
+        nadrz = .data$nadrz
+      )
+    ),
+    panel = factor(urovne_panelu[2], levels = urovne_panelu)
+  )
+
+data_den_celkem <-
+  tibble::tibble(
+    den_pokusu = c(den_min, den_max)
+  ) |>
+  dplyr::mutate(
+    delka_odhad = stats::predict(
+      mod_den,
+      newdata = data.frame(den_pokusu = .data$den_pokusu)
+    ),
+    panel = factor(urovne_panelu[1], levels = urovne_panelu)
+  )
+
+data_den_body <-
+  dplyr::bind_rows(
+    dplyr::mutate(data_zabky_skryte, panel = urovne_panelu[1]),
+    dplyr::mutate(data_zabky_skryte, panel = urovne_panelu[2])
+  ) |>
+  dplyr::mutate(
+    panel = factor(.data$panel, levels = urovne_panelu)
+  )
+
+ggplot2::ggplot(
+  data = data_den_body,
+  mapping = ggplot2::aes(
+    x = .data$den_pokusu,
+    y = .data$delka_tela_mm
+  )
+) +
+  ggplot2::facet_wrap(ggplot2::vars(.data$panel)) +
+  ggplot2::scale_color_manual(
+    values = barvy_vyschnuti,
+    name = "Nádrž"
+  ) +
+  ggplot2::labs(
+    x = "Den pokusu, kdy žabka vylezla z vody",
+    y = "Délka těla (mm)"
+  ) +
+  ggplot2::theme_bw(base_size = 12) +
+  ggplot2::theme(legend.position = "top") +
+  ggplot2::geom_jitter(
+    width = 0.3,
+    height = 0.25,
+    alpha = 0.35,
+    size = 1.2,
+    color = barva_data
+  ) +
+  ggplot2::geom_line(
+    data = data_den_predikce,
+    mapping = ggplot2::aes(
+      y = .data$delka_odhad,
+      group = .data$nadrz,
+      color = .data$vyschnuti
+    ),
+    linewidth = 0.8
+  ) +
+  ggplot2::geom_line(
+    data = data_den_celkem,
+    mapping = ggplot2::aes(y = .data$delka_odhad),
+    color = barva_model,
+    linewidth = 1.2
+  )
+```
+
+Bez ohledu na nádrže vychází `r render_glossary_term("sklon", display = "sklon")` `r format_cz(sklon_den, 3)` mm za den s `r render_glossary_term("p-hodnota", display = "p-hodnotou")` `r format_cz(p_den, 2)`: žádný zřetelný vztah. Když ale do modelu přidáme nádrž, sklon vyjde `r format_cz(sklon_den_nadrz, 2)` mm za den se `r render_glossary_term("standardni-chyba", display = "standardní chybou")` `r format_cz(se_den_nadrz, 3)` mm. **Uvnitř každé nádrže jsou žabky, které vylezly později, zřetelně větší**, za deset dní navíc v `r render_glossary_term("prumer", display = "průměru")` asi o `r format_cz(10 * sklon_den_nadrz, 1)` mm.
+
+## Proč se vztah ukázal až uvnitř nádrží
+
+```{r}
+#| label: spocitat-prumerne-dny
+#| echo: false
+den_prumer_vyschla <-
+  data_zabky_skryte |>
+  dplyr::filter(.data$vyschnuti == "vyschla") |>
+  dplyr::pull(.data$den_pokusu) |>
+  mean()
+
+den_prumer_nevyschla <-
+  data_zabky_skryte |>
+  dplyr::filter(.data$vyschnuti == "nevyschla") |>
+  dplyr::pull(.data$den_pokusu) |>
+  mean()
+```
+
+Z vyschlých nádrží vylézaly žabky v `r render_glossary_term("prumer", display = "průměru")` později (`r format_cz(den_prumer_vyschla, 0)`. den pokusu) než z nevyschlých (`r format_cz(den_prumer_nevyschla, 0)`. den pokusu), a přitom byly menší. Když všechny žabky smícháme dohromady, rozdíly **mezi** nádržemi překryjí vztah **uvnitř** nádrží a přímka vyjde téměř vodorovná. Vztah se ukáže, až když model porovnává žabky ze stejné nádrže.
+
+Tady nádrž jako `r render_glossary_term("pevny-faktor", display = "pevný faktor")` pomohla, protože den metamorfózy se mění uvnitř nádrží. Model porovnává žabky ze stejné nádrže a rozdíly mezi nádržemi z porovnání odstraní. Stejnou situaci známe z terénních pokusů s **bloky**: pole rozdělíme na několik částí s podobnými podmínkami a v každé části porovnáme všechna ošetření. Blok jako kategoriální prediktor odstraní rozdíly mezi částmi pole a porovnání ošetření se zpřesní. Totéž platí pro `r render_glossary_term("opakovana-mereni", display = "opakovaná měření")` jednoho jedince. <!-- TODO: add slug blok to pojmy.yaml -->
+
+Pro otázku o vyschnutí nám ale pevný faktor nepomůže. Potřebujeme model, který zachová všechny žabky a přitom pozná, že vyschnutí se mění jen mezi nádržemi.
+
+::: {.box-question title="Vaše vlastní studie: co se mění uvnitř jednotek?"}
+Co ve vaší studii se mění uvnitř jednotek nezávislé replikace (datum odběru, místo v tůni, velikostní třída, pozorovatel)? Dalo by se jednotky seskupit do bloků s podobnými podmínkami?
+
+:::: {.box-result title="Ukázka: larvy vážek v tůních" collapse="true"}
+Uvnitř tůně se mění velikost a stadium larev a datum odběru. Lesní a polní tůně můžeme vybírat ve stejných oblastech, například v `r pocet_oblasti` oblastech po `r tuni_typu_v_oblasti` lesních a `r tuni_typu_v_oblasti` polních tůních. Oblast je pak blok: lesní a polní tůně porovnáváme v podobném podnebí.
+::::
+:::
+
+# Každá nádrž má vlastní výchozí úroveň
+
+## Nádrže jako výběr z mnoha možných tůní
+
+```{r}
+#| label: zobrazit-tune-v-krajine
+#| echo: false
+#| eval: !expr file.exists(file.path(cesta_obrazky, "zabky_tune_v_krajine.png"))
+#| out-width: "80%"
+#| fig-align: center
+#| fig-cap: "Několik pokusných nádrží zastupuje mnoho možných tůní v krajině. Ilustrace vytvořená pomocí AI."
+#| fig-alt: "Pohled z kopce na krajinu s mnoha tůněmi a rybníčky v loukách, u polí i u lesa. V popředí stojí několik pokusných nádrží a žába ukazuje směrem k tůním v krajině; vážka letí od nádrží k tůním. Ilustrace vytvořená pomocí AI."
+knitr::include_graphics(
+  path = file.path(cesta_obrazky, "zabky_tune_v_krajine.png")
+)
+```
+
+Zajímá nás nádrž číslo 27 sama o sobě? Ne. Nádrže jsou pro nás `r render_glossary_term("vyber", display = "výběr")` z mnoha tůní, které mohly vyschnout, nebo nevyschnout. Kdybychom pokus opakovali, použili bychom jiné nádrže, s jinou vodou a jinými řasami. Zajímá nás, jak moc se tůně mezi sebou typicky liší, a ne, o kolik je právě nádrž 27 lepší než nádrž 54.
+
+```{r}
+#| label: nakreslit-nadrze-kolem-prumeru
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 7
+#| fig-height: 3.6
+#| fig-cap: "Průměrná délka žabek v každé nádrži. Svislá čárka ukazuje průměr nádrží s danou úpravou; nádrže se kolem něj rozptylují na obě strany."
+#| fig-alt: !expr 'stringr::str_glue("Graf jednotlivých hodnot průměrné délky žabek pro {pocet_nadrzi_nevyschlych} nevyschlých a {pocet_nadrzi_vyschlych} vyschlých nádrží. Body jedné úpravy jsou rozptýlené kolem průměru úpravy, přibližně souměrně na obě strany.")'
+prumery_uprav_nadrzi <-
+  data_nadrze_skryte |>
+  dplyr::group_by(.data$vyschnuti) |>
+  dplyr::summarise(
+    prumer_uprava = mean(.data$prumerna_delka_mm),
+    .groups = "drop"
+  )
+
+ggplot2::ggplot(
+  data = data_nadrze_skryte,
+  mapping = ggplot2::aes(
+    x = .data$prumerna_delka_mm,
+    y = .data$vyschnuti,
+    color = .data$vyschnuti
+  )
+) +
+  ggplot2::scale_color_manual(
+    values = barvy_vyschnuti,
+    guide = "none"
+  ) +
+  ggplot2::labs(
+    x = "Průměrná délka žabek v nádrži (mm)",
+    y = "Nádrž"
+  ) +
+  ggplot2::theme_bw(base_size = 12) +
+  ggplot2::geom_point(
+    data = prumery_uprav_nadrzi,
+    mapping = ggplot2::aes(
+      x = .data$prumer_uprava,
+      y = .data$vyschnuti
+    ),
+    shape = 124,
+    size = 12,
+    color = barva_text
+  ) +
+  ggplot2::geom_point(
+    size = 3.5,
+    alpha = 0.85
+  )
+```
+
+Výchozí úrovně nádrží se rozptylují kolem `r render_glossary_term("prumer", display = "průměru")` své úpravy, některé výš, jiné níž. Můžeme si je představit jako náhodné tahy z rozdělení, které má tvar podobný `r render_glossary_term("normalni-rozdeleni", display = "normálnímu rozdělení")` z předchozí lekce. Takovou skupinovou proměnnou, jejíž úrovně chápeme jako výběr z většího souboru možných úrovní, nazýváme `r render_glossary_term("nahodny-faktor", display = "náhodný faktor")`. Odchylky jednotlivých skupin od průměru jsou pak **náhodné efekty**. <!-- TODO: add slug nahodny-efekt to pojmy.yaml -->
+
+## Z čeho se skládá délka jedné žabky
+
+```{r}
+#| label: odhadnout-smiseny-model-skryte
+#| echo: false
+#| message: false
+#| warning: false
+mod_smiseny_skryty <-
+  glmmTMB::glmmTMB(
+    formula = delka_tela_mm ~ vyschnuti + (1 | nadrz),
+    data = data_zabky_skryte,
+    REML = TRUE
+  )
+
+koef_smiseny <-
+  glmmTMB::fixef(mod_smiseny_skryty) |>
+  purrr::chuck("cond")
+
+odchylky_nadrzi <-
+  glmmTMB::ranef(mod_smiseny_skryty) |>
+  purrr::chuck("cond", "nadrz")
+
+nadrz_ukazka <- 45
+
+zabka_ukazka <-
+  data_zabky_skryte |>
+  dplyr::filter(
+    .data$nadrz == nadrz_ukazka,
+    .data$poradi_zabky == 1
+  )
+
+odchylka_ukazka <- odchylky_nadrzi[as.character(nadrz_ukazka), "(Intercept)"]
+vyschnuti_ukazka <-
+  zabka_ukazka |>
+  dplyr::pull(.data$vyschnuti) |>
+  as.character()
+
+delka_ukazka <-
+  zabka_ukazka |>
+  dplyr::pull(.data$delka_tela_mm)
+
+vyschla_ukazka <- as.integer(vyschnuti_ukazka == "vyschla")
+prispevek_vyschnuti_ukazka <-
+  koef_smiseny[["vyschnutivyschla"]] * vyschla_ukazka
+
+odhad_ukazka <-
+  koef_smiseny[["(Intercept)"]] +
+  koef_smiseny[["vyschnutivyschla"]] * vyschla_ukazka +
+  odchylka_ukazka
+
+residuum_ukazka <- delka_ukazka - odhad_ukazka
+```
+
+Délku každé žabky můžeme rozložit na tři části: `r render_glossary_term("prumer", display = "průměr")` její skupiny nádrží, odchylku její nádrže a odchylku žabky od výchozí úrovně nádrže. První dvě části dávají odhadnutou délku žabky. Slovy:
+
+$$
+\begin{aligned}
+\text{odhadnutá délka žabky} = {} & \text{intercept} + \text{rozdíl po vyschnutí} \times \text{vyschla} \\
+& + \text{odchylka nádrže}
+\end{aligned}
+$$
+
+Veličina *vyschla* je 1 pro nádrž, která vyschla, a 0 pro nádrž, která nevyschla; rozdíl po vyschnutí se tedy přičte jen u vyschlých nádrží.
+
+Skutečná délka žabky se od odhadnuté liší ještě o `r render_glossary_term("residuum", display = "residuum")`, tedy o odchylku žabky od výchozí úrovně její nádrže.
+
+Podívejme se na jednu konkrétní žabku z nádrže `r nadrz_ukazka`. Čísla pocházejí z modelu, který odhadneme v následující části:
+
+| Veličina | Hodnota |
+|---|---|
+| nádrž | `r nadrz_ukazka` (`r vyschnuti_ukazka`) |
+| naměřená délka žabky | `r delka_ukazka` mm |
+| intercept (průměr nevyschlých nádrží) | `r format_cz(koef_smiseny[["(Intercept)"]], 2)` mm |
+| rozdíl po vyschnutí | `r format_cz(koef_smiseny[["vyschnutivyschla"]], 2)` mm |
+| vyschla nádrž? (1 = ano, 0 = ne) | `r vyschla_ukazka` |
+| odchylka nádrže `r nadrz_ukazka` | `r format_cz(odchylka_ukazka, 2)` mm |
+
+: Hodnoty pro jednu žabku z nádrže `r nadrz_ukazka`.
+
+$$
+\begin{aligned}
+\text{odhadnutá délka žabky} &= `r format_cz_math(koef_smiseny[["(Intercept)"]], 2)` + (`r format_cz_math(koef_smiseny[["vyschnutivyschla"]], 2)`) \times `r vyschla_ukazka` + `r format_cz_math(odchylka_ukazka, 2)` \\
+&= `r format_cz_math(koef_smiseny[["(Intercept)"]], 2)` + `r format_cz_math(prispevek_vyschnuti_ukazka, 2)` + `r format_cz_math(odchylka_ukazka, 2)` \\
+&= `r format_cz_math(odhad_ukazka, 2)`\ \text{mm}
+\end{aligned}
+$$
+
+Žabka měřila `r delka_ukazka` mm, její residuum je tedy `r delka_ukazka` − `r format_cz(odhad_ukazka, 2)` = `r format_cz(residuum_ukazka, 2)` mm. Nádrž `r nadrz_ukazka` patřila k nádržím s většími žabkami, proto je její odchylka kladná.
+
+Stejný zápis obecně, pro žabku $i$ z nádrže $j$:
+
+$$
+y_{ij} = \beta_0 + \beta_1 x_{j} + u_j + e_{ij}
+$$
+
+- $y_{ij}$ je délka žabky $i$ z nádrže $j$;
+- $\beta_0$ je intercept, průměrná délka žabek z nevyschlých nádrží (řádek `(Intercept)` ve výstupu R);
+- $\beta_1$ je rozdíl vyschlých nádrží oproti nevyschlým (řádek `vyschnutivyschla`);
+- $x_{j}$ je 1, pokud nádrž $j$ vyschla, a 0, pokud nevyschla; mění se jen mezi nádržemi, proto má jen index $j$;
+- $u_j$ je odchylka nádrže $j$ od průměru její úpravy, tedy posun její **výchozí úrovně**;
+- $e_{ij}$ je residuum, odchylka žabky $i$ od výchozí úrovně její nádrže.
+
+Nové je $u_j$. Model neodhaduje každou odchylku nádrže jako samostatný koeficient, jako to dělal pevný faktor. Předpokládá, že odchylky nádrží pocházejí z `r render_glossary_term("normalni-rozdeleni", display = "normálního rozdělení")` s průměrem 0 a s neznámou `r render_glossary_term("smerodatna-odchylka", display = "směrodatnou odchylkou")`, kterou z dat odhadne. Protože odchylka $u_j$ posouvá intercept každé nádrže, nazýváme tento člen **náhodný intercept**. Model, který obsahuje pevné efekty (vyschnutí) i náhodné efekty (nádrže), je **smíšený model**. <!-- TODO: add slugs nahodny-intercept, smiseny-model and pevny-efekt to pojmy.yaml -->
+
+## Model s náhodným interceptem v R
+
+Funkce `lm()`, se kterou jsme dosud pracovali, náhodné efekty odhadnout neumí. Každý prediktor v ní dostane vlastní koeficienty, takže nádrž by v ní mohla být jen pevným faktorem, a to jsme už viděli, že nefunguje. Pro smíšené modely existuje v R několik balíčků. Všechny dělají v jádru totéž. Liší se tím, jak složité je s nimi pracovat, kolik různých úloh zvládnou a jaké mají nevýhody:
+
+| Balíček a funkce | Složitost | Všestrannost | Nevýhody |
+|---|---|---|---|
+| `nlme`, funkce `lme()` | náhodné efekty se zapisují zvláštním argumentem mimo vzorec | jen pro spojitá měření, jako je délka nebo hmotnost | starší; jiný zápis, než jaký najdete ve většině novějších článků |
+| `lme4`, funkce `lmer()` a `glmer()` | náhodné efekty se zapisují přímo do vzorce | spojitá měření i odezvy typu ano/ne a počty, každé jinou funkcí | `lmer()` sama nevypisuje p-hodnoty |
+| `glmmTMB`, funkce `glmmTMB()` | stejný zápis jako `lme4` | spojitá měření i odezvy typu ano/ne a počty jednou funkcí; i složitější modely | výstup obsahuje víc částí, než zatím potřebujeme |
+| `brms`, funkce `brm()` | jiný, bayesovský přístup ke statistice | velmi všestranný | výpočet trvá dlouho a potřebuje další software; přesahuje rámec kurzu |
+
+: Nejčastější balíčky pro smíšené modely v R.
+
+V kurzu použijeme `glmmTMB()`, a to z několika důvodů:
+
+- **Stejný zápis vzorce jako `lm()`.** Model zapíšeme stejně jako dosud, jen přidáme náhodný efekt. Zápis `(1 | nadrz)` je navíc stejný jako v balíčku `lme4`, takže mu porozumíte i ve většině vědeckých článků.
+- **Jedna funkce pro různé typy odezvy.** V následující lekci budeme modelovat odezvy typu ano/ne a počty. `glmmTMB()` takové modely umí také, včetně náhodných efektů, takže se nemusíme učit novou funkci.
+- **Přehledný výstup.** Souhrn modelu obsahuje odhady, standardní chyby i p-hodnoty pevných efektů a směrodatné odchylky náhodných efektů.
+- **Spolehlivost.** Balíček je aktivně vyvíjený, rychlý a i složitější modely obvykle odhadne bez potíží.
+
+Funkce `glmmTMB()` umí odhadnout i úplně obyčejný lineární model bez náhodných efektů, a dá přitom stejné výsledky jako `lm()`. Navíc nabízí možnosti, které `lm()` nemá: náhodné efekty, modely pro odezvy typu ano/ne nebo počty a také různou variabilitu residuí v různých skupinách.
+
+Balíček stačí nainstalovat jednou. Následující kód ověří, zda je balíček k dispozici, a pokud chybí, zastaví se se srozumitelnou zprávou.
+
+```{r}
+#| label: overit-balicek-glmmtmb
+#| echo: true
+#| eval: true
+
+# Balíček stačí nainstalovat jednou:
+# install.packages("glmmTMB")
+
+if (
+  !requireNamespace(
+    package = "glmmTMB",
+    quietly = TRUE
+  )) {
+  stop(
+    "Chybí balíček {glmmTMB}. Nainstalujte ho, viz komentář výše.",
+    call. = FALSE
+  )
+}
+```
+
+Ověříme, že `glmmTMB()` bez náhodného efektu odhadne stejný model jako `lm()` se všemi žabkami:
+
+```{r}
+#| label: porovnat-glmmtmb-a-lm
+#| echo: true
+#| eval: true
+
+# Stejný model jako mod_vsechny_zabky, jen jinou funkcí
+mod_bez_nadrzi <-
+  glmmTMB::glmmTMB(
+    formula = delka_tela_mm ~ vyschnuti,
+    data = data_zabky,
+    REML = TRUE
+  )
+
+# Koeficienty z lm() a z glmmTMB()
+coef(object = mod_vsechny_zabky)
+glmmTMB::fixef(object = mod_bez_nadrzi)
+```
+
+```{r}
+#| label: overit-shodu-glmmtmb-a-lm
+#| echo: false
+shoda_glmmtmb_lm <-
+  isTRUE(
+    all.equal(
+      unname(stats::coef(mod_vsechny_zabky)),
+      unname(purrr::chuck(glmmTMB::fixef(mod_bez_nadrzi), "cond")),
+      tolerance = 1e-6
+    )
+  )
+```
+
+`r if (shoda_glmmtmb_lm) "Oba modely odhadly stejný intercept i stejný rozdíl po vyschnutí." else "Oba modely odhadly téměř stejné koeficienty."` Do vzorce teď stačí přidat náhodný intercept pro nádrž:
+
+```{r}
+#| label: odhadnout-smiseny-model
+#| echo: true
+#| eval: true
+
+# Vyschnutí je pevný efekt, nádrž náhodný intercept
+mod_smiseny <-
+  glmmTMB::glmmTMB(
+    formula = delka_tela_mm ~ vyschnuti + (1 | nadrz),
+    data = data_zabky,
+    REML = TRUE
+  )
+```
+
+Zápis vzorce je stejný jako u `lm()`, jen přibyl člen `(1 | nadrz)`. Čteme ho „intercept (`1`) se liší podle (`|`) nádrže". Argument `REML = TRUE` říká, aby model odhadl rozdíly mezi nádržemi až po zohlednění vlivu vyschnutí. Podobně jsme u `r render_glossary_term("smerodatna-odchylka", display = "směrodatné odchylky")` dělili `n − 1` místo `n`, aby nevyšla systematicky menší.
+
+## Jak velký je rozdíl a jak přesně ho známe
+
+```{r}
+#| label: zobrazit-souhrn-smiseneho-modelu
+#| echo: true
+#| eval: true
+
+# Souhrn smíšeného modelu
+summary(object = mod_smiseny)
+
+# 95% intervaly spolehlivosti pevných efektů (parm = "beta_")
+confint(
+  object = mod_smiseny,
+  parm = "beta_"
+)
+```
+
+```{r}
+#| label: vytahnout-vysledky-smiseneho-modelu
+#| echo: false
+souhrn_smiseny <-
+  summary(mod_smiseny_skryty) |>
+  purrr::chuck("coefficients", "cond")
+odhad_smiseny <- souhrn_smiseny["vyschnutivyschla", "Estimate"]
+se_smiseny <- souhrn_smiseny["vyschnutivyschla", "Std. Error"]
+z_smiseny <- souhrn_smiseny["vyschnutivyschla", "z value"]
+ci_smiseny <-
+  stats::confint(mod_smiseny_skryty, parm = "beta_")["vyschnutivyschla", 1:2]
+```
+
+Horní část výstupu (`AIC`, `BIC`, `logLik`) zatím nepotřebujeme. Řádek začínající `Number of obs` potvrzuje, že model zná `r pocet_zabek` žabek v `r pocet_nadrzi` nádržích. V části `Conditional model` najdeme tabulku pevných efektů. Čte se stejně jako u `lm()`: `r render_glossary_term("intercept", display = "intercept")` je `r render_glossary_term("prumer", display = "průměr")` nevyschlých nádrží a koeficient `vyschnutivyschla` rozdíl vyschlých nádrží. Žabky z vyschlých nádrží jsou podle smíšeného modelu o `r format_cz(abs(odhad_smiseny), 2)` mm menší, se `r render_glossary_term("standardni-chyba", display = "standardní chybou")` `r format_cz(se_smiseny, 3)` mm a s 95% `r render_glossary_term("interval-spolehlivosti", display = "intervalem spolehlivosti")` od `r format_cz(ci_smiseny[1], 2)` do `r format_cz(ci_smiseny[2], 2)` mm.
+
+**Standardní chyba je téměř stejná jako v modelu z průměrů nádrží (`r format_cz(se_prumery, 3)` mm), ačkoli model pracuje se všemi `r pocet_zabek` žabkami.** Smíšený model tedy „poznal", že vyschnutí se mění jen mezi `r pocet_nadrzi` nádržemi.
+
+Ve výstupu místo `t value` stojí `z value` (zde `r format_cz(z_smiseny, 2)`) a `r render_glossary_term("p-hodnota", display = "p-hodnota")` se počítá z `r render_glossary_term("normalni-rozdeleni", display = "normálního rozdělení")` místo `r render_glossary_term("t-rozdeleni", display = "t-rozdělení")`. Normální rozdělení odpovídá t-rozdělení s velmi mnoha `r render_glossary_term("stupne-volnosti", display = "stupni volnosti")`. Při `r pocet_nadrzi` nádržích je proto interval smíšeného modelu o něco užší a p-hodnota menší, než by byly při přesnějším výpočtu. Na závěru o vyschnutí to nic nemění.
+
+## Jak moc se liší nádrže a jak moc žabky v jedné nádrži
+
+```{r}
+#| label: vytahnout-slozky-variability
+#| echo: false
+sd_nadrze <-
+  glmmTMB::VarCorr(mod_smiseny_skryty) |>
+  purrr::chuck("cond", "nadrz") |>
+  attr(which = "stddev") |>
+  purrr::chuck(1)
+sd_zabky <- stats::sigma(mod_smiseny_skryty)
+rozptyl_nadrze <- sd_nadrze^2
+rozptyl_zabky <- sd_zabky^2
+podil_nadrze <- rozptyl_nadrze / (rozptyl_nadrze + rozptyl_zabky)
+```
+
+V části `Random effects` výstupu jsou dva řádky:
+
+- `nadrz (Intercept)`: `r render_glossary_term("smerodatna-odchylka", display = "směrodatná odchylka")` výchozích úrovní nádrží, `r format_cz(sd_nadrze, 2)` mm. Typická nádrž se od `r render_glossary_term("prumer", display = "průměru")` své úpravy liší asi o `r format_cz(sd_nadrze, 1)` mm.
+- `Residual`: směrodatná odchylka `r render_glossary_term("residuum", display = "residuí")`, `r format_cz(sd_zabky, 2)` mm. Typická žabka se od výchozí úrovně své nádrže liší asi o `r format_cz(sd_zabky, 1)` mm.
+
+::: {.box-question title="Kde je víc variability?"}
+Liší se víc nádrže mezi sebou, nebo žabky uvnitř jedné nádrže?
+:::
+
+Žabky uvnitř nádrže se liší víc než nádrže mezi sebou. Rozdíly mezi nádržemi přesto nejsou zanedbatelné. Když obě směrodatné odchylky umocníme na druhou, dostaneme `r render_glossary_term("rozptyl", display = "rozptyly")`, které se dají sčítat:
+
+$$
+\text{podíl variability mezi nádržemi} = \frac{\text{rozptyl mezi nádržemi}}{\text{rozptyl mezi nádržemi} + \text{rozptyl mezi žabkami v nádrži}}
+$$
+
+$$
+\frac{`r format_cz_math(sd_nadrze, 2)`^2}{`r format_cz_math(sd_nadrze, 2)`^2 + `r format_cz_math(sd_zabky, 2)`^2}
+= \frac{`r format_cz_math(rozptyl_nadrze, 2)`}{`r format_cz_math(rozptyl_nadrze, 2)` + `r format_cz_math(rozptyl_zabky, 2)`}
+= `r format_cz_math(podil_nadrze, 2)`
+$$
+
+Přibližně `r format_cz(100 * podil_nadrze, 0)` % `r render_glossary_term("variabilita", display = "variability")` v délce žabek, která zbývá po zohlednění vyschnutí, připadá na rozdíly mezi nádržemi a zbytek na rozdíly mezi žabkami jedné nádrže. Právě tato podobnost žabek z jedné nádrže způsobila, že model se všemi žabkami tak silně podhodnotil `r render_glossary_term("nejistota", display = "nejistotu")`.
+
+## Kde leží odhadnuté výchozí úrovně nádrží?
+
+```{r}
+#| label: nakreslit-vychozi-urovne
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 7.5
+#| fig-height: 4.2
+#| fig-cap: "Pro každou nádrž: průměr jejích žabek (prázdný kruh) a výchozí úroveň odhadnutá smíšeným modelem (plný kruh). Přerušované čáry ukazují odhad modelu pro nevyschlé a vyschlé nádrže. Nádrže jsou seřazené podle počtu žabek."
+#| fig-alt: "Pro každou nádrž, seřazenou podle počtu žabek, je nakreslen prázdný a plný kruh. Plné kruhy smíšeného modelu leží o něco blíž k přerušované čáře své úpravy než prázdné průměry. Největší posun je u nádrží s nejmenším počtem žabek."
+data_vychozi_urovne <-
+  data_nadrze_skryte |>
+  dplyr::mutate(
+    odchylka = odchylky_nadrzi[as.character(.data$nadrz), "(Intercept)"],
+    uroven_modelu = koef_smiseny[["(Intercept)"]] +
+      koef_smiseny[["vyschnutivyschla"]] * (.data$vyschnuti == "vyschla") +
+      .data$odchylka,
+    posun = abs(.data$prumerna_delka_mm - .data$uroven_modelu)
+  ) |>
+  dplyr::arrange(.data$pocet_zabek, .data$nadrz) |>
+  dplyr::mutate(
+    nadrz_popis = factor(
+      stringr::str_glue("{.data$nadrz}\n({.data$pocet_zabek})"),
+      levels = stringr::str_glue("{.data$nadrz}\n({.data$pocet_zabek})")
+    )
+  )
+
+data_urovne_uprav <-
+  tibble::tibble(
+    vyschnuti = factor(
+      c("nevyschla", "vyschla"),
+      levels = c("nevyschla", "vyschla")
+    ),
+    uroven = c(
+      koef_smiseny[["(Intercept)"]],
+      koef_smiseny[["(Intercept)"]] + koef_smiseny[["vyschnutivyschla"]]
+    )
+  )
+
+nadrz_posun_max <-
+  data_vychozi_urovne |>
+  dplyr::slice_max(.data$posun, n = 1)
+
+# Teaching threshold for "large" tanks, reused in the prose below.
+prah_velka_nadrz <- 40L
+
+nadrz_posun_max_cislo <- dplyr::pull(nadrz_posun_max, .data$nadrz)
+nadrz_posun_max_pocet <- dplyr::pull(nadrz_posun_max, .data$pocet_zabek)
+nadrz_posun_max_posun <- dplyr::pull(nadrz_posun_max, .data$posun)
+
+posun_velke_nadrze <-
+  data_vychozi_urovne |>
+  dplyr::filter(.data$pocet_zabek >= prah_velka_nadrz) |>
+  dplyr::pull(.data$posun) |>
+  max()
+
+ggplot2::ggplot(
+  data = data_vychozi_urovne,
+  mapping = ggplot2::aes(
+    x = .data$nadrz_popis,
+    color = .data$vyschnuti
+  )
+) +
+  ggplot2::scale_color_manual(
+    values = barvy_vyschnuti,
+    name = "Nádrž"
+  ) +
+  ggplot2::labs(
+    x = "Číslo nádrže (počet žabek)",
+    y = "Délka těla (mm)"
+  ) +
+  ggplot2::theme_bw(base_size = 11) +
+  ggplot2::theme(legend.position = "top") +
+  ggplot2::geom_hline(
+    data = data_urovne_uprav,
+    mapping = ggplot2::aes(
+      yintercept = .data$uroven,
+      color = .data$vyschnuti
+    ),
+    linetype = "dashed"
+  ) +
+  ggplot2::geom_segment(
+    mapping = ggplot2::aes(
+      xend = .data$nadrz_popis,
+      y = .data$prumerna_delka_mm,
+      yend = .data$uroven_modelu
+    ),
+    color = barva_data
+  ) +
+  ggplot2::geom_point(
+    mapping = ggplot2::aes(y = .data$prumerna_delka_mm),
+    shape = 21,
+    size = 3,
+    fill = "white"
+  ) +
+  ggplot2::geom_point(
+    mapping = ggplot2::aes(y = .data$uroven_modelu),
+    size = 2.6
+  )
+```
+
+Výchozí úrovně nádrží ze smíšeného modelu leží blízko `r render_glossary_term("prumer", display = "průměrů")` nádrží, ale o kousek blíž k průměru své úpravy. Nejvíc se posunula nádrž `r nadrz_posun_max_cislo`, ze které vylezlo jen `r nadrz_posun_max_pocet` žabek, a to o `r format_cz(nadrz_posun_max_posun, 2)` mm. Nádrže se `r prah_velka_nadrz` a více žabkami se posunuly nanejvýš o `r format_cz(posun_velke_nadrze, 2)` mm. Model tak odhaduje výchozí úroveň malé nádrže opatrněji: z mála žabek nelze její průměr určit tak přesně, a model si proto „půjčí" část informace od ostatních nádrží.
+
+## Co prozradí residua a výchozí úrovně nádrží
+
+Jako u každého modelu zkontrolujeme `r render_glossary_term("residuum", display = "residua")`. U smíšeného modelu máme navíc odhadnuté odchylky nádrží, o kterých model předpokládá, že pocházejí z `r render_glossary_term("normalni-rozdeleni", display = "normálního rozdělení")`.
+
+```{r}
+#| label: zkontrolovat-residua-smiseneho-modelu
+#| echo: true
+#| eval: true
+#| fig-width: 6
+#| fig-height: 4.5
+#| fig-alt: "Histogram residuí smíšeného modelu. Většina residuí leží kolem nuly, napravo je delší chvost několika velkých kladných residuí."
+
+# Residua: odchylky žabek od výchozí úrovně jejich nádrže
+vec_residua <-
+  residuals(object = mod_smiseny)
+
+# Histogram residuí
+hist(
+  x = vec_residua,
+  breaks = 20,
+  main = "Residua smíšeného modelu",
+  xlab = "Residuum (mm)",
+  ylab = "Četnost",
+  cex.lab = 1.2
+)
+```
+
+```{r}
+#| label: nakreslit-residua-proti-odhadu-smiseneho-modelu
+#| echo: true
+#| eval: true
+#| fig-width: 6
+#| fig-height: 4.5
+#| fig-alt: "Graf residuí smíšeného modelu proti odhadnutým hodnotám. Body jsou rozprostřené podél celé osy odhadů, protože každá nádrž má vlastní výchozí úroveň, a leží kolem nuly bez zřetelného vzoru."
+
+# Residua proti odhadnutým hodnotám (včetně výchozí úrovně nádrže)
+plot(
+  x = fitted(object = mod_smiseny),
+  y = vec_residua,
+  xlab = "Odhadnutá délka (mm)",
+  ylab = "Residuum (mm)",
+  pch = 16,
+  col = "#8C8C8C66",
+  cex.lab = 1.2
+)
+
+abline(
+  h = 0,
+  lty = 2
+)
+```
+
+V modelu se všemi žabkami tvořila residua jen dva sloupce. Ve smíšeném modelu má každá nádrž vlastní odhad, a body se proto rozprostřely po celé ose odhadnutých hodnot. Rozptýlení residuí je podobné u malých i velkých odhadů.
+
+```{r}
+#| label: nakreslit-qq-residui
+#| echo: true
+#| eval: true
+#| fig-width: 6
+#| fig-height: 4.5
+#| fig-alt: "Q–Q graf residuí smíšeného modelu. Body uprostřed leží na přímce, napravo nahoře se od ní odklánějí nahoru."
+
+# Q–Q graf residuí
+qqnorm(
+  y = vec_residua,
+  main = "Q–Q graf residuí",
+  xlab = "Teoretické kvantily",
+  ylab = "Residua (mm)"
+)
+
+qqline(y = vec_residua)
+```
+
+```{r}
+#| label: nakreslit-qq-nadrzi
+#| echo: true
+#| eval: true
+#| fig-width: 6
+#| fig-height: 4.5
+#| fig-alt: "Q–Q graf odhadnutých odchylek nádrží. Body leží přibližně na přímce."
+
+# Odhadnuté odchylky (posuny výchozích úrovní) nádrží
+vec_odchylky_nadrzi <-
+  glmmTMB::ranef(object = mod_smiseny)$cond$nadrz[, 1]
+
+# Q–Q graf odchylek nádrží
+qqnorm(
+  y = vec_odchylky_nadrzi,
+  main = "Q–Q graf odchylek nádrží",
+  xlab = "Teoretické kvantily",
+  ylab = "Odchylka nádrže (mm)"
+)
+
+qqline(y = vec_odchylky_nadrzi)
+```
+
+Residua jsou `r render_glossary_term("sikmost", display = "pravostranně šikmá")`: několik žabek bylo mnohem větších, než by odpovídalo jejich nádrži, a na `r render_glossary_term("qq-graf", display = "Q–Q grafu")` se body vpravo nahoře odklánějí od přímky. Stejný tvar jsme v předchozí lekci viděli u velikostí, které vznikají růstem. Odchylka od normálního tvaru je mírná a závěr o vyschnutí na ní nestojí: stejný rozdíl ukázal i model z průměrů nádrží, jehož residua se týkají celých nádrží. Odhadnuté odchylky nádrží leží přibližně na přímce. Je jich ovšem jen `r pocet_nadrzi`, takže jejich tvar posuzujeme jen hrubě.
+
+::: {.box-data title="Doplňující: platí totéž pro suchou hmotnost?" collapse="true"}
+```{r}
+#| label: srovnat-suchou-hmotnost
+#| echo: false
+#| message: false
+#| warning: false
+mod_hmotnost_vsechny <-
+  stats::lm(
+    formula = hmotnost_sucha_g ~ vyschnuti,
+    data = data_zabky_skryte
+  )
+
+data_nadrze_hmotnost <-
+  data_zabky_skryte |>
+  dplyr::group_by(.data$nadrz, .data$vyschnuti) |>
+  dplyr::summarise(
+    hmotnost_sucha_g = mean(.data$hmotnost_sucha_g),
+    .groups = "drop"
+  )
+
+mod_hmotnost_nadrze <-
+  stats::lm(
+    formula = hmotnost_sucha_g ~ vyschnuti,
+    data = data_nadrze_hmotnost
+  )
+
+mod_hmotnost_smiseny <-
+  glmmTMB::glmmTMB(
+    formula = hmotnost_sucha_g ~ vyschnuti + (1 | nadrz),
+    data = data_zabky_skryte,
+    REML = TRUE
+  )
+
+se_hmotnost_vsechny <-
+  stats::coef(summary(mod_hmotnost_vsechny))["vyschnutivyschla", "Std. Error"]
+
+se_hmotnost_nadrze <-
+  stats::coef(summary(mod_hmotnost_nadrze))["vyschnutivyschla", "Std. Error"]
+
+souhrn_hmotnost_smiseny <-
+  summary(mod_hmotnost_smiseny) |>
+  purrr::chuck("coefficients", "cond")
+
+odhad_hmotnost_smiseny <-
+  souhrn_hmotnost_smiseny["vyschnutivyschla", "Estimate"]
+
+se_hmotnost_smiseny <-
+  souhrn_hmotnost_smiseny["vyschnutivyschla", "Std. Error"]
+```
+
+Suchá hmotnost dává stejný obraz. Podle smíšeného modelu vážily žabky z vyschlých nádrží v sušině o `r format_cz(abs(odhad_hmotnost_smiseny), 3)` g méně, se standardní chybou `r format_cz(se_hmotnost_smiseny, 3)` g. Model se všemi žabkami by uvedl standardní chybu `r format_cz(se_hmotnost_vsechny, 4)` g, model z průměrů nádrží `r format_cz(se_hmotnost_nadrze, 3)` g. Residua hmotnosti jsou ještě šikmější než residua délky, protože hmotnost roste s délkou zhruba třetí mocninou.
+:::
+
+## Jakou část variability zachytil model se všemi žabkami?
+
+U lineárních modelů jsme se ptali, jakou část `r render_glossary_term("variabilita", display = "variability")` odezvy model zachytí. Odpověď dával `r render_glossary_term("r2", display = "koeficient determinace R²")`. Stejnou otázku si položíme i u smíšeného modelu. Abychom ji mohli zodpovědět, připomeneme si na modelu, který počítá každou žabku zvlášť, odkud se R² bere.
+
+```{r}
+#| label: spocitat-soucty-ctvercu-vsech-zabek
+#| echo: false
+vec_delka_vsech <- dplyr::pull(data_zabky_skryte, .data$delka_tela_mm)
+ss_celkem_vsechny <- sum((vec_delka_vsech - mean(vec_delka_vsech))^2)
+rss_vsechny <- sum(stats::residuals(mod_vsechny_zabky)^2)
+r2_rucne_vsechny <- 1 - rss_vsechny / ss_celkem_vsechny
+```
+
+R² se počítá ze dvou součtů čtverců:
+
+- `r render_glossary_term("celkovy-soucet-ctvercu", display = "Celkový součet čtverců")` měří, jak moc se délky všech žabek liší od jejich společného průměru. Popisuje variabilitu dřív, než použijeme jakýkoli prediktor.
+- `r render_glossary_term("soucet-ctvercu-residui", display = "Součet čtverců residuí (RSS)")` měří, kolik z těchto rozdílů zůstane, když každé žabce přiřadíme odhad modelu, tedy průměr její úpravy.
+
+Zachycený podíl variability je ta část celkového součtu čtverců, která po přidání prediktoru z residuí zmizela:
+
+$$
+R^2 = 1 - \frac{\text{součet čtverců residuí}}{\text{celkový součet čtverců}}
+$$
+
+Pro model, který počítá každou žabku zvlášť:
+
+$$
+R^2 = 1 - \frac{`r format_cz_math(rss_vsechny, 1)`}{`r format_cz_math(ss_celkem_vsechny, 1)`} = `r format_cz_math(r2_rucne_vsechny, 2)`
+$$
+
+Vyšlo stejné číslo jako `Multiple R-squared` ve výstupu `summary()`. Stejnou úvahu jsme poznali u `r render_glossary_term("anova", display = "analýzy rozptylu")`: celkový součet čtverců se rozdělil na část **mezi skupinami**, kterou zachytí rozdílné průměry skupin, a na část **uvnitř skupin**, která zbude jako residua. V modelu se všemi žabkami jsou skupinami vyschlé a nevyschlé nádrže. Rozdíly mezi nádržemi se stejnou úpravou model nezná, takže skončily v residuích spolu s rozdíly mezi žabkami.
+
+## Koeficient determinace jako podíl rozptylu
+
+```{r}
+#| label: spocitat-rozptyly-vsech-zabek
+#| echo: false
+rozptyl_delky <- stats::var(vec_delka_vsech)
+rozptyl_odhadu_vsechny <- stats::var(stats::fitted(mod_vsechny_zabky))
+rozptyl_residui_vsechny <- stats::var(stats::residuals(mod_vsechny_zabky))
+r2_rozptyly_vsechny <- rozptyl_odhadu_vsechny / rozptyl_delky
+```
+
+Součty čtverců rostou s počtem žabek. Když je vydělíme počtem žabek bez jedné, dostaneme `r render_glossary_term("rozptyl", display = "rozptyly")`. Rozptyl je druhá mocnina `r render_glossary_term("smerodatna-odchylka", display = "směrodatné odchylky")` a má tu výhodu, že se rozptyly nezávislých částí dají sčítat. Rozptyl naměřených délek se rozpadne na dvě části:
+
+$$
+\text{rozptyl délek} = \text{rozptyl zachycený vyschnutím} + \text{rozptyl residuí}
+$$
+
+Rozptyl zachycený vyschnutím je rozptyl odhadnutých hodnot modelu. Každá žabka v nich dostane průměr své úpravy, takže tato část obsahuje jen rozdíl mezi vyschlými a nevyschlými nádržemi.
+
+| Část variability | Rozptyl (mm²) |
+|---|---|
+| zachycená vyschnutím (odhadnuté hodnoty) | `r format_cz(rozptyl_odhadu_vsechny, 2)` |
+| residua (rozdíly mezi žabkami se stejnou úpravou) | `r format_cz(rozptyl_residui_vsechny, 2)` |
+| celkem (naměřené délky) | `r format_cz(rozptyl_delky, 2)` |
+
+: Rozdělení rozptylu délek v modelu, který počítá každou žabku zvlášť.
+
+$$
+`r format_cz_math(rozptyl_delky, 2)` = `r format_cz_math(rozptyl_odhadu_vsechny, 2)` + `r format_cz_math(rozptyl_residui_vsechny, 2)`
+$$
+
+Podíl první části na celku je opět R²:
+
+$$
+R^2 = \frac{\text{rozptyl zachycený vyschnutím}}{\text{rozptyl délek}} = \frac{`r format_cz_math(rozptyl_odhadu_vsechny, 2)`}{`r format_cz_math(rozptyl_delky, 2)`} = `r format_cz_math(r2_rozptyly_vsechny, 2)`
+$$
+
+Obě cesty vedou ke stejnému číslu. Pohled přes rozptyly se hodí pro smíšený model, protože ten ve výstupu neukazuje součty čtverců, ale směrodatné odchylky, ze kterých rozptyly snadno dostaneme.
+
+## Tři části variability v délce žabek
+
+V modelu se všemi žabkami tvořila residua jednu velkou část. Smíšený model z ní oddělil rozdíly mezi nádržemi. Z části `Random effects` jsme už přečetli rozptyl mezi nádržemi a rozptyl mezi žabkami v jedné nádrži. Spolu s rozptylem zachyceným vyschnutím tak máme tři části `r render_glossary_term("variabilita", display = "variability")`:
+
+$$
+\begin{aligned}
+\text{celkový rozptyl} &= \text{rozptyl zachycený vyschnutím} + \text{rozptyl mezi nádržemi} \\
+&\quad + \text{rozptyl mezi žabkami v nádrži}
+\end{aligned}
+$$
+
+::: {.box-question title="Odhadněte předem"}
+Na kterou ze tří částí podle vás připadne největší díl variability v délce žabek: na vyschnutí, na rozdíly mezi nádržemi, nebo na rozdíly mezi žabkami jedné nádrže?
+:::
+
+```{r}
+#| label: spocitat-r2-smiseneho-modelu
+#| echo: false
+rozptyl_pevne <-
+  stats::predict(mod_smiseny_skryty, re.form = NA) |>
+  stats::var()
+
+rozptyl_celkem <- rozptyl_pevne + rozptyl_nadrze + rozptyl_zabky
+r2_marginalni <- rozptyl_pevne / rozptyl_celkem
+r2_podminene <- (rozptyl_pevne + rozptyl_nadrze) / rozptyl_celkem
+podil_nadrze_celkem <- rozptyl_nadrze / rozptyl_celkem
+podil_zabky_celkem <- rozptyl_zabky / rozptyl_celkem
+```
+
+| Část variability | Rozptyl (mm²) | Podíl |
+|---|---|---|
+| zachycená vyschnutím | `r format_cz(rozptyl_pevne, 2)` | `r format_cz(100 * r2_marginalni, 0)` % |
+| rozdíly mezi nádržemi | `r format_cz(rozptyl_nadrze, 2)` | `r format_cz(100 * podil_nadrze_celkem, 0)` % |
+| rozdíly mezi žabkami v nádrži | `r format_cz(rozptyl_zabky, 2)` | `r format_cz(100 * podil_zabky_celkem, 0)` % |
+| celkem | `r format_cz(rozptyl_celkem, 2)` | 100 % |
+
+: Rozdělení rozptylu délek ve smíšeném modelu.
+
+```{r}
+#| label: nakreslit-rozdeleni-variability
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 7.5
+#| fig-height: 3.2
+#| fig-cap: "Rozdělení variability v délce žabek. Horní pruh: model, který počítá každou žabku zvlášť. Dolní pruh: smíšený model, ve kterém se residua rozdělila na rozdíly mezi nádržemi a rozdíly mezi žabkami jedné nádrže."
+#| fig-alt: !expr 'stringr::str_glue("Dva vodorovné pruhy rozdělené na barevné části. Horní pruh má dvě části: vyschnutí {format_cz(100 * r2_vsechny, 0)} % a residua {format_cz(100 * (1 - r2_vsechny), 0)} %. Dolní pruh má tři části: vyschnutí {format_cz(100 * r2_marginalni, 0)} %, rozdíly mezi nádržemi {format_cz(100 * podil_nadrze_celkem, 0)} % a rozdíly mezi žabkami v nádrži {format_cz(100 * podil_zabky_celkem, 0)} %.")'
+vec_urovne_casti <-
+  c(
+    "vyschnutí",
+    "rozdíly mezi nádržemi",
+    "rozdíly mezi žabkami v nádrži",
+    "residua"
+  )
+
+data_casti_variability <-
+  tibble::tibble(
+    model = factor(
+      c(
+        rep("Každá žabka zvlášť", 2),
+        rep("Smíšený model", 3)
+      ),
+      levels = c("Smíšený model", "Každá žabka zvlášť")
+    ),
+    cast = factor(
+      c(
+        "vyschnutí",
+        "residua",
+        "vyschnutí",
+        "rozdíly mezi nádržemi",
+        "rozdíly mezi žabkami v nádrži"
+      ),
+      levels = rev(vec_urovne_casti)
+    ),
+    podil = c(
+      r2_vsechny,
+      1 - r2_vsechny,
+      r2_marginalni,
+      podil_nadrze_celkem,
+      podil_zabky_celkem
+    )
+  ) |>
+  dplyr::mutate(
+    popisek = stringr::str_glue("{format_cz(100 * .data$podil, 0)} %"),
+    barva_popisku = dplyr::if_else(
+      .data$cast == "vyschnutí",
+      "white",
+      barva_text
+    )
+  )
+
+vec_barvy_casti <-
+  c(
+    "vyschnutí" = barva_model,
+    "rozdíly mezi nádržemi" = barva_zvyrazneni,
+    "rozdíly mezi žabkami v nádrži" = "grey65",
+    "residua" = "grey85"
+  )
+
+ggplot2::ggplot(
+  data = data_casti_variability,
+  mapping = ggplot2::aes(
+    x = .data$podil,
+    y = .data$model,
+    fill = .data$cast
+  )
+) +
+  ggplot2::scale_fill_manual(
+    values = vec_barvy_casti,
+    breaks = vec_urovne_casti,
+    name = NULL
+  ) +
+  ggplot2::scale_color_identity() +
+  ggplot2::scale_x_continuous(
+    labels = function(x) stringr::str_glue("{100 * x} %")
+  ) +
+  ggplot2::labs(
+    x = "Podíl variability v délce žabek",
+    y = NULL
+  ) +
+  ggplot2::theme_bw(base_size = 12) +
+  ggplot2::theme(legend.position = "bottom") +
+  ggplot2::guides(fill = ggplot2::guide_legend(nrow = 2)) +
+  ggplot2::geom_col(
+    width = 0.6,
+    color = "white"
+  ) +
+  ggplot2::geom_text(
+    mapping = ggplot2::aes(
+      label = .data$popisek,
+      color = .data$barva_popisku
+    ),
+    position = ggplot2::position_stack(vjust = 0.5),
+    size = 3.6
+  )
+```
+
+Největší část variability připadá na rozdíly mezi žabkami jedné nádrže. Vyschnutí zachytí o něco méně a rozdíly mezi nádržemi tvoří menší, ale zřetelnou část. Podíl vyschnutí je v obou modelech podobný: smíšený model vyschnutí nic neubral, jen rozdělil residua na dvě části.
+
+Součet tří částí (`r format_cz(rozptyl_celkem, 2)` mm²) je o něco větší než rozptyl naměřených délek (`r format_cz(rozptyl_delky, 2)` mm²). Smíšený model totiž rozptyl mezi nádržemi nepočítá jen z našich `r pocet_nadrzi` nádrží, ale odhaduje ho pro celý soubor nádrží, ze kterého naše nádrže pocházejí. Proto vyšel podíl vyschnutí o kousek menší než R² modelu se všemi žabkami.
+
+::: {.box-warning title="Pozor: dva různé podíly nádrží"}
+V části o rozdílech mezi nádržemi a mezi žabkami jsme spočítali, že na nádrže připadá asi `r format_cz(100 * podil_nadrze, 0)` % variability. Tady vyšlo asi `r format_cz(100 * podil_nadrze_celkem, 0)` %. Obě čísla jsou správná, ale mají jiný jmenovatel. Dřívější podíl se počítal jen z variability, která zbyla po zohlednění vyschnutí. Tady počítáme z celé variability v délce žabek, včetně části zachycené vyschnutím.
+:::
+
+## Marginální a podmíněné R²
+
+Ze tří částí variability můžeme spočítat dvě různá `r render_glossary_term("r2", display = "R²")`. Liší se tím, které části počítáme jako zachycené modelem:
+
+<!-- TODO: add slugs marginalni-r2 and podminene-r2 to slovnik -->
+
+- **Marginální R²** počítá jako zachycenou jen část připadající na pevné efekty, tady na vyschnutí. Odpovídá na otázku: kolik variability zachytí prediktor, který nás zajímá?
+- **Podmíněné R²** počítá jako zachycené pevné i náhodné efekty, tady vyschnutí i rozdíly mezi nádržemi. Odpovídá na otázku: kolik variability zachytí celý model, když zná i výchozí úrovně nádrží?
+
+Slovy:
+
+$$
+\begin{aligned}
+\text{marginální } R^2 &= \frac{\text{rozptyl zachycený vyschnutím}}{\text{celkový rozptyl}} \\
+\text{podmíněné } R^2 &= \frac{\text{rozptyl zachycený vyschnutím} + \text{rozptyl mezi nádržemi}}{\text{celkový rozptyl}}
+\end{aligned}
+$$
+
+S čísly z našeho modelu:
+
+$$
+\begin{aligned}
+\text{marginální } R^2 &= \frac{`r format_cz_math(rozptyl_pevne, 2)`}{`r format_cz_math(rozptyl_pevne, 2)` + `r format_cz_math(rozptyl_nadrze, 2)` + `r format_cz_math(rozptyl_zabky, 2)`} = `r format_cz_math(r2_marginalni, 2)` \\
+\text{podmíněné } R^2 &= \frac{`r format_cz_math(rozptyl_pevne, 2)` + `r format_cz_math(rozptyl_nadrze, 2)`}{`r format_cz_math(rozptyl_pevne, 2)` + `r format_cz_math(rozptyl_nadrze, 2)` + `r format_cz_math(rozptyl_zabky, 2)`} = `r format_cz_math(r2_podminene, 2)`
+\end{aligned}
+$$
+
+Obecně, se symboly:
+
+$$
+R^2_{m} = \frac{\sigma^2_f}{\sigma^2_f + \sigma^2_u + \sigma^2_e}, \qquad R^2_{c} = \frac{\sigma^2_f + \sigma^2_u}{\sigma^2_f + \sigma^2_u + \sigma^2_e}
+$$
+
+- $R^2_{m}$ je marginální a $R^2_{c}$ podmíněné R² (z anglického *marginal* a *conditional*);
+- $\sigma^2_f$ je rozptyl odhadů pevné části modelu, tady rozdílu mezi vyschlými a nevyschlými nádržemi;
+- $\sigma^2_u$ je rozptyl výchozích úrovní nádrží, tedy druhá mocnina směrodatné odchylky v řádku `nadrz (Intercept)`;
+- $\sigma^2_e$ je rozptyl residuí, tedy druhá mocnina směrodatné odchylky v řádku `Residual`.
+
+Vyschnutí zachytí asi `r format_cz(100 * r2_marginalni, 0)` % variability v délce žabek. Rozdíly mezi nádržemi přidají dalších asi `r format_cz(100 * podil_nadrze_celkem, 0)` %, takže celý model zachytí asi `r format_cz(100 * r2_podminene, 0)` %. Zbylých `r format_cz(100 * podil_zabky_celkem, 0)` % tvoří rozdíly mezi žabkami jedné nádrže, které model nevysvětlí. Marginální a podmíněné R² zavedli S. Nakagawa a H. Schielzeth (2013).
+
+::: {.box-extra title="Doplňující: výpočet R² smíšeného modelu v R" collapse="true"}
+Tři rozptyly můžeme z modelu získat přímo:
+
+```{r}
+#| label: ukazat-vypocet-r2-smiseneho-modelu
+#| echo: true
+#| eval: true
+
+# Rozptyl odhadů pevné části (jen vyschnutí, bez nádrží)
+rozptyl_vyschnuti <-
+  var(predict(object = mod_smiseny, re.form = NA))
+
+# Rozptyl výchozích úrovní nádrží
+rozptyl_mezi_nadrzemi <-
+  glmmTMB::VarCorr(x = mod_smiseny)$cond$nadrz[1, 1]
+
+# Rozptyl residuí
+rozptyl_v_nadrzi <-
+  sigma(object = mod_smiseny)^2
+
+rozptyl_celkovy <-
+  rozptyl_vyschnuti + rozptyl_mezi_nadrzemi + rozptyl_v_nadrzi
+
+# Marginální a podmíněné R²
+rozptyl_vyschnuti / rozptyl_celkovy
+(rozptyl_vyschnuti + rozptyl_mezi_nadrzemi) / rozptyl_celkovy
+```
+
+Argument `re.form = NA` říká funkci `predict()`, aby počítala odhady bez výchozích úrovní nádrží. Pro složitější modely zvládne tento výpočet například funkce `r2()` z balíčku `performance`.
+:::
+
+## Co R² smíšeného modelu říká a co ne
+
+Pro R² smíšeného modelu platí stejná omezení jako pro R² lineárního modelu. Popisuje data, na kterých byl model odhadnut. Neříká, jestli jsou splněny předpoklady modelu, ty jsme kontrolovali na residuích. A neříká ani, jak přesně model odhadne délku jedné konkrétní žabky. U smíšeného modelu k tomu přibývají tři věci:
+
+- **Vysoké podmíněné R² neznamená, že vyschnutí je důležité.** Velkou část podmíněného R² mohou tvořit rozdíly mezi nádržemi, které mají jiné příčiny. O vyschnutí vypovídá marginální R² a hlavně odhad rozdílu s jeho `r render_glossary_term("interval-spolehlivosti", display = "intervalem spolehlivosti")`.
+- **Rozdíly mezi nádržemi model nevysvětluje, jen je popisuje.** Víme, že se nádrže liší, ale ne proč. Kdybychom v každé nádrži změřili třeba teplotu vody nebo hustotu pulců, mohli bychom je přidat jako prediktory a část rozptylu mezi nádržemi by se přesunula do zachycené části.
+- **R² smíšeného modelu nelze srovnávat s R² modelu z průměrů nádrží.** Model z průměrů nádrží má R² `r format_cz(r2_prumery, 2)`, ale jeho odezvou je průměr nádrže, ne délka žabky. Průměry kolísají mnohem méně než jednotlivé žabky, proto je podíl zachycené variability vyšší. R² se dá porovnávat jen mezi modely se stejnou odezvou a stejnými pozorováními.
+
+## Čtyři způsoby, jak odpovědět na stejnou otázku
+
+```{r}
+#| label: srovnat-ctyri-pristupy
+#| echo: false
+tabulka_ctyri_pristupy <-
+  tibble::tibble(
+    Postup = c(
+      "každá žabka zvlášť",
+      "průměry nádrží",
+      "nádrž jako pevný faktor",
+      "náhodný intercept"
+    ),
+    `Nezávislé jednotky` = c(
+      stringr::str_glue("{pocet_zabek} žabek"),
+      stringr::str_glue("{pocet_nadrzi} nádrží"),
+      "—",
+      stringr::str_glue("{pocet_nadrzi} nádrží")
+    ),
+    `Rozdíl (mm)` = c(
+      format_cz(odhad_vsechny, 2),
+      format_cz(odhad_prumery, 2),
+      "nelze",
+      format_cz(odhad_smiseny, 2)
+    ),
+    `SE (mm)` = c(
+      format_cz(se_vsechny, 3),
+      format_cz(se_prumery, 3),
+      "—",
+      format_cz(se_smiseny, 3)
+    )
+  )
+
+knitr::kable(
+  x = tabulka_ctyri_pristupy,
+  caption = stringr::str_c(
+    "Čtyři odpovědi na otázku, o kolik jsou menší ",
+    "žabky z vyschlých nádrží."
+  )
+)
+```
+
+Všechny postupy kromě `r render_glossary_term("pevny-faktor", display = "pevného faktoru")` odhadly podobný rozdíl. Liší se v tom, kolik nezávislé informace si myslí, že mají. Model se všemi žabkami `r render_glossary_term("nejistota", display = "nejistotu")` podhodnotil, model z `r render_glossary_term("prumer", display = "průměrů")` a smíšený model ji odhadly podobně. Smíšený model navíc zachoval všechny žabky, takže by do něj šly přidat i `r render_glossary_term("prediktor", display = "prediktory")`, které se mění u jednotlivých žabek, například den metamorfózy.
+
+Kdy tedy stačí jednodušší řešení? Pokud se zkoumaný prediktor mění jen mezi skupinami, skupiny mají podobný počet pozorování a žádný další prediktor se nemění uvnitř skupin, dá model z průměrů skupin prakticky stejnou odpověď jako smíšený model. Smíšený model se vyplatí, když se počty pozorování ve skupinách výrazně liší nebo když chceme do modelu přidat i prediktory, které se mění uvnitř skupin.
+
+::: {.box-extra title="Extra: Když se nádrže liší i ve sklonu" collapse="true"}
+```{r}
+#| label: odhadnout-nahodny-sklon
+#| echo: false
+#| message: false
+#| warning: false
+mod_nahodny_sklon <-
+  glmmTMB::glmmTMB(
+    formula = delka_tela_mm ~ den_pokusu + (1 + den_pokusu | nadrz),
+    data = data_zabky_skryte,
+    REML = TRUE
+  )
+
+data_sklon_predikce <-
+  data_zabky_skryte |>
+  dplyr::group_by(.data$nadrz, .data$vyschnuti) |>
+  dplyr::reframe(
+    den_pokusu = range(.data$den_pokusu)
+  ) |>
+  dplyr::mutate(
+    delka_odhad = stats::predict(
+      mod_nahodny_sklon,
+      newdata = data.frame(
+        den_pokusu = .data$den_pokusu,
+        nadrz = .data$nadrz
+      )
+    )
+  )
+```
+
+```{r}
+#| label: nakreslit-nahodny-sklon
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 7
+#| fig-height: 4
+#| fig-cap: "Vztah délky žabky ke dni metamorfózy v modelu, ve kterém má každá nádrž vlastní výchozí úroveň i vlastní sklon."
+#| fig-alt: "Bodový graf délky těla proti dni metamorfózy s rostoucími přímkami různého sklonu, jednou pro každou nádrž."
+set.seed(900723)
+
+ggplot2::ggplot(
+  data = data_zabky_skryte,
+  mapping = ggplot2::aes(
+    x = .data$den_pokusu,
+    y = .data$delka_tela_mm
+  )
+) +
+  ggplot2::scale_color_manual(
+    values = barvy_vyschnuti,
+    name = "Nádrž"
+  ) +
+  ggplot2::labs(
+    x = "Den pokusu, kdy žabka vylezla z vody",
+    y = "Délka těla (mm)"
+  ) +
+  ggplot2::theme_bw(base_size = 12) +
+  ggplot2::theme(legend.position = "top") +
+  ggplot2::geom_jitter(
+    width = 0.3,
+    height = 0.25,
+    alpha = 0.3,
+    size = 1.1,
+    color = barva_data
+  ) +
+  ggplot2::geom_line(
+    data = data_sklon_predikce,
+    mapping = ggplot2::aes(
+      y = .data$delka_odhad,
+      group = .data$nadrz,
+      color = .data$vyschnuti
+    ),
+    linewidth = 0.8
+  )
+```
+
+Náhodný intercept dovoluje nádržím různou výchozí úroveň, ale sklon vztahu je pro všechny stejný. Nádrže se mohou lišit i v tom, jak rychle délka žabek přibývá s dalšími dny ve vodě. Takovou možnost zapisujeme jako **náhodný sklon**: `(1 + den_pokusu | nadrz)` znamená, že se podle nádrže liší intercept i sklon dne. Interpretace takového modelu přesahuje rámec této lekce; stačí vědět, že tato možnost existuje a že potřebuje dostatek skupin i dostatek měření v každé z nich.
+:::
+
+::: {.box-question title="Vaše vlastní studie: zápis modelu"}
+Napište vzorec modelu pro svou studii ve tvaru `odezva ~ prediktor + (1 | jednotka)`. Co bude jeden řádek vaší tabulky?
+
+:::: {.box-result title="Ukázka: larvy vážek v tůních" collapse="true"}
+Jeden řádek tabulky je jedna larva. Vzorec modelu: `delka_larvy_mm ~ okoli + (1 | tun)`, kde `okoli` má úrovně `les` a `pole`. Pokud tůně vybíráme v oblastech jako v blocích, přibude do modelu i oblast.
+::::
+:::
+
+# Pevný, nebo náhodný faktor?
+
+## Zajímají nás konkrétní úrovně, nebo celý soubor možných úrovní?
+
+Stejnou skupinovou proměnnou můžeme v modelu použít jako `r render_glossary_term("pevny-faktor", display = "pevný")`, nebo jako `r render_glossary_term("nahodny-faktor", display = "náhodný faktor")`. Rozhodnutí neplyne ze samotných dat, ale z otázky, kterou si klademe. Pomohou tyto otázky:
+
+::: {.box-rule title="Pevný, nebo náhodný faktor?"}
+1. **Zajímají nás konkrétní úrovně?** Pokud chceme vědět, jak se liší právě tyto úrovně (například tři konkrétní druhy), jde o pevný faktor. Pokud jsou úrovně jen zástupci mnoha možných (nádrže, lokality, jedinci), jde spíš o náhodný faktor.
+2. **Opakovaly by se stejné úrovně v novém pokusu?** Stejné druhy nebo stejné pohlaví ano, stejné nádrže nebo stejní jedinci ne.
+3. **Je úrovní dost?** Rozptyl mezi skupinami se z několika málo skupin odhaduje špatně. Jako hrubé vodítko potřebuje náhodný faktor alespoň zhruba pět úrovní, lépe víc.
+4. **Na které úrovni se mění zkoumaný prediktor?** Pokud se mění jen mezi skupinami, skupina nemůže být pevným faktorem a pomůže náhodný faktor nebo model z průměrů skupin.
+:::
+
+V našem pokusu je vyschnutí pevný faktor: zajímají nás přesně tyto dvě úrovně a opakovaly by se v každém novém pokusu. Nádrž je náhodný faktor: konkrétní nádrže nás nezajímají, v novém pokusu by byly jiné a máme jich `r pocet_nadrzi`.
+
+## Pevný, nebo náhodný? Šest situací z biologie
+
+::: {.box-question title="Rozhodněte"}
+Pro každou situaci rozhodněte, zda byste skupinovou proměnnou použili jako `r render_glossary_term("pevny-faktor", display = "pevný")`, nebo jako `r render_glossary_term("nahodny-faktor", display = "náhodný faktor")`.
+
+1. Pokus v květináčích porovnává růst tří konkrétních druhů trav.
+2. Na 20 lokalitách podél řeky měříte délku pstruhů a zajímá vás vliv teploty vody.
+3. Na poli je 8 bloků a v každém bloku jsou všechny čtyři dávky hnojiva.
+4. Každého z 30 netopýrů zvážíte v pěti různých měsících.
+5. Porovnáváte délku křídla samců a samic.
+6. Velikost ryb měříte jen ve třech jezerech.
+
+:::: {.box-result title="Řešení" collapse="true"}
+1. **Pevný faktor** druh. Zajímají nás právě tyto tři druhy a v novém pokusu bychom použili stejné.
+2. **Náhodný faktor** lokalita. Lokality zastupují mnoho možných míst u řeky; teplota vody se mění mezi lokalitami, proto ji nelze odhadnout vedle lokality jako pevného faktoru.
+3. **Náhodný faktor** blok. Bloky jsou jen části pole s podobnými podmínkami a v jiném roce by byly jinde. Blok jako pevný faktor by zde také fungoval, protože dávky hnojiva se mění uvnitř bloků.
+4. **Náhodný faktor** netopýr. Jednotliví netopýři nás nezajímají a opakované vážení jednoho jedince není nezávislé.
+5. **Pevný faktor** pohlaví. Dvě úrovně, které nás zajímají a opakovaly by se v každém pokusu.
+6. **Spíš pevný faktor, nebo opatrnost.** Ze tří jezer se rozptyl mezi jezery odhadnout nedá. Můžeme jezera porovnat jako pevný faktor, ale závěr pak platí jen pro tato tři jezera.
+::::
+:::
+
+## Když nepomůže ani model: jedno ošetřené povodí
+
+Smíšený model pozná, kolik nezávislých jednotek v datech je, ale nemůže je vytvořit. V experimentálním lese Hubbard Brook v USA výzkumníci pohnojili vápníkem celé jedno lesní povodí potoka a srovnávali ho s jedním sousedním, neošetřeným povodím. Ve dvou povodích změřili stovky semenáčků javoru. Úprava se ale týkala celého povodí a ošetřené povodí bylo jen jedno. Jakýkoli rozdíl mezi semenáčky může stejně dobře pocházet z vápníku jako z toho, čím se tato dvě povodí lišila odjakživa.
+
+Podobně je tomu u pstruhů z potoka Mack Creek v Oregonu: jeden úsek potoka protéká pasekou, druhý starým lesem. Ryb je v datech stovky, ale každé prostředí (paseka, starý les) zastupuje jen jeden úsek.
+
+::: {.box-warning title="Častá chyba: spoléhat na to, že statistika zachrání návrh"}
+Když má každá úprava jen jednu nezávislou jednotku, žádný model z dat nezjistí, jak moc se jednotky liší i bez úpravy. Chybu v návrhu studie nelze opravit analýzou; je potřeba jí předejít při plánování.
+:::
+
+::: {.box-question title="Vaše vlastní studie: pevný, nebo náhodný faktor?"}
+Které skupinové proměnné ve vaší studii budou `r render_glossary_term("pevny-faktor", display = "pevné")` a které náhodné? Má každá úroveň zkoumaného `r render_glossary_term("prediktor", display = "prediktoru")` několik nezávislých jednotek, nebo jen jednu?
+
+:::: {.box-result title="Ukázka: larvy vážek v tůních" collapse="true"}
+Okolí tůně (les, pole) je pevný faktor. Tůň je náhodný faktor, stejně jako oblast, pokud jsme tůně vybírali v oblastech. Lesních i polních tůní musí být několik, ideálně v každé oblasti; jedna lesní a jedna polní tůň by byly stejná past jako jedno pohnojené povodí.
+::::
+:::
+
+## Vylézají z vyschlých nádrží menší žabky?
+
+Se všemi nástroji z této lekce můžeme odpovědět na hlavní otázku.
+
+::: {.box-question title="Napište závěr"}
+Napište dvě až tři věty závěru: jak velký je rozdíl mezi žabkami z vyschlých a nevyschlých nádrží, jak přesně ho známe, co bylo jednotkou nezávislé replikace a jaké je hlavní omezení studie. Potom svůj závěr porovnejte s naším.
+:::
+
+::: {.box-result title="Závěr"}
+Žabky z nádrží, které před pokusem vyschly a znovu se naplnily, byly na konci metamorfózy v `r render_glossary_term("prumer", display = "průměru")` o `r format_cz(abs(odhad_smiseny), 1)` mm kratší než žabky z nádrží, které nevyschly (95% `r render_glossary_term("interval-spolehlivosti", display = "interval spolehlivosti")` `r format_cz(abs(ci_smiseny[2]), 1)` až `r format_cz(abs(ci_smiseny[1]), 1)` mm). Vyschnutí zachycuje asi `r format_cz(100 * r2_marginalni, 0)` % variability v délce žabek a rozdíly mezi nádržemi dalších asi `r format_cz(100 * podil_nadrze_celkem, 0)` %; zbytek tvoří rozdíly mezi žabkami jedné nádrže.
+:::
+
+Závěr má několik omezení:
+
+- **Vyschnutí a hustota pulců se v pokusu překrývají.** Z vyschlých nádrží vylezlo `r pocet_zabek_vyschla` žabek, z nevyschlých `r pocet_zabek_nevyschla`. Ve vyschlých nádržích tedy přežilo víc pulců a mohli si víc konkurovat o potravu. Menší žabky mohou být důsledkem vyschnutí samotného, vyšší hustoty pulců, nebo obojího. Jde o `r render_glossary_term("konfundovani", display = "konfundování")`, které tato data nedokážou rozplést.
+- **`r pocet_nadrzi` nádrží je málo.** Odhad je proto poměrně nepřesný a `r render_glossary_term("residuum", display = "residua")` jsou mírně šikmá.
+- **Nádrže nejsou divoké tůně.** Zobecnění na skutečné tůně v krajině vyžaduje opatrnost.
+
+# Jak naplánovat vlastní studii
+
+## Sedm otázek před prvním měřením
+
+Celá lekce ukázala, že o tom, co z dat půjde říct, se rozhoduje dřív, než začneme měřit. Tyto otázky si položte před každou studií, ve které budete měřit víc organismů na jednom místě nebo jeden organismus víckrát:
+
+::: {.box-rule title="Sedm otázek před prvním měřením"}
+1. **Jaká je otázka a co budu měřit?** Organismus, `r render_glossary_term("odezva", display = "odezva")` a její jednotka.
+2. **Na které úrovni se mění `r render_glossary_term("prediktor", display = "prediktor")`, který mě zajímá?** U jednotlivých organismů, nebo jen mezi skupinami (tůně, lokality, nádrže)?
+3. **Co je jednotka nezávislé replikace?** Nejmenší jednotka, které byla úprava nebo hodnota prediktoru přidělena nezávisle na ostatních.
+4. **Kolik jednotek a kolik měření v každé?** Pro prediktor, který se mění mezi skupinami, je počet skupin důležitější než počet měření ve skupině.
+5. **Co se mění uvnitř jednotek a dá se využít?** Bloky, dvojice, `r render_glossary_term("opakovana-mereni", display = "opakovaná měření")` stejného jedince.
+6. **Které skupinové proměnné budou `r render_glossary_term("pevny-faktor", display = "pevné")` a které náhodné?** Zajímají mě konkrétní úrovně? Je jich dost?
+7. **Jak bude vypadat model?** Zapište vzorec dřív, než začnete sbírat data.
+:::
+
+K návrhu patří i dvě zásady, které známe z pokusů: kontrolní skupina se má od ošetřené lišit jen zkoumanou úpravou a úpravu je vhodné přidělit jednotkám náhodně, třeba losem. Jinak se může stát, že ošetřené jednotky se od kontrolních liší ještě něčím jiným.
+
+## Larvy vážek v tůních: návrh od otázky po model
+
+```{r}
+#| label: zobrazit-vazky-v-tunich
+#| echo: false
+#| eval: !expr file.exists(file.path(cesta_obrazky, "vazky_tune_les_pole.png"))
+#| out-width: "80%"
+#| fig-align: center
+#| fig-cap: "Plánovaný příklad: larvy vážek v lesních a polních tůních. Ilustrace vytvořená pomocí AI."
+#| fig-alt: "Dvě tůně v jedné krajině: vlevo stinná tůň v lese, vpravo slunná tůň mezi poli. V obou jsou na stoncích larvy vážek; žába u lesní tůně je vylovuje síťkou do misky a mezi tůněmi poletuje vážka. Ilustrace vytvořená pomocí AI."
+knitr::include_graphics(
+  path = file.path(cesta_obrazky, "vazky_tune_les_pole.png")
+)
+```
+
+Ukázkovou studii z rámečků „Vaše vlastní studie" lze složit do jednoho návrhu. Jde o vymyšlený příklad, který ukazuje plánování; data k němu nemáme.
+
+| Krok | Návrh |
+|---|---|
+| Otázka | Mají larvy vážek v tůních obklopených lesem jinou délku těla než v tůních mezi poli? |
+| Odezva | délka těla larvy (mm) |
+| Prediktor | okolí tůně: `les`, nebo `pole`; mění se jen mezi tůněmi |
+| Jednotka nezávislé replikace | tůň |
+| Rozsah | `r pocet_oblasti` oblastí, v každé `r tuni_typu_v_oblasti` lesní a `r tuni_typu_v_oblasti` polní tůně, v každé tůni `r larev_v_tuni` larev: `r pocet_tuni_navrh` tůní, `r larev_celkem` larev |
+| Co se mění uvnitř | velikost a stadium larev, datum odběru; oblast funguje jako blok |
+| Pevné a náhodné faktory | okolí pevný faktor; tůň a oblast náhodné faktory |
+| Hlavní rizika | lesní a polní tůně se mohou lišit i velikostí nebo hloubkou; některé tůně mohou během léta vyschnout |
+
+: Návrh studie larev vážek od otázky po model.
+
+Vzorec modelu by vypadal takto:
+
+```r
+delka_larvy_mm ~ okoli + (1 | oblast) + (1 | tun)
+```
+
+Na otázku o okolí tůně tak budeme mít `r pocet_tuni_navrh` nezávislých odpovědí, ne `r larev_celkem`. Kdybychom stejné úsilí věnovali `r tuni_maly_navrh` tůním po `r larev_v_tuni_maly` larvách, měli bychom jen `r tuni_maly_navrh / 2L` lesní a `r tuni_maly_navrh / 2L` polní tůně, a tedy skoro stejnou past jako jedno pohnojené povodí. Model s oblastí i tůní obsahuje dva `r render_glossary_term("nahodny-faktor", display = "náhodné faktory")`; takové modely v této lekci neodhadujeme, ale zápis ukazuje, kam návrh míří.
+
+## Váš návrh na jedné stránce
+
+Odpovědi z pěti rámečků „Vaše vlastní studie" můžete sepsat do jednoho přehledu. Takový jednostránkový návrh se hodí na začátku semestrální práce i při první konzultaci se školitelem.
+
+::: {.box-question title="Váš návrh na jedné stránce"}
+1. **Otázka:** …
+2. **Organismus a odezva (jednotka):** …
+3. **Prediktor a úroveň, na které se mění:** …
+4. **Jednotka nezávislé replikace:** …
+5. **Počet jednotek a počet měření v každé z nich:** …
+6. **Bloky, dvojice nebo opakovaná měření:** …
+7. **Pevné a náhodné faktory:** …
+8. **Vzorec modelu:** `odezva ~ prediktor + (1 | jednotka)`
+9. **Největší riziko návrhu a jak ho zmenším:** …
+:::
+
+# Co když nás nezajímá délka, ale přežití?
+
+V pokusu se dalo měřit i něco jiného než délka žabek: kolik z 50 pulců v každé nádrži přežilo až do metamorfózy. Taková odezva není spojité měření, ale počet z daného maxima, a normální rozdělení ji nepopíše dobře. Modely pro počty a pro odezvy typu ano/ne probereme v následující lekci.
+
+Funkce `glmmTMB()`, kterou jsme použili, takové modely umí také. Stačí jí říct, jaké rozdělení má odezva, a člen `(1 | nadrz)` může zůstat stejný. Hierarchie dat totiž nezávisí na tom, co měříme, ale na tom, jak jsme data sebrali.
+
+# Shrnutí {.unnumbered}
+
+- Počet řádků v tabulce není totéž co počet nezávislých opakování. Rozhoduje úroveň, na které se mění zkoumaný prediktor.
+- Pseudoreplikace obvykle nezmění odhad efektu, ale podhodnotí jeho nejistotu: příliš malá standardní chyba, příliš úzký interval, příliš mnoho stupňů volnosti a častější falešné poplachy.
+- Model z průměrů skupin je poctivé řešení, ale ztrácí informaci uvnitř skupin. Skupina jako pevný faktor pomůže jen pro prediktory, které se mění uvnitř skupin.
+- Smíšený model s náhodným interceptem dává každé skupině vlastní výchozí úroveň, zachová všechna pozorování a nejistotu prediktoru, který se mění mezi skupinami, posoudí podle počtu skupin.
+- Zda je skupinová proměnná pevný, nebo náhodný faktor, rozhoduje otázka: zajímají nás konkrétní úrovně, nebo jsou to zástupci mnoha možných? Náhodný faktor potřebuje dost úrovní.
+- Návrh studie rozhoduje o tom, co z dat půjde říct. Chybějící nezávislé jednotky žádný model nenahradí.
+
+# Slovníček pojmů {.unnumbered}
 
 Pojmy použité v těchto materiálech a jejich definice:
 
 ```{r}
 #| label: slovnicek
 #| echo: false
-glossary::glossary_table()
+#| results: asis
+if (knitr::is_html_output()) {
+  glossary::glossary_table()
+} else {
+  cat(
+    paste0(
+      "Interaktivní slovníček je dostupný online: ",
+      "https://cuni-natur-biostatistics.github.io/slovnik/"
+    )
+  )
+}
 ```
