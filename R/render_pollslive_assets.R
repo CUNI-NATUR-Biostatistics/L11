@@ -13,7 +13,7 @@
 # Johnson & Raven 1973). L11 keeps an unchanged copy in
 # data/druhy_galapagy.csv. The copy is verified by a line-ending-independent
 # SHA-256 so that the check behaves the same on Windows and Linux checkouts.
-# The mammal histogram uses ggplot2::msleep (Savage & West 2007) directly.
+# The mammal box plot uses ggplot2::msleep (Savage & West 2007) directly.
 
 here::i_am("R/render_pollslive_assets.R")
 
@@ -247,36 +247,78 @@ save_quiz_plot(
 # 5. Q2: mammal body mass in kilograms -----
 #----------------------------------------------------------#
 
-# Only the kilogram panel of the L10 slide; the logarithmic panel would
-# answer the question about the shape of the distribution.
+# Reproduces the single vertical box plot of the L10 skripta (base R
+# boxplot() of ggplot2::msleep$bodywt in kilograms). The box and whiskers are
+# drawn from grDevices::boxplot.stats(), the same rule as boxplot(), so that
+# exactly the 11 species named in the quiz stem are flagged. The logarithmic
+# box plot is left out because it would answer the question.
+list_q2_stats <-
+  grDevices::boxplot.stats(x = dplyr::pull(data_savci, hmotnost_kg))
+
+data_q2_box <-
+  tibble::tibble(
+    x = 1,
+    ymin = list_q2_stats[["stats"]][1],
+    lower = list_q2_stats[["stats"]][2],
+    middle = list_q2_stats[["stats"]][3],
+    upper = list_q2_stats[["stats"]][4],
+    ymax = list_q2_stats[["stats"]][5]
+  )
+
+data_q2_odlehle <-
+  tibble::tibble(
+    x = 1,
+    hmotnost_kg = list_q2_stats[["out"]]
+  )
+
+stopifnot(
+  base::nrow(data_q2_odlehle) == 11L
+)
+
 graf_q2 <-
-  ggplot2::ggplot(
-    data = data_savci,
-    mapping = ggplot2::aes(x = hmotnost_kg)
-  ) +
-  ggplot2::scale_x_continuous(
-    labels = function(x) format_cz(x, 0),
-    n.breaks = 4
-  ) +
+  ggplot2::ggplot() +
+  ggplot2::scale_x_continuous(limits = c(0.4, 1.6)) +
   ggplot2::scale_y_continuous(
-    breaks = function(limity) unique(floor(pretty(limity))),
     labels = function(x) format_cz(x, 0)
   ) +
   ggplot2::labs(
     title = "Tělesná hmotnost 83 druhů savců",
-    x = "Hmotnost (kg)",
-    y = "Počet druhů savců"
+    y = "Tělesná hmotnost (kg)"
   ) +
   theme_quiz +
-  ggplot2::geom_histogram(
-    bins = 15,
-    fill = cols[["grey"]],
-    colour = "white"
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_blank(),
+    axis.title.x = ggplot2::element_blank(),
+    panel.grid.major.x = ggplot2::element_blank()
+  ) +
+  ggplot2::geom_boxplot(
+    data = data_q2_box,
+    mapping = ggplot2::aes(
+      x = x,
+      ymin = ymin,
+      lower = lower,
+      middle = middle,
+      upper = upper,
+      ymax = ymax
+    ),
+    stat = "identity",
+    width = 0.5,
+    fill = cols[["parchment"]],
+    colour = cols[["graphite"]],
+    linewidth = 1
+  ) +
+  ggplot2::geom_point(
+    data = data_q2_odlehle,
+    mapping = ggplot2::aes(x = x, y = hmotnost_kg),
+    shape = 1,
+    size = 3.2,
+    stroke = 1,
+    colour = cols[["graphite"]]
   )
 
 save_quiz_plot(
   plot = graf_q2,
-  filename = "l10-hmotnost-savcu-kg.png"
+  filename = "l10-hmotnost-savcu-kg-krabicovy-graf.png"
 )
 
 #----------------------------------------------------------#

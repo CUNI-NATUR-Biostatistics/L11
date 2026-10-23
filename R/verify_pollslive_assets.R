@@ -12,8 +12,8 @@ approved_assets <-
   c(
     "l10-koeficienty-mocninneho-vztahu.png" =
       "eca43a7aafe160d593d227628a7d47bbd473b80d238766efa72efc04d8192758",
-    "l10-hmotnost-savcu-kg.png" =
-      "770fc71d21907ac9b026de95918668a2a01dda9d52b5a2db27da2205cc9132f1",
+    "l10-hmotnost-savcu-kg-krabicovy-graf.png" =
+      "b06bf5c994eb2540071db6e1e7f36740ab77083d3c0f81318733eee171907161",
     "l10-diagnostika-mocninneho-vztahu.png" =
       "e46f371718d1940422d2b1561e2c51139c4bf0a027c657dd72dee6a9c77b870c"
   )

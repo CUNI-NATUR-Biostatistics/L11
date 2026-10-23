@@ -60,14 +60,14 @@
       "correctOptionId": "stejne-jedenact",
       "explanation": "Z-skóre od každé hmotnosti odečte průměr a vydělí ji směrodatnou odchylkou. Posune a zmenší osu, ale tvar rozdělení zůstane, a s ním i dlouhý chvost a stejní odlehlí savci. Tvar mění až transformace jako logaritmus.",
       "media": {
-        "path": "assets/l10-hmotnost-savcu-kg.png",
-        "alt": "Histogram tělesné hmotnosti 83 druhů savců v kilogramech. Téměř všechny druhy leží v prvním koši a několik velmi těžkých druhů tvoří dlouhý chvost vpravo.",
-        "provenance": "Deterministically rendered by R/render_pollslive_assets.R from ggplot2::msleep$bodywt (83 mammal species; Savage & West 2007; ggplot2, MIT), only the kilogram panel of the L10 histogram (bins = 15) without the logarithmic panel; asset SHA-256 770FC71D21907AC9B026DE95918668A2A01DDA9D52B5A2DB27DA2205CC9132F1."
+        "path": "assets/l10-hmotnost-savcu-kg-krabicovy-graf.png",
+        "alt": "Krabicový graf tělesné hmotnosti 83 druhů savců v kilogramech. Krabice je stlačená u nuly a nad ní leží mnoho bodů označených jako možná odlehlá pozorování.",
+        "provenance": "Deterministically rendered by R/render_pollslive_assets.R from ggplot2::msleep$bodywt (83 mammal species; Savage & West 2007; ggplot2, MIT), reproducing the L10 skripta box plot in kilograms (single vertical box; box, whiskers and the 11 flagged points from grDevices::boxplot.stats) without the logarithmic box plot; asset SHA-256 B06BF5C994EB2540071DB6E1E7F36740AB77083D3C0F81318733EEE171907161."
       }
     },
     {
       "id": "co-residua-neukazou",
-      "text": "Residua modelu Mocninný vztah netvoří oblouk ani vějíř a v Q–Q grafu leží blízko přímky. Co z těchto grafů poznat nemůžeme?",
+      "text": "Grafy residuí modelu Mocninný vztah neukazují žádný zřetelný problém. Co z nich přesto poznat nemůžeme?",
       "options": [
         {
           "id": "nezavislost-ostrovu",
