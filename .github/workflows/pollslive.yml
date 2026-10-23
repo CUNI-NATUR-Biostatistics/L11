@@ -1,4 +1,4 @@
-name: Validate PollsLive course quiz
+name: Validate PollsLive retrieval quiz
 
 on:
   pull_request:

@@ -26,3 +26,9 @@ Na tato převzatá data se nevztahuje licence původního výukového obsahu v k
 Soubor `pie_crab.csv` je nezměněná kopie tabulky jednotlivých krabů z lekce L05 (392 samců kraba *Minuca pugnax* ze 13 slanisek; zeměpisná šířka a šířka krunýře). V této lekci slouží jen k připomenutí, proč jsme v L05 modelovali průměry slanisek. Data pocházejí z výukového vzorku `pie_crab` v balíčku [`lterdatasampler`](https://lter.github.io/lterdatasampler/) (Plum Island Ecosystems LTER; původní dataset [doi:10.6073/pasta/4c27d2e778d3325d3830a5142e3839bb](https://doi.org/10.6073/pasta/4c27d2e778d3325d3830a5142e3839bb), studie [doi:10.1002/ece3.5883](https://doi.org/10.1002/ece3.5883)); licenční záznam balíčku uvádí pro výukové vzorky [CC0](https://creativecommons.org/publicdomain/zero/1.0/). Reprodukovatelnou přípravu obsahuje skript `R/prepare_crab_data.R` v repozitáři L05.
 
 SHA-256 souboru `pie_crab.csv`: `4ea1b496f05c409602b0657ca95505025c254a2f5595bfb7aa5f9fa4f85fb258`.
+
+## Galapágy z předchozí lekce
+
+Soubor `druhy_galapagy.csv` je nezměněná kopie výukové tabulky z lekce L10 (30 ostrovů Galapág; počet druhů rostlin a endemitů, plocha, nejvyšší bod a vzdálenosti). V této lekci slouží jen k obrázku s koeficienty modelu Mocninný vztah a s diagnostickými grafy v opakovacím kvízu o předchozí lekci. Údaje pocházejí z článku M. P. Johnson a P. H. Raven (1973): Species number and endemism: The Galapagos Archipelago revisited. *Science* 179: 893–895. Tabulka je převzata z datasetu `galamiss` v balíčku [`faraway`](https://cran.r-project.org/package=faraway) (J. Faraway), který je šířen pod licencí GPL. Reprodukovatelnou přípravu obsahuje skript `R/prepare_galapagos_data.R` v repozitáři L10. Obrázek s hmotnostmi savců používá přímo dataset `ggplot2::msleep` z balíčku `ggplot2` (Savage a West 2007; licence MIT), proto pro něj v tomto repozitáři není žádný soubor.
+
+SHA-256 souboru `druhy_galapagy.csv`: `a60499f4070e59dfe729035bdb2d14fb84ca6c2db5fee3694ceca1ce84c98fb2`.

@@ -9,27 +9,27 @@
   "questions": [
     {
       "id": "stokrat-vetsi-ostrov",
-      "text": "Desetkrát větší ostrov má podle modelu Mocninný vztah asi 2,45krát víc druhů. Kterým výpočtem zjistíte, kolikrát víc druhů má ostrov stokrát větší?",
+      "text": "Kterým výpočtem zjistíte podle modelu Mocninný vztah, kolikrát víc druhů má ostrov stokrát větší?",
       "options": [
         {
           "id": "sklon-krat-sto",
           "label": "0,389 × 100 (sklon vynásobený stem)"
         },
         {
-          "id": "nasobek-krat-deset",
-          "label": "2,45 × 10 (násobek vynásobený deseti)"
+          "id": "sklon-krat-log-sto",
+          "label": "0,389 × log(100) (sklon vynásobený logaritmem stovky)"
         },
         {
-          "id": "nasobek-na-druhou",
-          "label": "2,45 × 2,45 (násobek vynásobený sám sebou)"
+          "id": "sto-na-sklon",
+          "label": "100 na 0,389 (sto umocněné na sklon)"
         },
         {
-          "id": "nasobek-plus-nasobek",
-          "label": "2,45 + 2,45 (násobek sečtený se sebou)"
+          "id": "intercept-plus-sklon-krat-sto",
+          "label": "2,904 + 0,389 × 100 (intercept plus sklon krát sto)"
         }
       ],
-      "correctOptionId": "nasobek-na-druhou",
-      "explanation": "Na logaritmických osách se násobky plochy mění v násobky počtu druhů. Stokrát větší ostrov je desetkrát desetkrát větší, takže se počet druhů dvakrát vynásobí 2,45: 2,45 × 2,45 ≈ 6,0. Totéž dá výpočet 100 na 0,389.",
+      "correctOptionId": "sto-na-sklon",
+      "explanation": "Na logaritmických osách je sklon exponent: násobek plochy umocníme na sklon. 100 na 0,389 je asi 6,0, totéž jako 10 na 0,389 dvakrát za sebou (2,45 × 2,45). Součin 0,389 × log(100) je jen změna na logaritmické ose, kterou je ještě potřeba převést zpět.",
       "media": {
         "path": "assets/l10-koeficienty-mocninneho-vztahu.png",
         "alt": "Tabulka koeficientů modelu Mocninný vztah: intercept a sklon logaritmu plochy 0,389 s 95% intervalem spolehlivosti od 0,30 do 0,47.",
