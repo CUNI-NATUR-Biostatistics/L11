@@ -1,0 +1,98 @@
+{
+  "$schema": "https://raw.githubusercontent.com/CUNI-NATUR-Biostatistics/_internal/main/pollslive/quiz.schema.json",
+  "schemaVersion": 2,
+  "academicYear": "2026-27",
+  "lesson": "L11",
+  "retrievesLesson": "L10",
+  "lectureDate": "2026-12-14",
+  "title": "L11 – Opakování předchozí lekce – 2026/27",
+  "questions": [
+    {
+      "id": "stokrat-vetsi-ostrov",
+      "text": "Desetkrát větší ostrov má podle modelu Mocninný vztah asi 2,45krát víc druhů. Kterým výpočtem zjistíte, kolikrát víc druhů má ostrov stokrát větší?",
+      "options": [
+        {
+          "id": "sklon-krat-sto",
+          "label": "0,389 × 100 (sklon vynásobený stem)"
+        },
+        {
+          "id": "nasobek-krat-deset",
+          "label": "2,45 × 10 (násobek vynásobený deseti)"
+        },
+        {
+          "id": "nasobek-na-druhou",
+          "label": "2,45 × 2,45 (násobek vynásobený sám sebou)"
+        },
+        {
+          "id": "nasobek-plus-nasobek",
+          "label": "2,45 + 2,45 (násobek sečtený se sebou)"
+        }
+      ],
+      "correctOptionId": "nasobek-na-druhou",
+      "explanation": "Na logaritmických osách se násobky plochy mění v násobky počtu druhů. Stokrát větší ostrov je desetkrát desetkrát větší, takže se počet druhů dvakrát vynásobí 2,45: 2,45 × 2,45 ≈ 6,0. Totéž dá výpočet 100 na 0,389.",
+      "media": {
+        "path": "assets/l10-koeficienty-mocninneho-vztahu.png",
+        "alt": "Tabulka koeficientů modelu Mocninný vztah: intercept a sklon logaritmu plochy 0,389 s 95% intervalem spolehlivosti od 0,30 do 0,47.",
+        "provenance": "Deterministically rendered by R/render_pollslive_assets.R from the approved L10 teaching data (data/druhy_galapagy.csv, unchanged copy of L10 data/druhy_galapagy.csv; raw-file SHA-256 a60499f4070e59dfe729035bdb2d14fb84ca6c2db5fee3694ceca1ce84c98fb2; Johnson & Raven 1973 via faraway galamiss, GPL) and the L10 model Mocninný vztah, log(pocet_druhu) ~ log(plocha_km2); asset SHA-256 ECA43A7AAFE160D593D227628A7D47BBD473B80D238766EFA72EFC04D8192758."
+      }
+    },
+    {
+      "id": "savci-z-skore",
+      "text": "Krabicový graf hmotností v kilogramech označil 11 z 83 druhů savců jako možná odlehlé. Kolik druhů označí krabicový graf stejných hmotností převedených na z-skóre?",
+      "options": [
+        {
+          "id": "zadny-jako-log",
+          "label": "Žádný: z-skóre zkrátí dlouhý chvost podobně jako logaritmus."
+        },
+        {
+          "id": "stejne-jedenact",
+          "label": "Stejně 11: z-skóre mění jen polohu a měřítko, ne tvar."
+        },
+        {
+          "id": "mene-mensi-rozptyl",
+          "label": "Méně než 11: z-skóre zmenší rozptyl hmotností na jedničku."
+        },
+        {
+          "id": "nelze-bez-jednotek",
+          "label": "Nelze určit: z-skóre už nemá žádné jednotky hmotnosti."
+        }
+      ],
+      "correctOptionId": "stejne-jedenact",
+      "explanation": "Z-skóre od každé hmotnosti odečte průměr a vydělí ji směrodatnou odchylkou. Posune a zmenší osu, ale tvar rozdělení zůstane, a s ním i dlouhý chvost a stejní odlehlí savci. Tvar mění až transformace jako logaritmus.",
+      "media": {
+        "path": "assets/l10-hmotnost-savcu-kg.png",
+        "alt": "Histogram tělesné hmotnosti 83 druhů savců v kilogramech. Téměř všechny druhy leží v prvním koši a několik velmi těžkých druhů tvoří dlouhý chvost vpravo.",
+        "provenance": "Deterministically rendered by R/render_pollslive_assets.R from ggplot2::msleep$bodywt (83 mammal species; Savage & West 2007; ggplot2, MIT), only the kilogram panel of the L10 histogram (bins = 15) without the logarithmic panel; asset SHA-256 770FC71D21907AC9B026DE95918668A2A01DDA9D52B5A2DB27DA2205CC9132F1."
+      }
+    },
+    {
+      "id": "co-residua-neukazou",
+      "text": "Residua modelu Mocninný vztah netvoří oblouk ani vějíř a v Q–Q grafu leží blízko přímky. Co z těchto grafů poznat nemůžeme?",
+      "options": [
+        {
+          "id": "nezavislost-ostrovu",
+          "label": "Zda jsou ostrovy jednoho souostroví navzájem nezávislá pozorování."
+        },
+        {
+          "id": "tvar-vztahu",
+          "label": "Zda je vztah na logaritmických osách přibližně přímý, nebo zakřivený."
+        },
+        {
+          "id": "soumernost-residui",
+          "label": "Zda mají residua přibližně souměrné rozdělení bez dlouhého chvostu."
+        },
+        {
+          "id": "stejny-rozptyl",
+          "label": "Zda je rozptyl residuí podobný u malých i u velkých ostrovů."
+        }
+      ],
+      "correctOptionId": "nezavislost-ostrovu",
+      "explanation": "Graf residuí ukáže oblouk, vějíř i dlouhý chvost. Neukáže ale, zda si některé ostrovy nejsou podobné jen proto, že jsou sousedé a vyměňují si semena a živočichy. Nezávislost posuzujeme podle toho, jak data vznikla.",
+      "media": {
+        "path": "assets/l10-diagnostika-mocninneho-vztahu.png",
+        "alt": "Tři diagnostické grafy modelu Mocninný vztah. Residua tvoří přibližně stejně široký vodorovný pás kolem nuly, histogram je přibližně souměrný a body Q–Q grafu leží blízko přímky.",
+        "provenance": "Deterministically rendered by R/render_pollslive_assets.R from the approved L10 teaching data (data/druhy_galapagy.csv, unchanged copy of L10 data/druhy_galapagy.csv; raw-file SHA-256 a60499f4070e59dfe729035bdb2d14fb84ca6c2db5fee3694ceca1ce84c98fb2; Johnson & Raven 1973 via faraway galamiss, GPL); residuals vs fitted values, residual histogram and Q-Q plot of the L10 model Mocninný vztah, reproducing vykreslit_diagnostiku() from the L10 presentation; asset SHA-256 E46F371718D1940422D2B1561E2C51139C4BF0A027C657DD72DEE6A9C77B870C."
+      }
+    }
+  ]
+}
