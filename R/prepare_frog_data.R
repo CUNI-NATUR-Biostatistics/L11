@@ -125,6 +125,11 @@ data_frogs_teaching <-
   dplyr::arrange(
     .data$nadrz,
     .data$poradi_zabky
+  ) |>
+  # Tank labels such as "N27" read as names, not as quantities, in tables,
+  #    figures and text; rows stay sorted by the numeric tank number
+  dplyr::mutate(
+    nadrz = as.character(stringr::str_glue("N{.data$nadrz}"))
   )
 
 vec_tanks_per_treatment <-

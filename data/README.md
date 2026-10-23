@@ -4,7 +4,7 @@ Soubor `zabky_nadrze.csv` obsahuje 485 mladých žab (žabek) severoamerického 
 
 | Sloupec | Obsah |
 |---|---|
-| `nadrz` | číslo nádrže v původním pokusu |
+| `nadrz` | označení nádrže: písmeno N a číslo nádrže v původním pokusu (např. `N27`) |
 | `vyschnuti` | `vyschla` = nádrž před pokusem vyschla a byla znovu napuštěna; `nevyschla` = nádrž nevyschla |
 | `poradi_zabky` | pořadové číslo žabky v rámci nádrže |
 | `datum_metamorfozy` | datum, kdy byla žabka po metamorfóze odlovena a změřena |
@@ -17,7 +17,7 @@ Data pocházejí z pokusu K. J. Ward, S. E. M. Burkhead, E. A. Stybr-Burrus a T.
 
 Reprodukovatelnou přípravu provádí skript `R/prepare_frog_data.R`. Repozitář Dryad nepovoluje stahování skriptem, proto skript stáhne totožný soubor z jeho zrcadla v repozitáři Zenodo ([záznam 8083635](https://zenodo.org/records/8083635)) a ověří jeho otisk SHA-256 (`cc879383de5a35a7ee57c9e6b446bb9c364bc9fd7007452e55ba39ea06f2fef4`). Skript převede kód úpravy na slovní popis vyschnutí, přejmenuje sloupce do češtiny, vynechá pomocné hmotnosti vážicích kelímků a suchou hmotnost (rozdíl dvou vážení s přesností 0,001 g) zaokrouhlí na tři desetinná místa, aby odstranil šum počítačového zaokrouhlování. Řádky nefiltruje a žádné naměřené hodnoty nemění.
 
-SHA-256 souboru `zabky_nadrze.csv`: `bcb29dd70ec68357fee309a82eced115e217caf8c582730a2da290ab0df88011`.
+SHA-256 souboru `zabky_nadrze.csv`: `f118373203097f1d40062112c5ee9ee0cfd89c79229a7b1e7f78e732d6d0683e`.
 
 Na tato převzatá data se nevztahuje licence původního výukového obsahu v kořenovém `LICENSE.md`; při dalším použití uveďte původní článek a dataset.
 
