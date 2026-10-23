@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "fingerprintAlgorithm": "MD5",
-  "brandFingerprint": "bc91f2835e457d9164c15aed18e79ff2",
+  "brandFingerprint": "602a7575e4ce2bec28e28c6c59631184",
   "inputs": {
     "theme/colors.json": "c900347b9664c2d5258a1c3aa02d2c5e",
     "theme/fonts.json": "a7fd2ddc5131dbe43f2772c5a48dbefd",
@@ -18,7 +18,7 @@
     "R/Functions/Theme_generation/generate_colors_scss.R": "69a74c1d2fc21bcde1ede550957797e4",
     "R/Functions/Theme_generation/generate_fonts_html.R": "3a8ed387e5ef159cf6ffdbe641dc4ee9",
     "R/Functions/Theme_generation/generate_presentation_theme.R": "0ffe5004b2220a761e1611092f87b560",
-    "R/Functions/Theme_generation/generate_presentation_components.R": "f9069a6dd5662b94ec4acc24d202e35a",
+    "R/Functions/Theme_generation/generate_presentation_components.R": "f21a7b29335b4042ba18b0c48ad812ed",
     "R/Functions/Theme_generation/generate_skripta_html_theme.R": "ff8ee83a5f1b16160916c6317e6b5ad2",
     "R/Functions/Theme_generation/generate_skripta_typst_theme.R": "fed843d1935e42eca0d297ae7649dcb6",
     "R/Functions/Theme_generation/generate_r_theme.R": "f09061f6b65d7bc28a4cf7fea1f11044",
@@ -36,7 +36,7 @@
     "theme/_colors.scss": "c5d3acf4563db0f4a5d6e8272f75b6c7",
     "theme/fonts-include.html": "0b46aa0d18b11782f5541e6e5076c913",
     "theme/presentation_theme.scss": "e9e43e6c34c3a7860493013019d64611",
-    "theme/presentation_components.scss": "8d09c1fd87e0a453b0a89836e799baed",
+    "theme/presentation_components.scss": "abd330b73515753480983bea13b99031",
     "theme/skripta_theme.scss": "c1ee315040b7a12605ae900692af5428",
     "Learning_materials/skripta_theme.typ": "fc5c85bb1843dc0f9689f522b20b0dae",
     "R/set_r_theme.R": "42082d2fc70a12f97155edd6a151d0a2"
