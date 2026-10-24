@@ -129,13 +129,6 @@ barvy_vyschnuti <-
     "nevyschla" = "#2E6CA4",
     "vyschla" = "#C2613A"
   )
-
-# Cesta ke složce s ilustracemi pro skripta
-cesta_obrazky <-
-  here::here(
-    "Learning_materials",
-    "images"
-  )
 ```
 
 ```{r}
@@ -172,19 +165,6 @@ if (knitr::is_html_output()) {
     sep = "\n"
   )
 }
-```
-
-```{r}
-#| label: zobrazit-vysychajici-tun
-#| echo: false
-#| eval: !expr file.exists(file.path(cesta_obrazky, "zabky_vysychajici_tun.png"))
-#| out-width: "80%"
-#| fig-align: center
-#| fig-cap: "Tůň, která vyschla a znovu se naplnila. Ilustrace vytvořená pomocí AI."
-#| fig-alt: "Malá tůň na louce po opětovném napuštění, obklopená pruhem rozpraskaného vyschlého bahna. Z vody vylézají drobné žabky po metamorfóze; na kameni je pozoruje žába s polním zápisníkem a pravítkem a vedle ní poletuje vážka. Ilustrace vytvořená pomocí AI."
-knitr::include_graphics(
-  path = file.path(cesta_obrazky, "zabky_vysychajici_tun.png")
-)
 ```
 
 Mělké tůně, louže v kolejích a malé mokřady jsou pro obojživelníky nenahraditelné: kladou do nich vajíčka a pulci v nich rostou, dokud se nepromění v malé žabky. Za suchých let ale mnoho takových tůní vyschne a po deštích se znovu naplní. Voda se vrátí, jenže dno, řasy a drobní živočichové, kterými se pulci živí, už nemusejí být stejné jako v tůni, která nikdy nevyschla.
@@ -259,31 +239,23 @@ data_nadrze_skryte <-
 
 pocet_nadrzi <- nrow(data_nadrze_skryte)
 pocet_zabek <- nrow(data_zabky_skryte)
-vec_upravy_nadrzi <- dplyr::pull(data_nadrze_skryte, .data$vyschnuti)
-pocet_nadrzi_vyschlych <- sum(vec_upravy_nadrzi == "vyschla")
-pocet_nadrzi_nevyschlych <- sum(vec_upravy_nadrzi == "nevyschla")
 ```
 
 # Žabky z pokusných nádrží
 
 ## Pokus se `r pocet_nadrzi` nádržemi
 
-```{r}
-#| label: zobrazit-pokusne-nadrze
-#| echo: false
-#| eval: !expr file.exists(file.path(cesta_obrazky, "zabky_pokusne_nadrze.png"))
-#| out-width: "80%"
-#| fig-align: center
-#| fig-cap: "Venkovní pokusné nádrže. Ilustrace vytvořená pomocí AI."
-#| fig-alt: "Louka terénní stanice s několika velkými kulatými nádržemi s vodou, částečně zakrytými stínicí sítí. Na okraji nejbližší nádrže sedí žába se zápisníkem a na síti odpočívá vážka. Ilustrace vytvořená pomocí AI."
-knitr::include_graphics(
-  path = file.path(cesta_obrazky, "zabky_pokusne_nadrze.png")
-)
-```
-
 Pokus provedli K. J. Ward, S. E. M. Burkhead, E. A. Stybr-Burrus a T. M. Luhring v roce 2021 na terénní stanici Wichita State University v Kansasu (Ward et al. 2023, *Freshwater Biology*). Na louce rozmístili 64 velkých plastových nádrží na vodu pro dobytek, každou o objemu 1 000 litrů, a udělali z nich malé umělé tůně. Polovina nádrží před začátkem pokusu vyschla a byla znovu napuštěna, druhá polovina zůstala celou dobu plná. Do části nádrží potom vysadili po 50 pulcích severoamerického skokana *Lithobates blairi*.
 
 Malé žabky po dokončení metamorfózy vylezly jen z nádrží, ve kterých byli pulci bez dravých ryb. Takových nádrží bylo `r pocet_nadrzi` a s nimi budeme pracovat. Jakmile žabka vylezla z vody, výzkumníci jí změřili délku těla a zvážili ji.
+
+```{r}
+#| label: spocitat-upravy-nadrzi
+#| echo: false
+vec_upravy_nadrzi <- dplyr::pull(data_nadrze_skryte, .data$vyschnuti)
+pocet_nadrzi_vyschlych <- sum(vec_upravy_nadrzi == "vyschla")
+pocet_nadrzi_nevyschlych <- sum(vec_upravy_nadrzi == "nevyschla")
+```
 
 ```{r}
 #| label: zobrazit-usporadani-pokusu
@@ -293,7 +265,7 @@ Malé žabky po dokončení metamorfózy vylezly jen z nádrží, ve kterých by
 #| fig-width: 7
 #| fig-height: 3.2
 #| fig-cap: "Uspořádání pokusu. Každý kruh je jedna nádrž; popisek uvnitř je označení nádrže (N a číslo nádrže v původním pokusu), číslo pod kruhem počet žabek, které z ní vylezly. O vyschnutí se rozhodovalo vždy pro celou nádrž."
-#| fig-alt: "Dvě řady po osmi kruzích. Horní řada modrých kruhů představuje nádrže, které nevyschly, dolní řada cihlově červených kruhů nádrže, které vyschly a byly znovu napuštěny. V každém kruhu je označení nádrže, například N27, a pod ním počet žabek."
+#| fig-alt: !expr 'stringr::str_glue("Dvě řady kruhů. Horní řada {pocet_nadrzi_nevyschlych} modrých kruhů představuje nádrže, které nevyschly, dolní řada {pocet_nadrzi_vyschlych} cihlově červených kruhů nádrže, které vyschly a byly znovu napuštěny. V každém kruhu je označení nádrže, například N27, a pod ním počet žabek.")'
 data_schema <-
   data_nadrze_skryte |>
   dplyr::arrange(.data$vyschnuti, .data$nadrz) |>
@@ -540,8 +512,6 @@ delka_max <- max(vec_delka)
 hmotnost_median <- median(vec_hmotnost)
 hmotnost_max <- max(vec_hmotnost)
 pocet_chybejicich <- sum(is.na(data_zabky_skryte))
-
-delka_median <- median(vec_delka)
 ```
 
 Tabulka má `r pocet_zabek` řádků a `r if (pocet_chybejicich == 0) "žádné chybějící hodnoty" else paste(pocet_chybejicich, "chybějících hodnot")`. Délka těla se pohybuje od `r delka_min` do `r delka_max` mm a výzkumníci ji zapisovali na celé milimetry. To odpovídá velikosti žabek krátce po metamorfóze. Suchá hmotnost má `r render_glossary_term("median", display = "medián")` `r format_cz(hmotnost_median, 3)` g, ale největší žabka vážila `r format_cz(hmotnost_max, 3)` g: `r render_glossary_term("rozdeleni", display = "rozdělení")` hmotnosti má dlouhý chvost vpravo, podobně jako mnoho velikostí z předchozí lekce.
@@ -577,7 +547,7 @@ Z nádrží vylezlo nestejně mnoho žabek: nejméně `r pocet_v_nadrzi_min`, ne
 
 ## Jak velké jsou žabky z vyschlých a nevyschlých nádrží?
 
-Začneme `r render_glossary_term("houslovy-graf", display = "houslovým grafem (violin plot)")` délky těla pro obě skupiny nádrží. Šířka „houslí" ukazuje, kolik žabek mělo danou délku; uvnitř je úzký `r render_glossary_term("boxplot", display = "krabicový graf (boxplot)")` s mediánem a body jsou jednotlivé žabky.
+Začneme `r render_glossary_term("houslovy-graf", display = "houslovým grafem (violin plot)")` délky těla pro obě skupiny nádrží. Šířka „houslí" ukazuje, kolik žabek mělo danou délku; uvnitř je úzký `r render_glossary_term("boxplot", display = "krabicový graf (boxplot)")` s mediánem, malé body jsou jednotlivé žabky a velký bod s tmavým okrajem je průměr skupiny.
 
 ```{r}
 #| label: nakreslit-delku-podle-vyschnuti
@@ -586,8 +556,8 @@ Začneme `r render_glossary_term("houslovy-graf", display = "houslovým grafem (
 #| warning: false
 #| fig-width: 6.5
 #| fig-height: 4.5
-#| fig-cap: "Délka těla žabek z nevyschlých a z vyschlých nádrží. Houslový graf ukazuje rozdělení délek, úzký krabicový graf medián a kvartily, body jednotlivé žabky."
-#| fig-alt: "Dva houslové grafy délky těla žabek, modrý pro nevyschlé a cihlově červený pro vyschlé nádrže, s úzkými krabicovými grafy a jednotlivými žabkami jako body. Žabky z vyschlých nádrží jsou v průměru zřetelně menší."
+#| fig-cap: "Délka těla žabek z nevyschlých a z vyschlých nádrží. Houslový graf ukazuje rozdělení délek, úzký krabicový graf medián a kvartily, malé body jednotlivé žabky a velký bod s tmavým okrajem průměr skupiny."
+#| fig-alt: "Dva houslové grafy délky těla žabek, modrý pro nevyschlé a cihlově červený pro vyschlé nádrže, s úzkými krabicovými grafy, jednotlivými žabkami jako malými body a průměrem skupiny jako velkým bodem. Žabky z vyschlých nádrží jsou v průměru zřetelně menší."
 set.seed(900723)
 
 ggplot2::ggplot(
@@ -629,6 +599,14 @@ ggplot2::ggplot(
     color = barva_text,
     outlier.shape = NA,
     alpha = 0.9
+  ) +
+  ggplot2::stat_summary(
+    fun = mean,
+    geom = "point",
+    shape = 21,
+    size = 7,
+    stroke = 1.6,
+    color = barva_text
   )
 ```
 
@@ -677,6 +655,11 @@ Jak velký je rozdíl mezi žabkami z vyschlých a nevyschlých nádrží? Přek
 ```{r}
 #| label: spocitat-prumery-skupin
 #| echo: false
+delka_median <-
+  data_zabky_skryte |>
+  dplyr::pull(.data$delka_tela_mm) |>
+  median()
+
 prumery_skupin <-
   data_zabky_skryte |>
   dplyr::group_by(.data$vyschnuti) |>
@@ -710,7 +693,7 @@ Stejná data můžeme rozdělit podle nádrží. Každý sloupec bodů v grafu j
 #| fig-width: 7.5
 #| fig-height: 4.2
 #| fig-cap: "Délka těla žabek v jednotlivých nádržích. Nádrže jsou seřazené podle průměrné délky žabek; černá vodorovná čárka ukazuje průměr nádrže."
-#| fig-alt: "Graf jednotlivých hodnot délky těla žabek pro všechny nádrže seřazené podle průměru. Modré nádrže, které nevyschly, mají vyšší průměry než cihlově červené nádrže, které vyschly. Žabky z jedné nádrže mají podobné délky a průměry nádrží se liší i v rámci stejné úpravy."
+#| fig-alt: "Graf jednotlivých hodnot délky těla žabek pro všechny nádrže seřazené podle průměru. Modré nádrže, které nevyschly, mají většinou vyšší průměry než cihlově červené nádrže, které vyschly. Žabky z jedné nádrže mají podobné délky a průměry nádrží se liší i v rámci stejné úpravy."
 set.seed(900723)
 
 data_poradi_nadrzi <-
@@ -769,6 +752,47 @@ ggplot2::ggplot(
   )
 ```
 
+::: {.box-extra title="Doplňující: jak si skupiny prohlédnout v R" collapse="true"}
+U vlastních dat si skupiny prohlédnete jednou funkcí základní grafiky. Funkce `stripchart()` nakreslí jednotlivé hodnoty pro každou nádrž a `method = "jitter"` je mírně rozptýlí do stran, aby se nepřekrývaly. Vodorovné čárky označují průměry nádrží.
+
+```{r}
+#| label: ukazat-kod-zabky-podle-nadrzi
+#| echo: true
+#| eval: true
+#| fig-width: 7.5
+#| fig-height: 4.2
+#| fig-cap: "Délka těla žabek v jednotlivých nádržích nakreslená základní grafikou; nádrže jsou v pořadí podle čísla."
+#| fig-alt: "Graf jednotlivých hodnot délky těla žabek pro všechny nádrže seřazené podle čísla nádrže. Každý sloupec šedých bodů je jedna nádrž a černá vodorovná čárka označuje její průměr. Žabky z jedné nádrže mají podobné délky a průměry nádrží se od sebe liší."
+set.seed(900723)
+
+# Jednotlivé žabky: jeden sloupec bodů pro každou nádrž
+stripchart(
+  x = delka_tela_mm ~ nadrz,
+  data = data_zabky,
+  vertical = TRUE,
+  method = "jitter",
+  jitter = 0.2,
+  pch = 16,
+  col = "grey50",
+  las = 2,
+  xlab = "Nádrž",
+  ylab = "Délka těla (mm)"
+)
+
+# Průměr každé nádrže jako vodorovná čárka
+points(
+  x = seq_len(nlevels(data_zabky$nadrz)),
+  y = tapply(
+    X = data_zabky$delka_tela_mm,
+    INDEX = data_zabky$nadrz,
+    FUN = mean
+  ),
+  pch = "-",
+  cex = 3
+)
+```
+:::
+
 ::: {.box-question title="Co mají společného žabky z jedné nádrže?"}
 Podívejte se na jednu nádrž a porovnejte ji s ostatními. Jsou si žabky z jedné nádrže podobnější než žabky z různých nádrží? Liší se od sebe i nádrže se stejnou úpravou?
 :::
@@ -821,7 +845,7 @@ Data mají dvě úrovně: žabky jsou seskupené v nádržích a úpravu dostaly
 #| fig-width: 7
 #| fig-height: 3
 #| fig-cap: "Hierarchie dat v pokusu: úprava (vyschnutí) byla přidělena nádržím, žabky jsou seskupené v nádržích. Schéma ukazuje jen několik nádrží a žabek."
-#| fig-alt: "Schéma ve třech řádcích. Nahoře dvě úpravy, nevyschla a vyschla. Pod každou úpravou vedou čáry ke čtyřem nádržím a od každé nádrže tři čáry k jednotlivým žabkám."
+#| fig-alt: "Schéma ve třech řádcích. Nahoře dvě úpravy, modrá nevyschla a cihlově červená vyschla. Pod každou úpravou vedou čáry ke čtyřem nádržím v barvě úpravy a od každé nádrže tři šedé čáry k jednotlivým žabkám."
 data_uroven_uprava <-
   tibble::tibble(
     x = c(2.5, 7.5),
@@ -833,7 +857,8 @@ data_uroven_nadrz <-
   tibble::tibble(
     x = c(1, 2, 3, 4, 6, 7, 8, 9),
     y = 2,
-    rodic_x = rep(c(2.5, 7.5), each = 4)
+    rodic_x = rep(c(2.5, 7.5), each = 4),
+    vyschnuti = rep(c("nevyschla", "vyschla"), each = 4)
   )
 
 data_uroven_zabka <-
@@ -850,6 +875,14 @@ data_uroven_zabka <-
 ggplot2::ggplot() +
   ggplot2::scale_x_continuous(limits = c(-1.2, 10)) +
   ggplot2::scale_y_continuous(limits = c(0.7, 3.3)) +
+  ggplot2::scale_fill_manual(
+    values = barvy_vyschnuti,
+    guide = "none"
+  ) +
+  ggplot2::scale_color_manual(
+    values = barvy_vyschnuti,
+    guide = "none"
+  ) +
   ggplot2::theme_void(base_size = 12) +
   ggplot2::geom_segment(
     data = data_uroven_nadrz,
@@ -857,9 +890,10 @@ ggplot2::ggplot() +
       x = .data$rodic_x,
       y = 3,
       xend = .data$x,
-      yend = 2
+      yend = 2,
+      color = .data$vyschnuti
     ),
-    color = barva_data
+    linewidth = 0.8
   ) +
   ggplot2::geom_segment(
     data = data_uroven_zabka,
@@ -876,16 +910,22 @@ ggplot2::ggplot() +
     mapping = ggplot2::aes(
       x = .data$x,
       y = .data$y,
-      label = .data$popis
+      label = .data$popis,
+      fill = .data$popis
     ),
+    color = "white",
+    fontface = "bold",
     size = 3.8
   ) +
   ggplot2::geom_point(
     data = data_uroven_nadrz,
-    mapping = ggplot2::aes(x = .data$x, y = .data$y),
+    mapping = ggplot2::aes(
+      x = .data$x,
+      y = .data$y,
+      fill = .data$vyschnuti
+    ),
     shape = 21,
     size = 7,
-    fill = "grey85",
     color = barva_text
   ) +
   ggplot2::geom_point(
@@ -1434,11 +1474,256 @@ Když v zápisu modelu uvedeme vyschnutí před nádrží (`delka_tela_mm ~ vysc
 
 Proč model selhal? Každá nádrž buď vyschla, nebo nevyschla. Jakmile má každá nádrž v modelu vlastní koeficient, je v nich zahrnuto i vyschnutí: `r render_glossary_term("prumer", display = "průměr")` vyschlých nádrží je jen průměr několika nádrží. Pro samostatný koeficient vyschnutí už v datech nezbývá žádná informace.
 
+Dobře to ukáže mřížka modelu. Každý řádek zastupuje všechny žabky jedné nádrže (nádrže jsou seřazené jako ve schématu pokusu), každý sloupec jeden koeficient modelu s nádrží jako kategoriálním prediktorem a poslední sloupec koeficient vyschnutí. Jednička znamená, že sloupec patří k řádku. Mřížka pro přehlednost ukazuje všechny nádrže; v R se jedna nádrž stává referenční a její úroveň je součástí interceptu, takže pro ni tabulka koeficientů nemá vlastní řádek.
+
+```{r}
+#| label: nakreslit-prekryv-informace
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 7.5
+#| fig-height: 5.6
+#| fig-cap: "Mřížka modelu s nádrží jako kategoriálním prediktorem. Řádky jsou nádrže, sloupce koeficienty jednotlivých nádrží a oddělený sloupec vyschla. Oranžové rámečky ukazují, že sloupec vyschla je součtem sloupců vyschlých nádrží."
+#| fig-alt: !expr 'stringr::str_glue("Mřížka s {pocet_nadrzi} řádky pro nádrže a {pocet_nadrzi + 1} sloupci pro koeficienty modelu: jeden sloupec pro každou nádrž a oddělený sloupec vyschla. Každá nádrž má jedničku jen ve svém sloupci. Sloupec vyschla má jedničky přesně u {pocet_nadrzi_vyschlych} vyschlých nádrží; oranžový rámeček ukazuje, že je to součet sloupců vyschlých nádrží.")'
+# Tank order of the design schematic: non-dried tanks first, both
+#    treatments in numeric tank order
+vec_nadrze_matice <-
+  data_nadrze_skryte |>
+  dplyr::arrange(.data$vyschnuti, .data$nadrz) |>
+  dplyr::pull(.data$nadrz) |>
+  as.character()
+
+pocet_nadrzi_matice <- length(vec_nadrze_matice)
+pozice_vyschla <- pocet_nadrzi_matice + 2
+
+data_uprava_nadrzi <-
+  data_nadrze_skryte |>
+  dplyr::mutate(radek_nadrz = as.character(.data$nadrz)) |>
+  dplyr::select("radek_nadrz", "vyschnuti")
+
+data_matice <-
+  tidyr::expand_grid(
+    radek_nadrz = vec_nadrze_matice,
+    sloupec = c(vec_nadrze_matice, "vyschla")
+  ) |>
+  dplyr::left_join(
+    y = data_uprava_nadrzi,
+    by = dplyr::join_by("radek_nadrz"),
+    multiple = "error",
+    unmatched = "error"
+  ) |>
+  dplyr::mutate(
+    je_jedna = dplyr::if_else(
+      condition = .data$sloupec == "vyschla",
+      true = .data$vyschnuti == "vyschla",
+      false = .data$sloupec == .data$radek_nadrz
+    ),
+    vypln = dplyr::if_else(
+      condition = .data$je_jedna,
+      true = as.character(.data$vyschnuti),
+      false = "nula"
+    ),
+    x = dplyr::if_else(
+      condition = .data$sloupec == "vyschla",
+      true = pozice_vyschla,
+      false = match(.data$sloupec, vec_nadrze_matice)
+    ),
+    y = pocet_nadrzi_matice + 1 - match(.data$radek_nadrz, vec_nadrze_matice)
+  )
+
+# The orange frames mark the dried-tank columns and the vyschla column,
+#    which contains the same ones in the same rows
+data_ramecky <-
+  tibble::tibble(
+    xmin = c(pocet_nadrzi_nevyschlych + 0.5, pozice_vyschla - 0.5),
+    xmax = c(pocet_nadrzi_matice + 0.5, pozice_vyschla + 0.5),
+    ymin = 0.5,
+    ymax = pocet_nadrzi_vyschlych + 0.5
+  )
+
+ggplot2::ggplot(
+  data = data_matice,
+  mapping = ggplot2::aes(
+    x = .data$x,
+    y = .data$y
+  )
+) +
+  ggplot2::scale_fill_manual(
+    values = c(barvy_vyschnuti, "nula" = "#ECE8E2"),
+    guide = "none"
+  ) +
+  ggplot2::scale_x_continuous(
+    breaks = c(seq_len(pocet_nadrzi_matice), pozice_vyschla),
+    labels = c(vec_nadrze_matice, "vyschla"),
+    position = "top",
+    expand = ggplot2::expansion(add = 0.2)
+  ) +
+  ggplot2::scale_y_continuous(
+    breaks = seq_len(pocet_nadrzi_matice),
+    labels = rev(vec_nadrze_matice),
+    expand = ggplot2::expansion(add = 0.2)
+  ) +
+  ggplot2::labs(
+    x = "Sloupce modelu: koeficient každé nádrže a vyschnutí",
+    y = "Žabky z nádrže"
+  ) +
+  ggplot2::theme_bw(base_size = 11) +
+  ggplot2::theme(
+    panel.grid = ggplot2::element_blank(),
+    panel.border = ggplot2::element_blank(),
+    axis.ticks = ggplot2::element_blank(),
+    axis.title.x.top = ggplot2::element_text(
+      margin = ggplot2::margin(b = 8)
+    ),
+    axis.text.x.top = ggplot2::element_text(
+      angle = 90,
+      vjust = 0.5,
+      hjust = 0
+    )
+  ) +
+  ggplot2::geom_tile(
+    mapping = ggplot2::aes(fill = .data$vypln),
+    color = "white",
+    linewidth = 0.8
+  ) +
+  ggplot2::geom_text(
+    data = dplyr::filter(data_matice, .data$je_jedna),
+    label = "1",
+    color = "white",
+    fontface = "bold",
+    size = 3.2
+  ) +
+  ggplot2::geom_rect(
+    data = data_ramecky,
+    mapping = ggplot2::aes(
+      xmin = .data$xmin,
+      xmax = .data$xmax,
+      ymin = .data$ymin,
+      ymax = .data$ymax
+    ),
+    inherit.aes = FALSE,
+    fill = NA,
+    color = barva_zvyrazneni,
+    linewidth = 1.4
+  )
+```
+
+Sloupec `vyschla` má jedničky přesně v řádcích vyschlých nádrží, tedy tam, kde je mají sloupce vyschlých nádrží: je to jejich **součet** (oranžové rámečky). Tuto mřížku vidí R, když vypíše `NA` a hlášku `not defined because of singularities`: sloupec, který se dá poskládat z jiných sloupců, nenese žádnou novou informaci, a jeho koeficient proto nejde odhadnout.
+
 Nádrž jsme tu použili jako `r render_glossary_term("pevny-faktor", display = "pevný faktor")`: kategoriální prediktor, jehož každá úroveň má v modelu vlastní koeficient a jehož konkrétní úrovně nás zajímají. Z toho plyne obecné pravidlo:
 
 ::: {.box-rule title="Pravidlo pro analýzu"}
 Prediktor, který se mění jen mezi skupinami, nemůže být v modelu zároveň se skupinou jako pevným faktorem. Skupina by „spotřebovala" všechnu informaci, ze které by se jeho vliv dal odhadnout.
 :::
+
+Pravidlo se týká prediktoru, který se mění jen mezi nádržemi. Vymyšlený pokus, ve kterém by se úprava měnila uvnitř nádrží, vypadá jinak: každá ze čtyř nádrží je přepážkou rozdělená na polovinu, kde pulce přikrmujeme, a polovinu bez krmení. Data k němu nemáme, slouží jen k porovnání mřížek.
+
+```{r}
+#| label: nakreslit-uprava-uvnitr-nadrzi
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 6.5
+#| fig-height: 4
+#| fig-cap: "Mřížka modelu pro vymyšlený pokus se čtyřmi nádržemi A až D, každou rozdělenou na přikrmenou polovinu a polovinu bez krmení. Řádky jsou poloviny nádrží, sloupce koeficienty nádrží a oddělený sloupec přikrmeno."
+#| fig-alt: "Mřížka pro vymyšlený pokus se čtyřmi nádržemi A až D, každá rozdělená na dvě poloviny. Řádky jsou poloviny nádrží, sloupce koeficienty nádrží a oddělený sloupec přikrmeno. Každá nádrž má jedničky v obou svých řádcích; sloupec přikrmeno má jedničku jen u jedné poloviny každé nádrže, proto není součtem žádných sloupců nádrží."
+# Hypothetical teaching design: four tanks, each split into a fed and an
+#    unfed half, so that the treatment varies within tanks
+vec_nadrze_navrh <- c("A", "B", "C", "D")
+
+data_navrh_poloviny <-
+  tidyr::expand_grid(
+    nadrz = vec_nadrze_navrh,
+    prikrmeno = c(TRUE, FALSE)
+  ) |>
+  dplyr::mutate(
+    radek = dplyr::if_else(
+      condition = .data$prikrmeno,
+      true = stringr::str_glue("{.data$nadrz}: přikrmená"),
+      false = stringr::str_glue("{.data$nadrz}: bez krmení")
+    ),
+    y = dplyr::n() + 1 - dplyr::row_number()
+  )
+
+pozice_prikrmeno <- length(vec_nadrze_navrh) + 2
+
+data_navrh_matice <-
+  tidyr::expand_grid(
+    data_navrh_poloviny,
+    sloupec = c(vec_nadrze_navrh, "přikrmeno")
+  ) |>
+  dplyr::mutate(
+    je_jedna = dplyr::if_else(
+      condition = .data$sloupec == "přikrmeno",
+      true = .data$prikrmeno,
+      false = .data$sloupec == .data$nadrz
+    ),
+    vypln = dplyr::case_when(
+      !.data$je_jedna ~ "nula",
+      .data$sloupec == "přikrmeno" ~ "uprava",
+      .default = "nadrz"
+    ),
+    x = dplyr::if_else(
+      condition = .data$sloupec == "přikrmeno",
+      true = pozice_prikrmeno,
+      false = match(.data$sloupec, vec_nadrze_navrh)
+    )
+  )
+
+ggplot2::ggplot(
+  data = data_navrh_matice,
+  mapping = ggplot2::aes(
+    x = .data$x,
+    y = .data$y
+  )
+) +
+  ggplot2::scale_fill_manual(
+    values = c(
+      "nadrz" = barva_text,
+      "uprava" = barva_zvyrazneni,
+      "nula" = "#ECE8E2"
+    ),
+    guide = "none"
+  ) +
+  ggplot2::scale_x_continuous(
+    breaks = c(seq_along(vec_nadrze_navrh), pozice_prikrmeno),
+    labels = c(vec_nadrze_navrh, "přikrmeno"),
+    position = "top",
+    expand = ggplot2::expansion(add = 0.2)
+  ) +
+  ggplot2::scale_y_continuous(
+    breaks = dplyr::pull(data_navrh_poloviny, .data$y),
+    labels = dplyr::pull(data_navrh_poloviny, .data$radek),
+    expand = ggplot2::expansion(add = 0.2)
+  ) +
+  ggplot2::labs(
+    x = "Sloupce modelu: koeficient každé nádrže a přikrmení",
+    y = NULL
+  ) +
+  ggplot2::theme_bw(base_size = 11) +
+  ggplot2::theme(
+    panel.grid = ggplot2::element_blank(),
+    panel.border = ggplot2::element_blank(),
+    axis.ticks = ggplot2::element_blank(),
+    axis.title.x.top = ggplot2::element_text(
+      margin = ggplot2::margin(b = 8)
+    )
+  ) +
+  ggplot2::geom_tile(
+    mapping = ggplot2::aes(fill = .data$vypln),
+    color = "white",
+    linewidth = 1
+  ) +
+  ggplot2::geom_text(
+    data = dplyr::filter(data_navrh_matice, .data$je_jedna),
+    label = "1",
+    color = "white",
+    fontface = "bold",
+    size = 3.8
+  )
+```
+
+Sloupec `přikrmeno` tu není součtem sloupců nádrží, protože jedničku má v každé nádrži jen u jedné poloviny. Když se úprava mění **uvnitř** nádrží, model ji proto může odhadnout vedle nádrže jako pevného faktoru: porovná poloviny uvnitř každé nádrže a rozdíly mezi nádržemi z porovnání odstraní. Takovou proměnnou v datech žabek máme: den metamorfózy, který se mění uvnitř každé nádrže, jak ukazuje následující část.
 
 ## Souvisí den metamorfózy s délkou žabky?
 
@@ -1654,19 +1939,6 @@ Uvnitř tůně se mění velikost a stadium larev a datum odběru. Lesní a poln
 
 ## Nádrže jako výběr z mnoha možných tůní
 
-```{r}
-#| label: zobrazit-tune-v-krajine
-#| echo: false
-#| eval: !expr file.exists(file.path(cesta_obrazky, "zabky_tune_v_krajine.png"))
-#| out-width: "80%"
-#| fig-align: center
-#| fig-cap: "Několik pokusných nádrží zastupuje mnoho možných tůní v krajině. Ilustrace vytvořená pomocí AI."
-#| fig-alt: "Pohled z kopce na krajinu s mnoha tůněmi a rybníčky v loukách, u polí i u lesa. V popředí stojí několik pokusných nádrží a žába ukazuje směrem k tůním v krajině; vážka letí od nádrží k tůním. Ilustrace vytvořená pomocí AI."
-knitr::include_graphics(
-  path = file.path(cesta_obrazky, "zabky_tune_v_krajine.png")
-)
-```
-
 Zajímá nás nádrž N27 sama o sobě? Ne. Nádrže jsou pro nás `r render_glossary_term("vyber", display = "výběr")` z mnoha tůní, které mohly vyschnout, nebo nevyschnout. Kdybychom pokus opakovali, použili bychom jiné nádrže, s jinou vodou a jinými řasami. Zajímá nás, jak moc se tůně mezi sebou typicky liší, a ne, o kolik je právě nádrž N27 lepší než nádrž N54.
 
 Délku každé žabky si můžeme představit jako tři vrstvy položené na sebe:
@@ -1682,8 +1954,8 @@ Délku každé žabky si můžeme představit jako tři vrstvy položené na seb
 #| warning: false
 #| fig-width: 7
 #| fig-height: 7.5
-#| fig-cap: "Délky žabek poskládané ze tří vrstev. Nahoře jen průměry obou úprav, uprostřed navíc posun každé nádrže (oranžová šipka od průměru úpravy k průměru nádrže, černá čárka), dole navíc jednotlivé žabky. Nádrže jsou seřazené podle úpravy a průměrné délky žabek."
-#| fig-alt: "Tři panely se stejnou svislou osou délky těla. V horním panelu jsou jen dvě vodorovné úsečky, modrá pro nevyschlé a cihlově červená pro vyschlé nádrže. V prostředním panelu vedou od úseček oranžové šipky k průměrům jednotlivých nádrží, některé nahoru, jiné dolů. V dolním panelu jsou kolem průměrů nádrží šedé body jednotlivých žabek."
+#| fig-cap: "Délky žabek poskládané ze tří vrstev. Nahoře jen průměry obou úprav, uprostřed navíc posun každé nádrže (oranžová šipka od průměru úpravy k průměru nádrže, černá čárka), dole navíc jednotlivé žabky a tenké šedé čáry od každé žabky k průměru její nádrže. Nádrže jsou seřazené podle úpravy a průměrné délky žabek."
+#| fig-alt: "Tři panely se stejnou svislou osou délky těla. V horním panelu jsou jen dvě vodorovné úsečky, modrá pro nevyschlé a cihlově červená pro vyschlé nádrže. V prostředním panelu vedou od úseček oranžové šipky k průměrům jednotlivých nádrží, některé nahoru, jiné dolů. V dolním panelu jsou kolem průměrů nádrží šedé body jednotlivých žabek a od každé žabky vede tenká šedá čára k průměru její nádrže."
 set.seed(900723)
 
 prumery_uprav_nadrzi <-
@@ -1737,12 +2009,14 @@ data_vrstvy_posuny <-
 data_vrstvy_zabky <-
   data_zabky_skryte |>
   dplyr::left_join(
-    dplyr::select(data_vrstvy_nadrze, "nadrz", "poradi"),
+    dplyr::select(data_vrstvy_nadrze, "nadrz", "poradi", "prumerna_delka_mm"),
     by = dplyr::join_by(nadrz),
     multiple = "error",
     unmatched = "error"
   ) |>
   dplyr::mutate(
+    # Jitter is drawn by hand so that each residual line starts at its point
+    poradi_bod = .data$poradi + stats::runif(dplyr::n(), -0.18, 0.18),
     panel = factor(vec_panely_vrstev[3], levels = vec_panely_vrstev)
   )
 
@@ -1768,14 +2042,24 @@ ggplot2::ggplot() +
     legend.position = "top",
     panel.grid.minor = ggplot2::element_blank()
   ) +
-  ggplot2::geom_jitter(
+  ggplot2::geom_segment(
     data = data_vrstvy_zabky,
     mapping = ggplot2::aes(
-      x = .data$poradi,
+      x = .data$poradi_bod,
+      xend = .data$poradi_bod,
+      y = .data$delka_tela_mm,
+      yend = .data$prumerna_delka_mm
+    ),
+    alpha = 0.4,
+    linewidth = 0.3,
+    color = barva_data
+  ) +
+  ggplot2::geom_point(
+    data = data_vrstvy_zabky,
+    mapping = ggplot2::aes(
+      x = .data$poradi_bod,
       y = .data$delka_tela_mm
     ),
-    width = 0.18,
-    height = 0.2,
     alpha = 0.35,
     size = 0.9,
     color = barva_data
@@ -1817,7 +2101,7 @@ ggplot2::ggplot() +
 
 Posuny nádrží v prostředním panelu vedou na obě strany, některé nahoru, jiné dolů, a jen málokterý je velký. Můžeme si je představit jako náhodné tahy z rozdělení, které má tvar podobný `r render_glossary_term("normalni-rozdeleni", display = "normálnímu rozdělení")` z předchozí lekce. Takovou skupinovou proměnnou, jejíž úrovně chápeme jako výběr z většího souboru možných úrovní, nazýváme `r render_glossary_term("nahodny-faktor", display = "náhodný faktor")`. Posuny jednotlivých skupin od průměru jsou pak **náhodné efekty**. <!-- TODO: add slug nahodny-efekt to pojmy.yaml -->
 
-Dolní panel ukazuje, proč na rozlišení obou vrstev záleží. `r render_glossary_term("linearni-model", display = "Lineární model")`, který nádrže nezná, sloučí posun nádrže a odchylku žabky do jediného `r render_glossary_term("residuum", display = "residua")`. Model s náhodným faktorem je drží odděleně: ví, které žabky sdílejí stejný posun, protože pocházejí ze stejné nádrže.
+Dolní panel ukazuje, proč na rozlišení obou vrstev záleží: tenké šedé čáry od žabek k průměru jejich nádrže jsou odchylky žabek, tedy residua vůči nádrži. `r render_glossary_term("linearni-model", display = "Lineární model")`, který nádrže nezná, sloučí posun nádrže a odchylku žabky do jediného `r render_glossary_term("residuum", display = "residua")`. Model s náhodným faktorem je drží odděleně: ví, které žabky sdílejí stejný posun, protože pocházejí ze stejné nádrže.
 
 ## Z čeho se skládá délka jedné žabky
 
@@ -2074,6 +2358,125 @@ V části `Random effects` výstupu jsou dva řádky:
 
 - `nadrz (Intercept)`: `r render_glossary_term("smerodatna-odchylka", display = "směrodatná odchylka")` výchozích úrovní nádrží, `r format_cz(sd_nadrze, 2)` mm. Typická nádrž se od `r render_glossary_term("prumer", display = "průměru")` své úpravy liší asi o `r format_cz(sd_nadrze, 1)` mm.
 - `Residual`: směrodatná odchylka `r render_glossary_term("residuum", display = "residuí")`, `r format_cz(sd_zabky, 2)` mm. Typická žabka se od výchozí úrovně své nádrže liší asi o `r format_cz(sd_zabky, 1)` mm.
+
+Výchozí úrovně nádrží si lze nakreslit i bez dalších balíčků. Následující kód vezme žabky seřazené podle průměru jejich nádrže, obarví je podle úpravy, pro každou nádrž spočítá její výchozí úroveň (odhad pro danou úpravu plus odchylka nádrže z `glmmTMB::ranef()`) a vedle ní vykreslí odhad jen z pevných efektů pro obě úpravy.
+
+```{r}
+#| label: nakreslit-smiseny-model
+#| echo: true
+#| eval: true
+#| fig-width: 7.5
+#| fig-height: 4.8
+#| fig-cap: "Smíšený model v datech. Body jsou žabky seřazené podle nádrží a obarvené podle úpravy, nevyschlé nádrže modře a vyschlé cihlově červeně. Fialové úsečky jsou výchozí úrovně nádrží z modelu, přerušované čáry odhad jen z pevných efektů pro nevyschlé a vyschlé nádrže."
+#| fig-alt: "Bodový graf délky těla žabek, na vodorovné ose jsou nádrže seřazené podle průměrné délky žabek. Body žabek z nevyschlých nádrží jsou modré, z vyschlých cihlově červené. Nad každou nádrží je krátká fialová úsečka, výchozí úroveň z modelu. Dvě vodorovné přerušované čáry, modrá nahoře pro nevyschlé a cihlově červená níže pro vyschlé nádrže, ukazují odhad jen z pevných efektů. Fialové úsečky se kolem čar své úpravy rozcházejí na obě strany."
+set.seed(900723)
+
+# Barvy použité v grafu
+barva_nevyschla <- "#2E6CA4"
+barva_vyschla <- "#C2613A"
+barva_nadrze <- "#5D2890"
+
+# Odhady pevných efektů a odchylky nádrží z modelu
+vec_pevne <- glmmTMB::fixef(object = mod_smiseny)$cond
+mat_odchylky <- glmmTMB::ranef(object = mod_smiseny)$cond$nadrz
+
+# Jeden řádek pro každou nádrž: úprava a výchozí úroveň z modelu
+data_nadrze_model <- unique(x = data_zabky[, c("nadrz", "vyschnuti")])
+data_nadrze_model$uroven <-
+  vec_pevne["(Intercept)"] +
+  vec_pevne["vyschnutivyschla"] * (data_nadrze_model$vyschnuti == "vyschla") +
+  mat_odchylky[as.character(x = data_nadrze_model$nadrz), "(Intercept)"]
+
+# Nádrže seřazené podle průměrné délky žabek
+vec_prumery_nadrzi <-
+  tapply(
+    X = data_zabky$delka_tela_mm,
+    INDEX = data_zabky$nadrz,
+    FUN = mean
+  )
+vec_poradi_nadrzi <- names(x = sort(x = vec_prumery_nadrzi))
+
+# Pozice nádrže na vodorovné ose pro každou žabku a pro každou nádrž
+vec_pozice_zabek <-
+  match(
+    x = as.character(x = data_zabky$nadrz),
+    table = vec_poradi_nadrzi
+  )
+vec_pozice_nadrzi <-
+  match(
+    x = as.character(x = data_nadrze_model$nadrz),
+    table = vec_poradi_nadrzi
+  )
+
+# Barva každé žabky podle úpravy její nádrže (poloprůhledná)
+vec_barvy_zabek <-
+  adjustcolor(
+    col = ifelse(
+      test = data_zabky$vyschnuti == "vyschla",
+      yes = barva_vyschla,
+      no = barva_nevyschla
+    ),
+    alpha.f = 0.5
+  )
+
+# Žabky s malým náhodným posunem do stran, aby se body nepřekrývaly
+plot(
+  x = jitter(
+    x = vec_pozice_zabek,
+    amount = 0.2
+  ),
+  y = data_zabky$delka_tela_mm,
+  xaxt = "n",
+  pch = 16,
+  col = vec_barvy_zabek,
+  xlab = "Nádrž (seřazeno podle průměrné délky žabek)",
+  ylab = "Délka těla (mm)"
+)
+axis(
+  side = 1,
+  at = seq_along(along.with = vec_poradi_nadrzi),
+  labels = vec_poradi_nadrzi,
+  las = 2
+)
+
+# Výchozí úroveň každé nádrže jako krátká fialová úsečka
+segments(
+  x0 = vec_pozice_nadrzi - 0.4,
+  x1 = vec_pozice_nadrzi + 0.4,
+  y0 = data_nadrze_model$uroven,
+  y1 = data_nadrze_model$uroven,
+  col = barva_nadrze,
+  lwd = 4
+)
+
+# Odhad jen z pevných efektů pro obě úpravy
+abline(
+  h = vec_pevne["(Intercept)"],
+  col = barva_nevyschla,
+  lty = 2,
+  lwd = 2
+)
+abline(
+  h = vec_pevne["(Intercept)"] + vec_pevne["vyschnutivyschla"],
+  col = barva_vyschla,
+  lty = 2,
+  lwd = 2
+)
+
+# Legenda: barvy úprav a výchozí úroveň nádrže
+legend(
+  x = "bottomright",
+  legend = c("nevyschla", "vyschla", "výchozí úroveň nádrže"),
+  col = c(barva_nevyschla, barva_vyschla, barva_nadrze),
+  pch = c(16, 16, NA),
+  lty = c(2, 2, 1),
+  lwd = c(2, 2, 4),
+  cex = 0.75,
+  bg = "white"
+)
+```
+
+Přerušované čáry ukazují odhad rozdílu po vyschnutí, zatímco fialové úsečky se kolem čáry své úpravy rozcházejí na obě strany: právě tento rozptyl výchozích úrovní nádrží měří řádek `nadrz (Intercept)`.
 
 ::: {.box-question title="Kde je víc variability?"}
 Liší se víc nádrže mezi sebou, nebo žabky uvnitř jedné nádrže?
@@ -2383,7 +2786,7 @@ ggplot2::ggplot() +
       yintercept = .data$prumerna_delka_mm,
       color = .data$vyschnuti
     ),
-    linewidth = 1
+    linewidth = 3.2
   ) +
   ggplot2::geom_hline(
     data = data_tri_panely,
@@ -2403,34 +2806,78 @@ Stejný obraz pro všech `r pocet_nadrzi` nádrží:
 #| message: false
 #| warning: false
 #| fig-width: 7.5
-#| fig-height: 4.2
-#| fig-cap: "Pro každou nádrž: průměr jejích žabek (prázdný kruh) a výchozí úroveň odhadnutá smíšeným modelem (fialový bod). Oranžová šipka vede od průměru nádrže k odhadu modelu. Přerušované čáry ukazují odhad modelu pro nevyschlé a vyschlé nádrže. Nádrže jsou seřazené podle počtu žabek."
-#| fig-alt: "Pro každou nádrž, seřazenou podle počtu žabek, je nakreslen prázdný kruh a fialový bod spojené oranžovou šipkou. Fialové body leží o něco blíž k přerušované čáře své úpravy než prázdné průměry. Nejdelší šipky jsou u nádrží s nejmenším počtem žabek, u velkých nádrží šipky téměř mizí."
-ggplot2::ggplot(
-  data = data_vychozi_urovne,
-  mapping = ggplot2::aes(
-    x = .data$nadrz_popis,
-    color = .data$vyschnuti
+#| fig-height: 6.2
+#| fig-cap: "Horní panel: pro každou nádrž průměr jejích žabek (prázdný kruh) a výchozí úroveň odhadnutá smíšeným modelem (fialový bod). Oranžová šipka vede od průměru nádrže k odhadu modelu. Dolní panel: stejný posun v milimetrech, velikost bodu odpovídá počtu žabek. Přerušované čáry v barvě úpravy ukazují odhad modelu pro nevyschlé a vyschlé nádrže. Nádrže jsou seřazené podle průměrné délky žabek, pod názvem nádrže je počet žabek."
+#| fig-alt: "Pro každou nádrž, seřazenou podle průměrné délky žabek, je nakreslen prázdný kruh a fialový bod spojené oranžovou šipkou. Přerušované čáry v barvě úpravy, modrá pro nevyschlé a cihlově červená pro vyschlé nádrže, ukazují odhad modelu pro obě úpravy. Fialové body leží o něco blíž k přerušované čáře své úpravy než prázdné průměry. Dolní panel ukazuje stejný posun jako oranžovou úsečku od nuly s bodem, jehož velikost odpovídá počtu žabek. Největší posuny mají malé body, tedy nádrže s malým počtem žabek, který je uveden pod názvem nádrže; u nádrží s mnoha žabkami je posun téměř nulový."
+# Tanks on the x axis ordered by mean froglet length; the froglet count stays
+#    in the label
+data_vychozi_urovne_graf <-
+  data_vychozi_urovne |>
+  dplyr::mutate(
+    nadrz_popis = forcats::fct_reorder(
+      .f = .data$nadrz_popis,
+      .x = .data$prumerna_delka_mm
+    )
   )
-) +
+
+vec_panely_urovne <-
+  c(
+    "Průměr nádrže (kruh) a odhad modelu (bod), délka těla v mm",
+    "Posun odhadu modelu od průměru nádrže (mm); velikost bodu = počet žabek"
+  )
+
+data_urovne_panel_1 <-
+  data_vychozi_urovne_graf |>
+  dplyr::mutate(
+    panel = factor(vec_panely_urovne[1], levels = vec_panely_urovne)
+  )
+
+data_urovne_panel_2 <-
+  data_vychozi_urovne_graf |>
+  dplyr::mutate(
+    posun_odhadu = .data$uroven_modelu - .data$prumerna_delka_mm,
+    panel = factor(vec_panely_urovne[2], levels = vec_panely_urovne)
+  )
+
+data_urovne_uprav_panel <-
+  data_urovne_uprav |>
+  dplyr::mutate(
+    panel = factor(vec_panely_urovne[1], levels = vec_panely_urovne)
+  )
+
+ggplot2::ggplot() +
+  ggplot2::facet_wrap(
+    ggplot2::vars(.data$panel),
+    ncol = 1,
+    scales = "free_y"
+  ) +
   ggplot2::scale_color_manual(
     values = barvy_vyschnuti,
     name = "Nádrž"
   ) +
+  ggplot2::scale_size_continuous(
+    range = c(1.5, 5),
+    name = "Počet žabek"
+  ) +
   ggplot2::labs(
     x = "Nádrž (počet žabek)",
-    y = "Délka těla (mm)"
+    y = NULL
   ) +
   ggplot2::theme_bw(base_size = 11) +
   ggplot2::theme(legend.position = "top") +
   ggplot2::geom_hline(
-    data = data_urovne_uprav,
-    mapping = ggplot2::aes(yintercept = .data$uroven),
-    color = barva_text,
-    linetype = "dashed"
+    data = data_urovne_uprav_panel,
+    mapping = ggplot2::aes(
+      yintercept = .data$uroven,
+      color = .data$vyschnuti
+    ),
+    linetype = "dashed",
+    linewidth = 0.8
   ) +
   ggplot2::geom_segment(
+    data = data_urovne_panel_1,
     mapping = ggplot2::aes(
+      x = .data$nadrz_popis,
       xend = .data$nadrz_popis,
       y = .data$prumerna_delka_mm,
       yend = .data$uroven_modelu
@@ -2440,15 +2887,50 @@ ggplot2::ggplot(
     arrow = grid::arrow(length = grid::unit(0.06, "inches"))
   ) +
   ggplot2::geom_point(
-    mapping = ggplot2::aes(y = .data$prumerna_delka_mm),
+    data = data_urovne_panel_1,
+    mapping = ggplot2::aes(
+      x = .data$nadrz_popis,
+      y = .data$prumerna_delka_mm,
+      color = .data$vyschnuti
+    ),
     shape = 21,
     size = 3,
     fill = "white"
   ) +
   ggplot2::geom_point(
-    mapping = ggplot2::aes(y = .data$uroven_modelu),
+    data = data_urovne_panel_1,
+    mapping = ggplot2::aes(
+      x = .data$nadrz_popis,
+      y = .data$uroven_modelu
+    ),
     color = barva_model,
     size = 2.6
+  ) +
+  ggplot2::geom_hline(
+    data = data_urovne_panel_2,
+    mapping = ggplot2::aes(yintercept = 0),
+    color = barva_text,
+    linewidth = 0.4
+  ) +
+  ggplot2::geom_segment(
+    data = data_urovne_panel_2,
+    mapping = ggplot2::aes(
+      x = .data$nadrz_popis,
+      xend = .data$nadrz_popis,
+      y = 0,
+      yend = .data$posun_odhadu
+    ),
+    color = barva_zvyrazneni,
+    linewidth = 1.2
+  ) +
+  ggplot2::geom_point(
+    data = data_urovne_panel_2,
+    mapping = ggplot2::aes(
+      x = .data$nadrz_popis,
+      y = .data$posun_odhadu,
+      size = .data$pocet_zabek
+    ),
+    color = barva_zvyrazneni
   )
 ```
 
@@ -2761,8 +3243,8 @@ podil_zabky_celkem <- rozptyl_zabky / rozptyl_celkem
 #| warning: false
 #| fig-width: 7.5
 #| fig-height: 3.2
-#| fig-cap: "Rozdělení variability v délce žabek. Horní pruh: model, který počítá každou žabku zvlášť. Dolní pruh: smíšený model, ve kterém se residua rozdělila na rozdíly mezi nádržemi a rozdíly mezi žabkami jedné nádrže."
-#| fig-alt: !expr 'stringr::str_glue("Dva vodorovné pruhy rozdělené na barevné části. Horní pruh má dvě části: vyschnutí {format_cz(100 * r2_vsechny, 0)} % a residua {format_cz(100 * (1 - r2_vsechny), 0)} %. Dolní pruh má tři části: vyschnutí {format_cz(100 * r2_marginalni, 0)} %, rozdíly mezi nádržemi {format_cz(100 * podil_nadrze_celkem, 0)} % a rozdíly mezi žabkami v nádrži {format_cz(100 * podil_zabky_celkem, 0)} %.")'
+#| fig-cap: "Rozdělení variability v délce žabek. Dolní pruh: model, který počítá každou žabku zvlášť. Horní pruh: smíšený model, ve kterém se residua rozdělila na rozdíly mezi nádržemi a rozdíly mezi žabkami jedné nádrže. Závorky nad smíšeným modelem ukazují, kterou část zahrnuje marginální a podmíněné R²."
+#| fig-alt: !expr 'stringr::str_glue("Dva vodorovné pruhy rozdělené na barevné části. Dolní pruh má dvě části: vyschnutí {format_cz(100 * r2_vsechny, 0)} % a residua {format_cz(100 * (1 - r2_vsechny), 0)} %. Horní pruh má tři části: vyschnutí {format_cz(100 * r2_marginalni, 0)} %, rozdíly mezi nádržemi {format_cz(100 * podil_nadrze_celkem, 0)} % a rozdíly mezi žabkami v nádrži {format_cz(100 * podil_zabky_celkem, 0)} %. Nad horním pruhem jsou dvě závorky: marginální R² {format_cz(r2_marginalni, 2)} pokrývá jen fialovou část, podmíněné R² {format_cz(r2_podminene, 2)} fialovou i oranžovou část.")'
 vec_urovne_casti <-
   c(
     "vyschnutí",
@@ -2778,7 +3260,7 @@ data_casti_variability <-
         rep("Každá žabka zvlášť", 2),
         rep("Smíšený model", 3)
       ),
-      levels = c("Smíšený model", "Každá žabka zvlášť")
+      levels = c("Každá žabka zvlášť", "Smíšený model")
     ),
     cast = factor(
       c(
@@ -2815,6 +3297,19 @@ vec_barvy_casti <-
     "residua" = "grey85"
   )
 
+# Brackets above the mixed-model bar (the second level of the y axis, so the
+#    bar spans 1.7 to 2.3): marginal R2 covers the purple part only,
+#    conditional R2 the purple and the orange part
+data_r2_zavorky <-
+  tibble::tibble(
+    xmax = c(r2_marginalni, r2_podminene),
+    y = c(2.5, 2.9),
+    popisek = c(
+      stringr::str_glue("marginální R² = {format_cz(r2_marginalni, 2)}"),
+      stringr::str_glue("podmíněné R² = {format_cz(r2_podminene, 2)}")
+    )
+  )
+
 ggplot2::ggplot(
   data = data_casti_variability,
   mapping = ggplot2::aes(
@@ -2832,6 +3327,7 @@ ggplot2::ggplot(
   ggplot2::scale_x_continuous(
     labels = function(x) stringr::str_glue("{100 * x} %")
   ) +
+  ggplot2::coord_cartesian(ylim = c(0.4, 3.15)) +
   ggplot2::labs(
     x = "Podíl variability v délce žabek",
     y = NULL
@@ -2850,6 +3346,42 @@ ggplot2::ggplot(
     ),
     position = ggplot2::position_stack(vjust = 0.5),
     size = 3.6
+  ) +
+  ggplot2::geom_segment(
+    data = data_r2_zavorky,
+    mapping = ggplot2::aes(
+      x = 0,
+      xend = .data$xmax,
+      y = .data$y,
+      yend = .data$y
+    ),
+    inherit.aes = FALSE,
+    color = barva_text,
+    linewidth = 0.7
+  ) +
+  ggplot2::geom_segment(
+    data = tidyr::expand_grid(data_r2_zavorky, konec = c("od", "do")),
+    mapping = ggplot2::aes(
+      x = dplyr::if_else(.data$konec == "od", 0, .data$xmax),
+      xend = dplyr::if_else(.data$konec == "od", 0, .data$xmax),
+      y = .data$y,
+      yend = .data$y - 0.12
+    ),
+    inherit.aes = FALSE,
+    color = barva_text,
+    linewidth = 0.7
+  ) +
+  ggplot2::geom_text(
+    data = data_r2_zavorky,
+    mapping = ggplot2::aes(
+      x = .data$xmax + 0.01,
+      y = .data$y,
+      label = .data$popisek
+    ),
+    inherit.aes = FALSE,
+    hjust = 0,
+    size = 3.6,
+    color = barva_text
   )
 ```
 
@@ -2986,84 +3518,7 @@ Všechny postupy kromě `r render_glossary_term("pevny-faktor", display = "pevn�
 
 Kdy tedy stačí jednodušší řešení? Pokud se zkoumaný prediktor mění jen mezi skupinami, skupiny mají podobný počet pozorování a žádný další prediktor se nemění uvnitř skupin, dá model z průměrů skupin prakticky stejnou odpověď jako smíšený model. Smíšený model se vyplatí, když se počty pozorování ve skupinách výrazně liší nebo když chceme do modelu přidat i prediktory, které se mění uvnitř skupin.
 
-::: {.box-extra title="Extra: Když se nádrže liší i ve sklonu" collapse="true"}
-```{r}
-#| label: odhadnout-nahodny-sklon
-#| echo: false
-#| message: false
-#| warning: false
-mod_nahodny_sklon <-
-  glmmTMB::glmmTMB(
-    formula = delka_tela_mm ~ den_pokusu + (1 + den_pokusu | nadrz),
-    data = data_zabky_skryte,
-    REML = TRUE
-  )
-
-data_sklon_predikce <-
-  data_zabky_skryte |>
-  dplyr::group_by(.data$nadrz, .data$vyschnuti) |>
-  dplyr::reframe(
-    den_pokusu = range(.data$den_pokusu)
-  ) |>
-  dplyr::mutate(
-    delka_odhad = stats::predict(
-      mod_nahodny_sklon,
-      newdata = data.frame(
-        den_pokusu = .data$den_pokusu,
-        nadrz = .data$nadrz
-      )
-    )
-  )
-```
-
-```{r}
-#| label: nakreslit-nahodny-sklon
-#| echo: false
-#| message: false
-#| warning: false
-#| fig-width: 7
-#| fig-height: 4
-#| fig-cap: "Vztah délky žabky ke dni metamorfózy v modelu, ve kterém má každá nádrž vlastní výchozí úroveň i vlastní sklon."
-#| fig-alt: "Bodový graf délky těla proti dni metamorfózy s rostoucími přímkami různého sklonu, jednou pro každou nádrž."
-set.seed(900723)
-
-ggplot2::ggplot(
-  data = data_zabky_skryte,
-  mapping = ggplot2::aes(
-    x = .data$den_pokusu,
-    y = .data$delka_tela_mm
-  )
-) +
-  ggplot2::scale_color_manual(
-    values = barvy_vyschnuti,
-    name = "Nádrž"
-  ) +
-  ggplot2::labs(
-    x = "Den pokusu, kdy žabka vylezla z vody",
-    y = "Délka těla (mm)"
-  ) +
-  ggplot2::theme_bw(base_size = 12) +
-  ggplot2::theme(legend.position = "top") +
-  ggplot2::geom_jitter(
-    width = 0.3,
-    height = 0.25,
-    alpha = 0.3,
-    size = 1.1,
-    color = barva_data
-  ) +
-  ggplot2::geom_line(
-    data = data_sklon_predikce,
-    mapping = ggplot2::aes(
-      y = .data$delka_odhad,
-      group = .data$nadrz,
-      color = .data$vyschnuti
-    ),
-    linewidth = 0.8
-  )
-```
-
-Náhodný intercept dovoluje nádržím různou výchozí úroveň, ale sklon vztahu je pro všechny stejný. Nádrže se mohou lišit i v tom, jak rychle délka žabek přibývá s dalšími dny ve vodě. Takovou možnost zapisujeme jako **náhodný sklon**: `(1 + den_pokusu | nadrz)` znamená, že se podle nádrže liší intercept i sklon dne. Interpretace takového modelu přesahuje rámec této lekce; stačí vědět, že tato možnost existuje a že potřebuje dostatek skupin i dostatek měření v každé z nich.
-:::
+Náhodný intercept dovoluje nádržím různou výchozí úroveň, ale sklon vztahu je pro všechny stejný; dalším krokem by byl **náhodný sklon** `(1 + den_pokusu | nadrz)`, ve kterém se podle nádrže liší i sklon, například vztahu délky ke dni metamorfózy; jeho interpretace ale přesahuje rámec této lekce.
 
 ::: {.box-question title="Vaše vlastní studie: zápis modelu"}
 Napište vzorec modelu pro svou studii ve tvaru `odezva ~ prediktor + (1 | jednotka)`. Co bude jeden řádek vaší tabulky?
@@ -3166,19 +3621,6 @@ Celá lekce ukázala, že o tom, co z dat půjde říct, se rozhoduje dřív, ne
 K návrhu patří i dvě zásady, které známe z pokusů: kontrolní skupina se má od ošetřené lišit jen zkoumanou úpravou a úpravu je vhodné přidělit jednotkám náhodně, třeba losem. Jinak se může stát, že ošetřené jednotky se od kontrolních liší ještě něčím jiným.
 
 ## Larvy vážek v tůních: návrh od otázky po model
-
-```{r}
-#| label: zobrazit-vazky-v-tunich
-#| echo: false
-#| eval: !expr file.exists(file.path(cesta_obrazky, "vazky_tune_les_pole.png"))
-#| out-width: "80%"
-#| fig-align: center
-#| fig-cap: "Plánovaný příklad: larvy vážek v lesních a polních tůních. Ilustrace vytvořená pomocí AI."
-#| fig-alt: "Dvě tůně v jedné krajině: vlevo stinná tůň v lese, vpravo slunná tůň mezi poli. V obou jsou na stoncích larvy vážek; žába u lesní tůně je vylovuje síťkou do misky a mezi tůněmi poletuje vážka. Ilustrace vytvořená pomocí AI."
-knitr::include_graphics(
-  path = file.path(cesta_obrazky, "vazky_tune_les_pole.png")
-)
-```
 
 Ukázkovou studii z rámečků „Vaše vlastní studie" lze složit do jednoho návrhu. Jde o vymyšlený příklad, který ukazuje plánování; data k němu nemáme.
 
