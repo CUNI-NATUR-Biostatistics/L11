@@ -1,0 +1,28 @@
+{
+  "id": "G8",
+  "file": "zabky_sbor_jedne_nadrze.png",
+  "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-faf7eda4-1c19-46ad-aaae-d6d02636bcc4.png",
+  "pixel_size": [
+    1448,
+    1086
+  ],
+  "mode": "RGBA",
+  "alpha_range": [
+    0,
+    255
+  ],
+  "transparent_pixels": 239509,
+  "sha256": "ff7ef8d125f9ee0f53fc26feda6e93cb9e01700fd8fd95f6bff2ccb655e1e1d0",
+  "status": "candidate saved; author review pending",
+  "edits": [
+    {
+      "reason": "Ensure each background tank has one uniformly coloured rim band",
+      "prompt": "Precise tank-band colour cleanup of the supplied dusk froglet choir painting. Preserve the lantern glow, navy twilight sky, stars, same-size singing froglets, blue-green dragonfly conductor and twig, water, vegetation, viewpoint, painterly edge and real RGBA transparency. The main foreground choir tank stays uniformly TERRACOTTA #C2613A around its entire rim. Fix ONLY the distant tank rim bands: left background tank uniformly STEEL BLUE #2E6CA4 on both front and rear arcs; middle background tank uniformly TERRACOTTA on all arcs; right background tank uniformly STEEL BLUE on its ENTIRE visible rim, removing any terracotta/red arc on that same tank. Each separate tank has exactly ONE band colour; there must not be a blue front with a terracotta rear on one tank. Preserve dim natural dusk shading without inventing another painted colour. Do not add or remove tanks, frogs, lanterns, wings, legs or objects. No letters, numbers, symbols, music notes, text or watermark. Same transparent PNG, landscape 4:3.",
+      "references": [
+        "C:/Users/ondre/.codex/generated_images/01a15fdb-163b-7ce1-95f4-5864e4ad5189/exec-0c38f01d-144c-4183-a440-e9428c7c6b4e.png"
+      ],
+      "input_sha256": "fcbdcdd7668a9047f3f3fdb593638a0049183bc7a3442a9527e685fe1bbe496d",
+      "output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-faf7eda4-1c19-46ad-aaae-d6d02636bcc4.png"
+    }
+  ]
+}

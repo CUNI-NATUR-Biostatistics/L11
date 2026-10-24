@@ -1,0 +1,28 @@
+{
+  "id": "G2",
+  "file": "zabky_pokusne_nadrze.png",
+  "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-9816f96b-cefa-4cb8-854e-befa581cf349.png",
+  "pixel_size": [
+    1536,
+    1024
+  ],
+  "mode": "RGBA",
+  "alpha_range": [
+    0,
+    254
+  ],
+  "transparent_pixels": 163358,
+  "sha256": "8c60b250bf00e25d197d25727fbf5866f4d36ec2a4b18c26bdb4133fab03bf53",
+  "status": "candidate saved; author review pending",
+  "edits": [
+    {
+      "reason": "Break the overly regular alternating rim-band sequence",
+      "prompt": "Precise colour assignment correction to the supplied misty tank-row painting. Preserve the low viewpoint, morning fog, small spotted frog carrying bucket and indigo notebook, vegetation, water, tadpoles, shade nets, all composition, natural colours, painterly style and genuine transparent exterior. Change ONLY the colours of painted tank rim bands farther back, so their treatment assignments DO NOT alternate regularly. Starting at the nearest foreground tank and going diagonally away into the mist, the visible rim-band sequence should be TERRACOTTA, STEEL BLUE, STEEL BLUE, TERRACOTTA, TERRACOTTA, STEEL BLUE, then obscured distant bands. Steel blue #2E6CA4, terracotta #C2613A. Each individual tank must have exactly one SOLID uniform band colour all the way around its visible rim, never blue in front and red at back. Keep existing nearest terracotta tank and second blue tank unchanged. Repaint the third band blue and fifth band terracotta as needed to create adjacent same-colour tanks. Do not change the number or shape of tanks or reveal a countable experimental total. No numbers, labels, letters, new objects or markings. No dragonfly. Keep the soft rectangular painterly silhouette, transparent RGBA PNG, landscape 3:2, same size.",
+      "references": [
+        "C:/Users/ondre/.codex/generated_images/01a15fdb-163b-7ce1-95f4-5864e4ad5189/exec-7e6c7a6e-5a80-4dfe-be4f-548b7a5ceea0.png"
+      ],
+      "input_sha256": "9123018256c9107e9e4d24dd54aacb2c1f189f51afc08431c22fbf984640b1e9",
+      "output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-9816f96b-cefa-4cb8-854e-befa581cf349.png"
+    }
+  ]
+}

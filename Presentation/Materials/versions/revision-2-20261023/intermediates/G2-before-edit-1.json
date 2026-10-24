@@ -1,0 +1,17 @@
+{
+  "id": "G2",
+  "file": "zabky_pokusne_nadrze.png",
+  "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-7e6c7a6e-5a80-4dfe-be4f-548b7a5ceea0.png",
+  "pixel_size": [
+    1536,
+    1024
+  ],
+  "mode": "RGBA",
+  "alpha_range": [
+    0,
+    253
+  ],
+  "transparent_pixels": 114973,
+  "sha256": "9123018256c9107e9e4d24dd54aacb2c1f189f51afc08431c22fbf984640b1e9",
+  "status": "candidate saved; author review pending"
+}

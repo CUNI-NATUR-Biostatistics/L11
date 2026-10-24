@@ -1,0 +1,17 @@
+{
+  "id": "G9",
+  "file": "zabky_pevny_nahodny.png",
+  "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-c91ee78e-03e3-4a00-a2a0-df2cfdbeff84.png",
+  "pixel_size": [
+    1448,
+    1086
+  ],
+  "mode": "RGBA",
+  "alpha_range": [
+    0,
+    255
+  ],
+  "transparent_pixels": 165420,
+  "sha256": "0368efc5252ffc6898730301f4c7b5ba4d69c1fb2d8a869c8b555ac334ffd89c",
+  "status": "candidate saved; author review pending"
+}

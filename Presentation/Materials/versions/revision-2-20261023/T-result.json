@@ -1,0 +1,17 @@
+{
+  "id": "T",
+  "file": "zabky_titulni.png",
+  "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-1d315056-62a6-4d1f-9101-da7280c0b7c3.png",
+  "pixel_size": [
+    1086,
+    1448
+  ],
+  "mode": "RGBA",
+  "alpha_range": [
+    0,
+    255
+  ],
+  "transparent_pixels": 232607,
+  "sha256": "947a5c84f020f3db37f5579d73d4fafe9dde1ad45d8935b7fa61a9f836554d0b",
+  "status": "candidate saved; author review pending"
+}

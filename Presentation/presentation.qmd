@@ -149,7 +149,7 @@ Hierarchická data a náhodné efekty
 #| label: zobrazit-titulni-ilustraci
 #| echo: false
 #| out-width: "100%"
-#| fig-alt: "Žába ekoložka sedí na okraji pokusné nádrže, ze které lezou drobné žabky, a vedle ní poletuje vážka; za nimi se plní vodou vyschlá tůň s rozpraskaným bahnem a v dálce je krajina s mnoha tůněmi. Ilustrace vytvořená pomocí AI."
+#| fig-alt: "Nahoře vyschlá tůň s rozpraskaným dnem, do které začíná přitékat voda, dole nádrž s cihlově červeným pruhem na okraji, plná vody, ze které vylézají tři stejně malé žabky. Mezi oběma částmi poletuje vážka. Ilustrace vytvořená pomocí AI."
 # Generated title illustration; prompt and provenance in GENERATED_IMAGES.md.
 include_optional_figure(data_source = "zabky_titulni.png")
 ```
@@ -295,7 +295,7 @@ pulcu_v_nadrzi <- 50L
 #| label: zobrazit-pokusne-nadrze
 #| echo: false
 #| out-width: "100%"
-#| fig-alt: "Louka terénní stanice s několika velkými kulatými nádržemi s vodou, částečně zakrytými stínicí sítí. Na okraji nejbližší nádrže sedí žába se zápisníkem a na síti odpočívá vážka. Ilustrace vytvořená pomocí AI."
+#| fig-alt: "Ranní mlha nad terénní stanicí: řada velkých kulatých nádrží s modrými a cihlově červenými pruhy na okrajích mizí v mlze. V popředí je v jedné nádrži vidět pulce a řasy, v dálce jde žába s kbelíkem a zápisníkem. Ilustrace vytvořená pomocí AI."
 include_optional_figure(data_source = "zabky_pokusne_nadrze.png")
 ```
 
@@ -884,7 +884,7 @@ Pokud by vyschnutí na žabky nemělo vliv, mohla mít shodou okolností někter
 #| label: zobrazit-jednotky
 #| echo: false
 #| out-width: "100%"
-#| fig-alt: "Žába ekoložka měří pravítkem jednu žabku na okraji nádrže, zatímco vážka nad ní přehlíží celou nádrž shora. Ilustrace vytvořená pomocí AI."
+#| fig-alt: "Vlevo zblízka přes lupu jedna malá žabka na pravítku, vpravo z výšky celá nádrž s modrým pruhem na okraji jako malý kruh vody, nad kterou letí vážka. Ilustrace vytvořená pomocí AI."
 include_optional_figure(data_source = "zabky_jednotka_replikace.png")
 ```
 
@@ -1419,7 +1419,7 @@ Odpověď na hlasování: B. Pozor, nejde o to, který model je „správně“ 
 #| label: zobrazit-sbor-jedne-nadrze
 #| echo: false
 #| out-width: "100%"
-#| fig-alt: "Žabky z jedné nádrže zpívají na jejím okraji jednohlasně jako sbor, zatímco vážka si přikládá křídlo k uchu a žába ekoložka si do zápisníku píše stále tutéž poznámku. Ilustrace vytvořená pomocí AI."
+#| fig-alt: "Soumrak u nádrže s cihlově červeným pruhem na okraji: řada stejně velkých žabek na okraji osvětleném lucernou zpívá jednohlasně a vážka je diriguje větvičkou. Ostatní nádrže v pozadí mlčí. Ilustrace vytvořená pomocí AI."
 include_optional_figure(data_source = "zabky_sbor_jedne_nadrze.png")
 ```
 
@@ -1501,7 +1501,7 @@ Hlavní kontrola porozumění k pseudoreplikaci. Správně B, zakroužkovat až 
 #| label: zobrazit-jednu-nadrz
 #| echo: false
 #| out-width: "100%"
-#| fig-alt: "Žába ekoložka trpělivě měří dlouhou řadu žabek, které lezou z jediné nádrže, zatímco vážka nad ní ukazuje na řadu dalších nádrží, ke kterým se zatím nikdo nedostal. Ilustrace vytvořená pomocí AI."
+#| fig-alt: "Pohled shora na louku s mnoha kulatými nádržemi s modrými a cihlově červenými okraji. U jediné nádrže sedí žába obklopená hromadou popsaných listů a řadou žabek čekajících na měření, všechny ostatní nádrže zůstávají nedotčené. Ilustrace vytvořená pomocí AI."
 include_optional_figure(data_source = "zabky_jedna_nadrz_mnoho_zabek.png")
 ```
 
@@ -3744,7 +3744,7 @@ Volitelný snímek (tabulka je i ve skriptech). Smíšený model se vyplatí, kd
 #| label: zobrazit-pevny-nahodny
 #| echo: false
 #| out-width: "100%"
-#| fig-alt: "Žába ekoložka vybírá z kytice tři konkrétní květiny, zatímco vážka losuje oblázky z plátěného pytlíku. Ilustrace vytvořená pomocí AI."
+#| fig-alt: "Vlevo herbářová složka se třemi pečlivě vybranými a vylisovanými rostlinami, které žába přikládá pinzetou, vpravo šedý plátěný pytlík s oblázky, ze kterého vážka se zakrytýma očima náhodně vytahuje jeden oblázek. Ilustrace vytvořená pomocí AI."
 include_optional_figure(data_source = "zabky_pevny_nahodny.png")
 ```
 
@@ -3985,7 +3985,7 @@ Stejných `r larev_celkem` larev lze nasbírat dvěma způsoby:
 #| label: zobrazit-planovani-2
 #| echo: false
 #| out-width: "75%"
-#| fig-alt: "Žába ekoložka u polního stolku plánuje studii nad prázdnou mapou s obrysy tůní. Ilustrace vytvořená pomocí AI."
+#| fig-alt: "Pohled shora na terénní stolek s ručně kreslenou mapou tůní u lesa a u polí, do které jsou zapíchnuté modré a cihlově červené špendlíky. Vedle leží síťka, pravítko, zavřený zápisník, tužka a miska s larvou vážky. Ilustrace vytvořená pomocí AI."
 include_optional_figure(data_source = "zabky_planovani_studie.png")
 ```
 
@@ -4020,7 +4020,7 @@ Uvnitř tůně se mění velikost a stadium larev a datum odběru, podobně jako
 #| label: zobrazit-planovani-3
 #| echo: false
 #| out-width: "100%"
-#| fig-alt: "Žába ekoložka u polního stolku plánuje studii nad prázdnou mapou s obrysy tůní. Ilustrace vytvořená pomocí AI."
+#| fig-alt: "Pohled shora na terénní stolek s ručně kreslenou mapou tůní u lesa a u polí, do které jsou zapíchnuté modré a cihlově červené špendlíky. Vedle leží síťka, pravítko, zavřený zápisník, tužka a miska s larvou vážky. Ilustrace vytvořená pomocí AI."
 include_optional_figure(data_source = "zabky_planovani_studie.png")
 ```
 
@@ -4053,7 +4053,7 @@ Okolí (les, pole) je [pevný faktor]{.text-hgl-indigo_velvet}; tůň a oblast j
 #| label: zobrazit-planovani-5
 #| echo: false
 #| out-width: "100%"
-#| fig-alt: "Žába ekoložka u polního stolku plánuje studii nad prázdnou mapou s obrysy tůní. Ilustrace vytvořená pomocí AI."
+#| fig-alt: "Pohled shora na terénní stolek s ručně kreslenou mapou tůní u lesa a u polí, do které jsou zapíchnuté modré a cihlově červené špendlíky. Vedle leží síťka, pravítko, zavřený zápisník, tužka a miska s larvou vážky. Ilustrace vytvořená pomocí AI."
 include_optional_figure(data_source = "zabky_planovani_studie.png")
 ```
 
@@ -4088,7 +4088,7 @@ Jeden řádek = [jedna larva]{.text-hgl-graphite}.
 #| label: zobrazit-planovani-4
 #| echo: false
 #| out-width: "100%"
-#| fig-alt: "Žába ekoložka u polního stolku plánuje studii nad prázdnou mapou s obrysy tůní. Ilustrace vytvořená pomocí AI."
+#| fig-alt: "Pohled shora na terénní stolek s ručně kreslenou mapou tůní u lesa a u polí, do které jsou zapíchnuté modré a cihlově červené špendlíky. Vedle leží síťka, pravítko, zavřený zápisník, tužka a miska s larvou vážky. Ilustrace vytvořená pomocí AI."
 include_optional_figure(data_source = "zabky_planovani_studie.png")
 ```
 
@@ -4121,7 +4121,7 @@ Stejná stavba jako u žabek: `delka_tela_mm ~ vyschnuti + (1 | nadrz)`. Pokud t
 #| label: zobrazit-planovani-6
 #| echo: false
 #| out-width: "100%"
-#| fig-alt: "Žába ekoložka u polního stolku plánuje studii nad prázdnou mapou s obrysy tůní. Ilustrace vytvořená pomocí AI."
+#| fig-alt: "Pohled shora na terénní stolek s ručně kreslenou mapou tůní u lesa a u polí, do které jsou zapíchnuté modré a cihlově červené špendlíky. Vedle leží síťka, pravítko, zavřený zápisník, tužka a miska s larvou vážky. Ilustrace vytvořená pomocí AI."
 include_optional_figure(data_source = "zabky_planovani_studie.png")
 ```
 

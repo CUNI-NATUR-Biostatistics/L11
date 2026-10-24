@@ -1,0 +1,17 @@
+{
+  "id": "G7",
+  "file": "zabky_jednotka_replikace.png",
+  "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-90b0c33e-e92f-413f-8373-c6eafa4f34aa.png",
+  "pixel_size": [
+    1448,
+    1086
+  ],
+  "mode": "RGBA",
+  "alpha_range": [
+    0,
+    255
+  ],
+  "transparent_pixels": 293935,
+  "sha256": "bd9e5be3e964d735c814d77cb4ef11f7fc4cefd849428b14861832d911675be4",
+  "status": "candidate saved; author review pending"
+}

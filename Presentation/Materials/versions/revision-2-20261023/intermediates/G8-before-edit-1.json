@@ -1,0 +1,17 @@
+{
+  "id": "G8",
+  "file": "zabky_sbor_jedne_nadrze.png",
+  "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-0c38f01d-144c-4183-a440-e9428c7c6b4e.png",
+  "pixel_size": [
+    1448,
+    1086
+  ],
+  "mode": "RGBA",
+  "alpha_range": [
+    0,
+    255
+  ],
+  "transparent_pixels": 236452,
+  "sha256": "fcbdcdd7668a9047f3f3fdb593638a0049183bc7a3442a9527e685fe1bbe496d",
+  "status": "candidate saved; author review pending"
+}

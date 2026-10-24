@@ -1,0 +1,28 @@
+{
+  "id": "G9",
+  "file": "zabky_pevny_nahodny.png",
+  "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-9dd7b8e0-f39f-4f60-aa2c-5a41edfbb222.png",
+  "pixel_size": [
+    1448,
+    1086
+  ],
+  "mode": "RGBA",
+  "alpha_range": [
+    0,
+    255
+  ],
+  "transparent_pixels": 168334,
+  "sha256": "7c06df0e1962e894a2481cb32559b6e2b36632a35bc4cfdd90d4dbe5e3245af6",
+  "status": "candidate saved; author review pending",
+  "edits": [
+    {
+      "reason": "Remove extra dragonfly wing while retaining the eye-covering gesture",
+      "prompt": "Precise insect anatomy correction to the supplied herbarium-and-pebbles still-life painting. Preserve the three pressed specimens (grass, clover, buttercup), blank paper strips, amphibian hand with tweezers, one orange pin, grey cloth bag and grey stones, pale table/window lighting, natural colours, painterly style and RGBA transparent border. Correct ONLY the blue-green dragonfly: it currently has FIVE wing sheets because the eye-covering folded wing was added as an extra. REMOVE the middle horizontal LEFT-pointing wing just underneath the long upper-left wing, the one extending toward the window at about ten o'clock behind the head. Preserve the existing folded translucent wing covering the eyes as one of the remaining FOUR wings. Final count: one upper-left extended wing, one folded eye-covering wing on the left, and TWO extended wings on the right = exactly FOUR wings, attached to one thorax. Repair the removed wing's area with the already-existing pale window/table background. Keep one long abdomen and six thin legs, including the leg drawing a pebble. Do not add wings, hands, limbs, symbols, text, labels or new props. All other scene details unchanged. Transparent RGBA PNG landscape 4:3, same canvas size.",
+      "references": [
+        "C:/Users/ondre/.codex/generated_images/01a15fdb-163b-7ce1-95f4-5864e4ad5189/exec-c91ee78e-03e3-4a00-a2a0-df2cfdbeff84.png"
+      ],
+      "input_sha256": "0368efc5252ffc6898730301f4c7b5ba4d69c1fb2d8a869c8b555ac334ffd89c",
+      "output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-9dd7b8e0-f39f-4f60-aa2c-5a41edfbb222.png"
+    }
+  ]
+}

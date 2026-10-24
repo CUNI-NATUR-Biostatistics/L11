@@ -1,0 +1,22 @@
+{
+  "edits": [
+    {
+      "id": "G2",
+      "reason": "Break the overly regular alternating rim-band sequence",
+      "target": "C:/Users/ondre/.codex/generated_images/01a15fdb-163b-7ce1-95f4-5864e4ad5189/exec-7e6c7a6e-5a80-4dfe-be4f-548b7a5ceea0.png",
+      "prompt": "Precise colour assignment correction to the supplied misty tank-row painting. Preserve the low viewpoint, morning fog, small spotted frog carrying bucket and indigo notebook, vegetation, water, tadpoles, shade nets, all composition, natural colours, painterly style and genuine transparent exterior. Change ONLY the colours of painted tank rim bands farther back, so their treatment assignments DO NOT alternate regularly. Starting at the nearest foreground tank and going diagonally away into the mist, the visible rim-band sequence should be TERRACOTTA, STEEL BLUE, STEEL BLUE, TERRACOTTA, TERRACOTTA, STEEL BLUE, then obscured distant bands. Steel blue #2E6CA4, terracotta #C2613A. Each individual tank must have exactly one SOLID uniform band colour all the way around its visible rim, never blue in front and red at back. Keep existing nearest terracotta tank and second blue tank unchanged. Repaint the third band blue and fifth band terracotta as needed to create adjacent same-colour tanks. Do not change the number or shape of tanks or reveal a countable experimental total. No numbers, labels, letters, new objects or markings. No dragonfly. Keep the soft rectangular painterly silhouette, transparent RGBA PNG, landscape 3:2, same size."
+    },
+    {
+      "id": "G8",
+      "reason": "Ensure each background tank has one uniformly coloured rim band",
+      "target": "C:/Users/ondre/.codex/generated_images/01a15fdb-163b-7ce1-95f4-5864e4ad5189/exec-0c38f01d-144c-4183-a440-e9428c7c6b4e.png",
+      "prompt": "Precise tank-band colour cleanup of the supplied dusk froglet choir painting. Preserve the lantern glow, navy twilight sky, stars, same-size singing froglets, blue-green dragonfly conductor and twig, water, vegetation, viewpoint, painterly edge and real RGBA transparency. The main foreground choir tank stays uniformly TERRACOTTA #C2613A around its entire rim. Fix ONLY the distant tank rim bands: left background tank uniformly STEEL BLUE #2E6CA4 on both front and rear arcs; middle background tank uniformly TERRACOTTA on all arcs; right background tank uniformly STEEL BLUE on its ENTIRE visible rim, removing any terracotta/red arc on that same tank. Each separate tank has exactly ONE band colour; there must not be a blue front with a terracotta rear on one tank. Preserve dim natural dusk shading without inventing another painted colour. Do not add or remove tanks, frogs, lanterns, wings, legs or objects. No letters, numbers, symbols, music notes, text or watermark. Same transparent PNG, landscape 4:3."
+    },
+    {
+      "id": "G9",
+      "reason": "Remove extra dragonfly wing while retaining the eye-covering gesture",
+      "target": "C:/Users/ondre/.codex/generated_images/01a15fdb-163b-7ce1-95f4-5864e4ad5189/exec-c91ee78e-03e3-4a00-a2a0-df2cfdbeff84.png",
+      "prompt": "Precise insect anatomy correction to the supplied herbarium-and-pebbles still-life painting. Preserve the three pressed specimens (grass, clover, buttercup), blank paper strips, amphibian hand with tweezers, one orange pin, grey cloth bag and grey stones, pale table/window lighting, natural colours, painterly style and RGBA transparent border. Correct ONLY the blue-green dragonfly: it currently has FIVE wing sheets because the eye-covering folded wing was added as an extra. REMOVE the middle horizontal LEFT-pointing wing just underneath the long upper-left wing, the one extending toward the window at about ten o'clock behind the head. Preserve the existing folded translucent wing covering the eyes as one of the remaining FOUR wings. Final count: one upper-left extended wing, one folded eye-covering wing on the left, and TWO extended wings on the right = exactly FOUR wings, attached to one thorax. Repair the removed wing's area with the already-existing pale window/table background. Keep one long abdomen and six thin legs, including the leg drawing a pebble. Do not add wings, hands, limbs, symbols, text, labels or new props. All other scene details unchanged. Transparent RGBA PNG landscape 4:3, same canvas size."
+    }
+  ]
+}

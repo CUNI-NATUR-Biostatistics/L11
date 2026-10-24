@@ -1,0 +1,294 @@
+{
+  "revision": 2,
+  "date": "2026-10-23",
+  "tool": "OpenAI built-in image_gen",
+  "model": "Not exposed by built-in tool",
+  "mode": "Built-in generation; no CLI/API fallback",
+  "scope": "Seven revision-2 candidates only; installation and slide alt-text replacement await author review, as required by the plan.",
+  "brief": "../../GENERATED_IMAGES.md",
+  "reuse_terms": "CC BY 4.0 educational-content terms under L11/LICENSE.md; retain course attribution and AI disclosure.",
+  "specs": [
+    {
+      "id": "T",
+      "file": "zabky_titulni.png",
+      "planned_prompt": "Warm storybook natural-history watercolour/gouache illustration, tall portrait 3:4, transparent RGBA background with a painterly edge shaped like a tall arched panel. Upper half: a small prairie pool under harsh summer sun, its bed cracked into pale ochre plates with a terracotta (#C2613A) tint in the dry mud, a thin trickle of new rain water just beginning to refill it, heat shimmer in the air. Lower half: the same scene after refilling, seen through the rim of a round cattle tank wearing a painted terracotta band, cool clear water with a few tadpoles and three tiny froglets of identical size climbing out over the rim. The blue-green dragonfly assistant hovers between the two halves, linking them; no frog ecologist in this image. Natural colours for water, mud, plants and animals; the terracotta only as tint in the dried mud and on the painted rim band. Gentle, slightly dramatic light. No text, letters, numbers, labels, arrows, charts, logos or watermarks; nothing suggests which froglets are larger.",
+      "alt_text": "Nahoře vyschlá tůň s rozpraskaným dnem, do které začíná přitékat voda, dole nádrž s cihlově červeným pruhem na okraji, plná vody, ze které vylézají tři stejně malé žabky. Mezi oběma částmi poletuje vážka. Ilustrace vytvořená pomocí AI.",
+      "prompt": "Use case: scientific-educational, NEW composition for L11 illustration revision 2. The first four reference images provide ONLY the established rich warm natural-history watercolour/gouache medium, organism identity, painterly texture and quality; do not reuse their medium-shot frog-on-tank composition or oval silhouette. The specific scene and allowed cast BELOW take priority. Strongly differentiate this image's prescribed viewpoint, setting, lighting and painterly outline. Natural colours for organisms, mud, water and vegetation; brown-green spotted plains leopard frog when requested, blue-green hawker dragonfly with one segmented abdomen, four clear wings and six thin legs when requested. Never add a frog or dragonfly to a scene that excludes it. All tiny froglets similar size, no implied treatment outcome. Every visible cattle tank in THIS new image has exactly one painted rim band, either steel blue #2E6CA4 (never dried) or terracotta #C2613A (dried/refilled), no striped/multicoloured rims, no regular alternating pattern. Water and animals do not take the band colours. Purple only on a notebook, if a notebook is specified. One SMALL focus accent at most in orange #F2A516, as specified; not multiple scattered orange equipment patches. Grey raw pebbles/tags, graphite equipment outlines. No text, letters, numbers, axes, labels, arrows, charts, musical symbols, decorative glyphs, logos or watermarks. All notebook pages, paper strips and tags completely blank; heaps of worked pages may have only faint nonletter pen textures, never legible writing or numerical tallies. Rulers completely plain, WITHOUT graduations, ticks or numbers. No extra limbs, extra insect abdomens, human hands, human ears or floating punctuation. A frog hand must look like a brown-green amphibian forelimb, not a human hand. Keep true RGBA transparent pixels OUTSIDE the scene's distinct painterly silhouette, including a small clear margin, with no checkerboard or flat opaque backdrop. Interior mist, dusk sky or table surface may be painted ONLY where the scene calls for them. The seven scene briefs intentionally differ; follow the specific framing and scene below exactly.\n\nWarm storybook natural-history watercolour/gouache illustration, tall portrait 3:4, transparent RGBA background with a painterly edge shaped like a tall arched panel. Upper half: a small prairie pool under harsh summer sun, its bed cracked into pale ochre plates with a terracotta (#C2613A) tint in the dry mud, a thin trickle of new rain water just beginning to refill it, heat shimmer in the air. Lower half: the same scene after refilling, seen through the rim of a round cattle tank wearing a painted terracotta band, cool clear water with a few tadpoles and three tiny froglets of identical size climbing out over the rim. The blue-green dragonfly assistant hovers between the two halves, linking them; no frog ecologist in this image. Natural colours for water, mud, plants and animals; the terracotta only as tint in the dried mud and on the painted rim band. Gentle, slightly dramatic light. No text, letters, numbers, labels, arrows, charts, logos or watermarks; nothing suggests which froglets are larger.\nFinal framing: portrait 3:4, approximately 1152 x 1536 or larger at that ratio. Tall arched painted panel. NO adult frog ecologist or notebook anywhere. Exactly three same-size froglets below and the ONE dragonfly between the two zones. Upper dry-pool harsh ochre heat, lower refilled-pool cool water; no statistical result. Only ONE terracotta rim band on the tank. No blue rim band is required in this scene. Exterior of arch genuinely transparent. The fifth reference is L10 title COMPOSITION/PAINTERLY EDGE reference only; do not copy its animals, sea, islands or cacti.",
+      "references": [
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_vysychajici_tun.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_pokusne_nadrze.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_tune_v_krajine.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/vazky_tune_les_pole.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L10/Presentation/Materials/ostrovy_titulni.png"
+      ],
+      "ratio": "3:4",
+      "transparent_background": true,
+      "status": "generated candidate; author output review pending; not installed",
+      "result": {
+        "id": "T",
+        "file": "zabky_titulni.png",
+        "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-1d315056-62a6-4d1f-9101-da7280c0b7c3.png",
+        "pixel_size": [
+          1086,
+          1448
+        ],
+        "mode": "RGBA",
+        "alpha_range": [
+          0,
+          255
+        ],
+        "transparent_pixels": 232607,
+        "sha256": "947a5c84f020f3db37f5579d73d4fafe9dde1ad45d8935b7fa61a9f836554d0b",
+        "status": "candidate saved; author review pending"
+      }
+    },
+    {
+      "id": "G2",
+      "file": "zabky_pokusne_nadrze.png",
+      "planned_prompt": "Warm storybook natural-history watercolour/gouache illustration, wide landscape 3:2, transparent RGBA background with a soft rectangular painterly edge. Early morning mist at a prairie field station: a row of large round grey cattle tanks recedes diagonally into the mist, each tank with a painted rim band, alternating in no regular pattern between steel blue (#2E6CA4) and terracotta (#C2613A); some tanks are partly covered by shade cloth. In the foreground, one tank rim shows tadpoles and floating algae in clear water. The plains leopard frog field ecologist, small in the middle distance, walks along the row carrying a plain bucket with a small grey tag and its indigo notebook under its arm. No dragonfly in this image. Natural colours for water, grass and animals; course colours only on the rim bands, notebook and tag. The number of tanks cannot be counted (the row fades into the mist). No text, letters, numbers, labels, arrows, charts, logos or watermarks.",
+      "alt_text": "Ranní mlha nad terénní stanicí: řada velkých kulatých nádrží s modrými a cihlově červenými pruhy na okrajích mizí v mlze. V popředí je v jedné nádrži vidět pulce a řasy, v dálce jde žába s kbelíkem a zápisníkem. Ilustrace vytvořená pomocí AI.",
+      "prompt": "Use case: scientific-educational, NEW composition for L11 illustration revision 2. The first four reference images provide ONLY the established rich warm natural-history watercolour/gouache medium, organism identity, painterly texture and quality; do not reuse their medium-shot frog-on-tank composition or oval silhouette. The specific scene and allowed cast BELOW take priority. Strongly differentiate this image's prescribed viewpoint, setting, lighting and painterly outline. Natural colours for organisms, mud, water and vegetation; brown-green spotted plains leopard frog when requested, blue-green hawker dragonfly with one segmented abdomen, four clear wings and six thin legs when requested. Never add a frog or dragonfly to a scene that excludes it. All tiny froglets similar size, no implied treatment outcome. Every visible cattle tank in THIS new image has exactly one painted rim band, either steel blue #2E6CA4 (never dried) or terracotta #C2613A (dried/refilled), no striped/multicoloured rims, no regular alternating pattern. Water and animals do not take the band colours. Purple only on a notebook, if a notebook is specified. One SMALL focus accent at most in orange #F2A516, as specified; not multiple scattered orange equipment patches. Grey raw pebbles/tags, graphite equipment outlines. No text, letters, numbers, axes, labels, arrows, charts, musical symbols, decorative glyphs, logos or watermarks. All notebook pages, paper strips and tags completely blank; heaps of worked pages may have only faint nonletter pen textures, never legible writing or numerical tallies. Rulers completely plain, WITHOUT graduations, ticks or numbers. No extra limbs, extra insect abdomens, human hands, human ears or floating punctuation. A frog hand must look like a brown-green amphibian forelimb, not a human hand. Keep true RGBA transparent pixels OUTSIDE the scene's distinct painterly silhouette, including a small clear margin, with no checkerboard or flat opaque backdrop. Interior mist, dusk sky or table surface may be painted ONLY where the scene calls for them. The seven scene briefs intentionally differ; follow the specific framing and scene below exactly.\n\nWarm storybook natural-history watercolour/gouache illustration, wide landscape 3:2, transparent RGBA background with a soft rectangular painterly edge. Early morning mist at a prairie field station: a row of large round grey cattle tanks recedes diagonally into the mist, each tank with a painted rim band, alternating in no regular pattern between steel blue (#2E6CA4) and terracotta (#C2613A); some tanks are partly covered by shade cloth. In the foreground, one tank rim shows tadpoles and floating algae in clear water. The plains leopard frog field ecologist, small in the middle distance, walks along the row carrying a plain bucket with a small grey tag and its indigo notebook under its arm. No dragonfly in this image. Natural colours for water, grass and animals; course colours only on the rim bands, notebook and tag. The number of tanks cannot be counted (the row fades into the mist). No text, letters, numbers, labels, arrows, charts, logos or watermarks.\nFinal framing: wide landscape 3:2, approximately 1536 x 1024. Low water-rim-height view down a diagonal row, soft rectangular mist-edged silhouette, subdued cool morning light. Frog SMALL in middle distance, carrying a grey bucket and indigo closed notebook. NO dragonfly or prominent central frog. The mist obscures the far row; partially cropped tanks extend beyond frame so no exact experimental total is encoded. Every visible tank rim has one solid steel-blue OR terracotta band in irregular order, comparable water levels, no size difference or visibly dry tank.",
+      "references": [
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_vysychajici_tun.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_pokusne_nadrze.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_tune_v_krajine.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/vazky_tune_les_pole.png"
+      ],
+      "ratio": "3:2",
+      "transparent_background": true,
+      "status": "generated candidate; author output review pending; not installed",
+      "result": {
+        "id": "G2",
+        "file": "zabky_pokusne_nadrze.png",
+        "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-9816f96b-cefa-4cb8-854e-befa581cf349.png",
+        "pixel_size": [
+          1536,
+          1024
+        ],
+        "mode": "RGBA",
+        "alpha_range": [
+          0,
+          254
+        ],
+        "transparent_pixels": 163358,
+        "sha256": "8c60b250bf00e25d197d25727fbf5866f4d36ec2a4b18c26bdb4133fab03bf53",
+        "status": "candidate saved; author review pending",
+        "edits": [
+          {
+            "reason": "Break the overly regular alternating rim-band sequence",
+            "prompt": "Precise colour assignment correction to the supplied misty tank-row painting. Preserve the low viewpoint, morning fog, small spotted frog carrying bucket and indigo notebook, vegetation, water, tadpoles, shade nets, all composition, natural colours, painterly style and genuine transparent exterior. Change ONLY the colours of painted tank rim bands farther back, so their treatment assignments DO NOT alternate regularly. Starting at the nearest foreground tank and going diagonally away into the mist, the visible rim-band sequence should be TERRACOTTA, STEEL BLUE, STEEL BLUE, TERRACOTTA, TERRACOTTA, STEEL BLUE, then obscured distant bands. Steel blue #2E6CA4, terracotta #C2613A. Each individual tank must have exactly one SOLID uniform band colour all the way around its visible rim, never blue in front and red at back. Keep existing nearest terracotta tank and second blue tank unchanged. Repaint the third band blue and fifth band terracotta as needed to create adjacent same-colour tanks. Do not change the number or shape of tanks or reveal a countable experimental total. No numbers, labels, letters, new objects or markings. No dragonfly. Keep the soft rectangular painterly silhouette, transparent RGBA PNG, landscape 3:2, same size.",
+            "references": [
+              "C:/Users/ondre/.codex/generated_images/01a15fdb-163b-7ce1-95f4-5864e4ad5189/exec-7e6c7a6e-5a80-4dfe-be4f-548b7a5ceea0.png"
+            ],
+            "input_sha256": "9123018256c9107e9e4d24dd54aacb2c1f189f51afc08431c22fbf984640b1e9",
+            "output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-9816f96b-cefa-4cb8-854e-befa581cf349.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "G3",
+      "file": "zabky_jedna_nadrz_mnoho_zabek.png",
+      "planned_prompt": "Warm storybook natural-history watercolour/gouache illustration, wide panorama 2:1, transparent RGBA background with a painterly edge. Bird's-eye view straight down on a mown meadow with a loose grid of many round cattle tanks seen from above as circles of water, each with a painted rim band in steel blue (#2E6CA4) or terracotta (#C2613A). At exactly one tank, the plains leopard frog field ecologist sits on the rim surrounded by a huge, untidy heap of filled notebook pages and many tiny froglets lined up for measurement, with one small orange (#F2A516) marker flag beside it as the focus accent. Every other tank is calm and untouched, with no notes and no visitors. Long late-afternoon shadows. Natural colours; course colours only on rim bands, notebook pages and the flag. All froglets are the same size. No text, letters, numbers, labels, arrows, charts, logos or watermarks.",
+      "alt_text": "Pohled shora na louku s mnoha kulatými nádržemi s modrými a cihlově červenými okraji. U jediné nádrže sedí žába obklopená hromadou popsaných listů a řadou žabek čekajících na měření, všechny ostatní nádrže zůstávají nedotčené. Ilustrace vytvořená pomocí AI.",
+      "prompt": "Use case: scientific-educational, NEW composition for L11 illustration revision 2. The first four reference images provide ONLY the established rich warm natural-history watercolour/gouache medium, organism identity, painterly texture and quality; do not reuse their medium-shot frog-on-tank composition or oval silhouette. The specific scene and allowed cast BELOW take priority. Strongly differentiate this image's prescribed viewpoint, setting, lighting and painterly outline. Natural colours for organisms, mud, water and vegetation; brown-green spotted plains leopard frog when requested, blue-green hawker dragonfly with one segmented abdomen, four clear wings and six thin legs when requested. Never add a frog or dragonfly to a scene that excludes it. All tiny froglets similar size, no implied treatment outcome. Every visible cattle tank in THIS new image has exactly one painted rim band, either steel blue #2E6CA4 (never dried) or terracotta #C2613A (dried/refilled), no striped/multicoloured rims, no regular alternating pattern. Water and animals do not take the band colours. Purple only on a notebook, if a notebook is specified. One SMALL focus accent at most in orange #F2A516, as specified; not multiple scattered orange equipment patches. Grey raw pebbles/tags, graphite equipment outlines. No text, letters, numbers, axes, labels, arrows, charts, musical symbols, decorative glyphs, logos or watermarks. All notebook pages, paper strips and tags completely blank; heaps of worked pages may have only faint nonletter pen textures, never legible writing or numerical tallies. Rulers completely plain, WITHOUT graduations, ticks or numbers. No extra limbs, extra insect abdomens, human hands, human ears or floating punctuation. A frog hand must look like a brown-green amphibian forelimb, not a human hand. Keep true RGBA transparent pixels OUTSIDE the scene's distinct painterly silhouette, including a small clear margin, with no checkerboard or flat opaque backdrop. Interior mist, dusk sky or table surface may be painted ONLY where the scene calls for them. The seven scene briefs intentionally differ; follow the specific framing and scene below exactly.\n\nWarm storybook natural-history watercolour/gouache illustration, wide panorama 2:1, transparent RGBA background with a painterly edge. Bird's-eye view straight down on a mown meadow with a loose grid of many round cattle tanks seen from above as circles of water, each with a painted rim band in steel blue (#2E6CA4) or terracotta (#C2613A). At exactly one tank, the plains leopard frog field ecologist sits on the rim surrounded by a huge, untidy heap of filled notebook pages and many tiny froglets lined up for measurement, with one small orange (#F2A516) marker flag beside it as the focus accent. Every other tank is calm and untouched, with no notes and no visitors. Long late-afternoon shadows. Natural colours; course colours only on rim bands, notebook pages and the flag. All froglets are the same size. No text, letters, numbers, labels, arrows, charts, logos or watermarks.\nFinal framing: very wide panorama 2:1, approximately 2048 x 1024. TRUE STRAIGHT-DOWN bird's-eye view: tanks are circles, not eye-level ellipses; tiny frog, froglets and paper heap are seen from overhead. No horizon and no dragonfly. One working tank is the sole busy cluster, the rest undisturbed. Many tanks partly cropped at lateral edges so no full experimental count is implied. A small indigo notebook belongs to the frog and the only orange focus accent is ONE small unlabelled marker flag beside the busy tank. All worked pages parchment, blank or faint abstract nonletter pen texture. Shadows long but no clouds or sky.",
+      "references": [
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_vysychajici_tun.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_pokusne_nadrze.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_tune_v_krajine.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/vazky_tune_les_pole.png"
+      ],
+      "ratio": "2:1",
+      "transparent_background": true,
+      "status": "generated candidate; author output review pending; not installed",
+      "result": {
+        "id": "G3",
+        "file": "zabky_jedna_nadrz_mnoho_zabek.png",
+        "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-610c7c6e-09d4-4413-89d6-735935490e8a.png",
+        "pixel_size": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "alpha_range": [
+          0,
+          255
+        ],
+        "transparent_pixels": 136964,
+        "sha256": "56bcf1c6c7ba31c50b5f808947a55384ff0dff1c3b2c859998c4ba35a1b905ad",
+        "status": "candidate saved; author review pending"
+      }
+    },
+    {
+      "id": "G6",
+      "file": "zabky_planovani_studie.png",
+      "planned_prompt": "Warm storybook natural-history watercolour/gouache illustration, square 1:1, transparent RGBA background with a round medallion-shaped painterly edge, designed to stay readable at about 200 px wide. Top-down still life on a weathered wooden field table: an unfolded hand-drawn map with simple outlines of several pools, some surrounded by tiny painted trees and some by tiny painted field stripes; small round map pins in steel blue (#2E6CA4) and terracotta (#C2613A) stuck into some pools; a small dip net, a plain ruler, an indigo notebook lying closed, a pencil and one dragonfly larva in a small glass dish of water. No characters, no hands. Studio-like soft light from the upper left. No text, letters, numbers, labels, arrows, charts, logos or watermarks; the map carries only outlines and pins.",
+      "alt_text": "Pohled shora na terénní stolek s ručně kreslenou mapou tůní u lesa a u polí, do které jsou zapíchnuté modré a cihlově červené špendlíky. Vedle leží síťka, pravítko, zavřený zápisník, tužka a miska s larvou vážky. Ilustrace vytvořená pomocí AI.",
+      "prompt": "Use case: scientific-educational, NEW composition for L11 illustration revision 2. The first four reference images provide ONLY the established rich warm natural-history watercolour/gouache medium, organism identity, painterly texture and quality; do not reuse their medium-shot frog-on-tank composition or oval silhouette. The specific scene and allowed cast BELOW take priority. Strongly differentiate this image's prescribed viewpoint, setting, lighting and painterly outline. Natural colours for organisms, mud, water and vegetation; brown-green spotted plains leopard frog when requested, blue-green hawker dragonfly with one segmented abdomen, four clear wings and six thin legs when requested. Never add a frog or dragonfly to a scene that excludes it. All tiny froglets similar size, no implied treatment outcome. Every visible cattle tank in THIS new image has exactly one painted rim band, either steel blue #2E6CA4 (never dried) or terracotta #C2613A (dried/refilled), no striped/multicoloured rims, no regular alternating pattern. Water and animals do not take the band colours. Purple only on a notebook, if a notebook is specified. One SMALL focus accent at most in orange #F2A516, as specified; not multiple scattered orange equipment patches. Grey raw pebbles/tags, graphite equipment outlines. No text, letters, numbers, axes, labels, arrows, charts, musical symbols, decorative glyphs, logos or watermarks. All notebook pages, paper strips and tags completely blank; heaps of worked pages may have only faint nonletter pen textures, never legible writing or numerical tallies. Rulers completely plain, WITHOUT graduations, ticks or numbers. No extra limbs, extra insect abdomens, human hands, human ears or floating punctuation. A frog hand must look like a brown-green amphibian forelimb, not a human hand. Keep true RGBA transparent pixels OUTSIDE the scene's distinct painterly silhouette, including a small clear margin, with no checkerboard or flat opaque backdrop. Interior mist, dusk sky or table surface may be painted ONLY where the scene calls for them. The seven scene briefs intentionally differ; follow the specific framing and scene below exactly.\n\nWarm storybook natural-history watercolour/gouache illustration, square 1:1, transparent RGBA background with a round medallion-shaped painterly edge, designed to stay readable at about 200 px wide. Top-down still life on a weathered wooden field table: an unfolded hand-drawn map with simple outlines of several pools, some surrounded by tiny painted trees and some by tiny painted field stripes; small round map pins in steel blue (#2E6CA4) and terracotta (#C2613A) stuck into some pools; a small dip net, a plain ruler, an indigo notebook lying closed, a pencil and one dragonfly larva in a small glass dish of water. No characters, no hands. Studio-like soft light from the upper left. No text, letters, numbers, labels, arrows, charts, logos or watermarks; the map carries only outlines and pins.\nFinal framing: square 1:1, approximately 1536 x 1536. TRUE TOP-DOWN still life with round medallion edge, simple enough to read at 200 px. NO frog, human, hand, adult dragonfly or animal face. Only ONE anatomically recognisable dragonfly nymph in the small glass dish: six thoracic legs, elongated abdomen, wing buds, no leaf-like tail gills. Map simple pond outlines with small forest/field margin drawings and blue/terracotta pin heads, no axes, text, legends or symbols. Closed indigo notebook. Ruler unmarked, no measurements. One net and one pencil; quiet studio lighting.",
+      "references": [
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_vysychajici_tun.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_pokusne_nadrze.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_tune_v_krajine.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/vazky_tune_les_pole.png"
+      ],
+      "ratio": "1:1",
+      "transparent_background": true,
+      "status": "generated candidate; author output review pending; not installed",
+      "result": {
+        "id": "G6",
+        "file": "zabky_planovani_studie.png",
+        "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-1795715e-90db-4eb6-92b3-5c93abe70b9f.png",
+        "pixel_size": [
+          1254,
+          1254
+        ],
+        "mode": "RGBA",
+        "alpha_range": [
+          0,
+          255
+        ],
+        "transparent_pixels": 397741,
+        "sha256": "83e1d5d4fdda706ca7bf6e8c90e75a49c8d5f0466f4580026e767fed52af4287",
+        "status": "candidate saved; author review pending"
+      }
+    },
+    {
+      "id": "G7",
+      "file": "zabky_jednotka_replikace.png",
+      "planned_prompt": "Warm storybook natural-history watercolour/gouache illustration, landscape 4:3, transparent RGBA background with a painterly edge. Left two thirds: an extreme close-up through a large round magnifying glass held by the frog's hand (only the hand and sleeve visible), showing one tiny froglet sitting on a plain wooden ruler, every skin detail and toe visible. Right third: the same scene from far above, as if seen by the blue-green dragonfly assistant flying high: one whole round cattle tank as a small circle of water with a painted steel blue (#2E6CA4) rim band, the tiny frog figure at its edge. The two parts are connected only by the dragonfly's flight path suggested by a faint trail of wing shimmer, not by an arrow. Bright midday light. Natural colours; course colours only on the rim band and the magnifier handle. No text, letters, numbers, labels, arrows, charts, logos or watermarks.",
+      "alt_text": "Vlevo zblízka přes lupu jedna malá žabka na pravítku, vpravo z výšky celá nádrž s modrým pruhem na okraji jako malý kruh vody, nad kterou letí vážka. Ilustrace vytvořená pomocí AI.",
+      "prompt": "Use case: scientific-educational, NEW composition for L11 illustration revision 2. The first four reference images provide ONLY the established rich warm natural-history watercolour/gouache medium, organism identity, painterly texture and quality; do not reuse their medium-shot frog-on-tank composition or oval silhouette. The specific scene and allowed cast BELOW take priority. Strongly differentiate this image's prescribed viewpoint, setting, lighting and painterly outline. Natural colours for organisms, mud, water and vegetation; brown-green spotted plains leopard frog when requested, blue-green hawker dragonfly with one segmented abdomen, four clear wings and six thin legs when requested. Never add a frog or dragonfly to a scene that excludes it. All tiny froglets similar size, no implied treatment outcome. Every visible cattle tank in THIS new image has exactly one painted rim band, either steel blue #2E6CA4 (never dried) or terracotta #C2613A (dried/refilled), no striped/multicoloured rims, no regular alternating pattern. Water and animals do not take the band colours. Purple only on a notebook, if a notebook is specified. One SMALL focus accent at most in orange #F2A516, as specified; not multiple scattered orange equipment patches. Grey raw pebbles/tags, graphite equipment outlines. No text, letters, numbers, axes, labels, arrows, charts, musical symbols, decorative glyphs, logos or watermarks. All notebook pages, paper strips and tags completely blank; heaps of worked pages may have only faint nonletter pen textures, never legible writing or numerical tallies. Rulers completely plain, WITHOUT graduations, ticks or numbers. No extra limbs, extra insect abdomens, human hands, human ears or floating punctuation. A frog hand must look like a brown-green amphibian forelimb, not a human hand. Keep true RGBA transparent pixels OUTSIDE the scene's distinct painterly silhouette, including a small clear margin, with no checkerboard or flat opaque backdrop. Interior mist, dusk sky or table surface may be painted ONLY where the scene calls for them. The seven scene briefs intentionally differ; follow the specific framing and scene below exactly.\n\nWarm storybook natural-history watercolour/gouache illustration, landscape 4:3, transparent RGBA background with a painterly edge. Left two thirds: an extreme close-up through a large round magnifying glass held by the frog's hand (only the hand and sleeve visible), showing one tiny froglet sitting on a plain wooden ruler, every skin detail and toe visible. Right third: the same scene from far above, as if seen by the blue-green dragonfly assistant flying high: one whole round cattle tank as a small circle of water with a painted steel blue (#2E6CA4) rim band, the tiny frog figure at its edge. The two parts are connected only by the dragonfly's flight path suggested by a faint trail of wing shimmer, not by an arrow. Bright midday light. Natural colours; course colours only on the rim band and the magnifier handle. No text, letters, numbers, labels, arrows, charts, logos or watermarks.\nFinal framing: landscape 4:3, approximately 1536 x 1152. Use the expressly requested TWO-SCALE montage: left two thirds an extreme magnified froglet close-up through a round magnifying glass; right third a distant overhead whole tank. No dividing line, chart, labels or arrows. Large frog ecologist appears ONLY as one natural amphibian hand and a quiet graphite sleeve holding magnifier; no large head/body. The tiny frog figure at the far tank edge is allowed as the explicitly requested scale cue. One blue-green dragonfly high above the right-hand view. Tank has one solid steel-blue rim band. Magnifier graphite handle with ONE small orange focus ring; no purple handle. A very faint natural wing shimmer may link views but no graphic trail, arrow or punctuation. Ruler wholly unmarked.",
+      "references": [
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_vysychajici_tun.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_pokusne_nadrze.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_tune_v_krajine.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/vazky_tune_les_pole.png"
+      ],
+      "ratio": "4:3",
+      "transparent_background": true,
+      "status": "generated candidate; author output review pending; not installed",
+      "result": {
+        "id": "G7",
+        "file": "zabky_jednotka_replikace.png",
+        "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-90b0c33e-e92f-413f-8373-c6eafa4f34aa.png",
+        "pixel_size": [
+          1448,
+          1086
+        ],
+        "mode": "RGBA",
+        "alpha_range": [
+          0,
+          255
+        ],
+        "transparent_pixels": 293935,
+        "sha256": "bd9e5be3e964d735c814d77cb4ef11f7fc4cefd849428b14861832d911675be4",
+        "status": "candidate saved; author review pending"
+      }
+    },
+    {
+      "id": "G8",
+      "file": "zabky_sbor_jedne_nadrze.png",
+      "planned_prompt": "Warm storybook natural-history watercolour/gouache illustration, landscape 4:3, transparent RGBA background with a painterly edge. Dusk at the field station, deep indigo sky with the first stars, one small amber lantern on the rim of a round cattle tank wearing a painted terracotta (#C2613A) rim band. Along the lit rim, a row of tiny froglets of identical size sings in perfect unison, mouths open in exactly the same shape, all facing the same way like a small choir. The blue-green dragonfly assistant hovers in front of them as the conductor, holding a thin twig as a baton. In the dark background, other tanks are silent silhouettes. No frog ecologist. Natural anatomy; course colours only on the rim band; the lantern glow is the single orange accent. No text, letters, numbers, labels, musical notes, charts, logos or watermarks.",
+      "alt_text": "Soumrak u nádrže s cihlově červeným pruhem na okraji: řada stejně velkých žabek na okraji osvětleném lucernou zpívá jednohlasně a vážka je diriguje větvičkou. Ostatní nádrže v pozadí mlčí. Ilustrace vytvořená pomocí AI.",
+      "prompt": "Use case: scientific-educational, NEW composition for L11 illustration revision 2. The first four reference images provide ONLY the established rich warm natural-history watercolour/gouache medium, organism identity, painterly texture and quality; do not reuse their medium-shot frog-on-tank composition or oval silhouette. The specific scene and allowed cast BELOW take priority. Strongly differentiate this image's prescribed viewpoint, setting, lighting and painterly outline. Natural colours for organisms, mud, water and vegetation; brown-green spotted plains leopard frog when requested, blue-green hawker dragonfly with one segmented abdomen, four clear wings and six thin legs when requested. Never add a frog or dragonfly to a scene that excludes it. All tiny froglets similar size, no implied treatment outcome. Every visible cattle tank in THIS new image has exactly one painted rim band, either steel blue #2E6CA4 (never dried) or terracotta #C2613A (dried/refilled), no striped/multicoloured rims, no regular alternating pattern. Water and animals do not take the band colours. Purple only on a notebook, if a notebook is specified. One SMALL focus accent at most in orange #F2A516, as specified; not multiple scattered orange equipment patches. Grey raw pebbles/tags, graphite equipment outlines. No text, letters, numbers, axes, labels, arrows, charts, musical symbols, decorative glyphs, logos or watermarks. All notebook pages, paper strips and tags completely blank; heaps of worked pages may have only faint nonletter pen textures, never legible writing or numerical tallies. Rulers completely plain, WITHOUT graduations, ticks or numbers. No extra limbs, extra insect abdomens, human hands, human ears or floating punctuation. A frog hand must look like a brown-green amphibian forelimb, not a human hand. Keep true RGBA transparent pixels OUTSIDE the scene's distinct painterly silhouette, including a small clear margin, with no checkerboard or flat opaque backdrop. Interior mist, dusk sky or table surface may be painted ONLY where the scene calls for them. The seven scene briefs intentionally differ; follow the specific framing and scene below exactly.\n\nWarm storybook natural-history watercolour/gouache illustration, landscape 4:3, transparent RGBA background with a painterly edge. Dusk at the field station, deep indigo sky with the first stars, one small amber lantern on the rim of a round cattle tank wearing a painted terracotta (#C2613A) rim band. Along the lit rim, a row of tiny froglets of identical size sings in perfect unison, mouths open in exactly the same shape, all facing the same way like a small choir. The blue-green dragonfly assistant hovers in front of them as the conductor, holding a thin twig as a baton. In the dark background, other tanks are silent silhouettes. No frog ecologist. Natural anatomy; course colours only on the rim band; the lantern glow is the single orange accent. No text, letters, numbers, labels, musical notes, charts, logos or watermarks.\nFinal framing: landscape 4:3, approximately 1536 x 1152. Dusk stage scene, distinguishable from every daylight image. NO adult frog ecologist, notebook or reporter. Froglets same size, matching mouths and posture, one dragonfly conducting with ONE thin unmarked twig held in a leg. Exactly four dragonfly wings, one abdomen. Main tank exactly one terracotta rim band. Distant tank silhouettes have a single restrained blue or terracotta rim if a rim is visible. Only ONE amber lantern provides the warm orange glow; no other lanterns or orange props. Interior night sky is natural deep navy/indigo twilight with a few small stars, enclosed by the painterly scene edge; the OUTSIDE remains transparent. No music notes, floating sound symbols, faces in sky or lettering.",
+      "references": [
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_vysychajici_tun.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_pokusne_nadrze.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_tune_v_krajine.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/vazky_tune_les_pole.png"
+      ],
+      "ratio": "4:3",
+      "transparent_background": true,
+      "status": "generated candidate; author output review pending; not installed",
+      "result": {
+        "id": "G8",
+        "file": "zabky_sbor_jedne_nadrze.png",
+        "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-faf7eda4-1c19-46ad-aaae-d6d02636bcc4.png",
+        "pixel_size": [
+          1448,
+          1086
+        ],
+        "mode": "RGBA",
+        "alpha_range": [
+          0,
+          255
+        ],
+        "transparent_pixels": 239509,
+        "sha256": "ff7ef8d125f9ee0f53fc26feda6e93cb9e01700fd8fd95f6bff2ccb655e1e1d0",
+        "status": "candidate saved; author review pending",
+        "edits": [
+          {
+            "reason": "Ensure each background tank has one uniformly coloured rim band",
+            "prompt": "Precise tank-band colour cleanup of the supplied dusk froglet choir painting. Preserve the lantern glow, navy twilight sky, stars, same-size singing froglets, blue-green dragonfly conductor and twig, water, vegetation, viewpoint, painterly edge and real RGBA transparency. The main foreground choir tank stays uniformly TERRACOTTA #C2613A around its entire rim. Fix ONLY the distant tank rim bands: left background tank uniformly STEEL BLUE #2E6CA4 on both front and rear arcs; middle background tank uniformly TERRACOTTA on all arcs; right background tank uniformly STEEL BLUE on its ENTIRE visible rim, removing any terracotta/red arc on that same tank. Each separate tank has exactly ONE band colour; there must not be a blue front with a terracotta rear on one tank. Preserve dim natural dusk shading without inventing another painted colour. Do not add or remove tanks, frogs, lanterns, wings, legs or objects. No letters, numbers, symbols, music notes, text or watermark. Same transparent PNG, landscape 4:3.",
+            "references": [
+              "C:/Users/ondre/.codex/generated_images/01a15fdb-163b-7ce1-95f4-5864e4ad5189/exec-0c38f01d-144c-4183-a440-e9428c7c6b4e.png"
+            ],
+            "input_sha256": "fcbdcdd7668a9047f3f3fdb593638a0049183bc7a3442a9527e685fe1bbe496d",
+            "output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-faf7eda4-1c19-46ad-aaae-d6d02636bcc4.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "G9",
+      "file": "zabky_pevny_nahodny.png",
+      "planned_prompt": "Warm storybook natural-history watercolour/gouache illustration, landscape 4:3, transparent RGBA background with a soft rectangular painterly edge. Close-up still life on a pale table, split into two halves by composition, not by a line. Left half: an open herbarium folder with exactly three carefully pressed, clearly different plant specimens (a grass, a clover and a buttercup), each fixed with a small paper strip; a frog's hand places the third specimen deliberately with tweezers. Right half: a plain grey cloth bag spilling many similar grey pebbles, with the blue-green dragonfly's leg drawing one pebble at random, the dragonfly's eyes playfully covered by one wing. One small orange (#F2A516) pin on the herbarium is the only focus accent. Soft north-window light. Natural colours; no treatment colours in this image. No text, letters, numbers, labels, arrows, charts, logos or watermarks; the paper strips are blank.",
+      "alt_text": "Vlevo herbářová složka se třemi pečlivě vybranými a vylisovanými rostlinami, které žába přikládá pinzetou, vpravo šedý plátěný pytlík s oblázky, ze kterého vážka se zakrytýma očima náhodně vytahuje jeden oblázek. Ilustrace vytvořená pomocí AI.",
+      "prompt": "Use case: scientific-educational, NEW composition for L11 illustration revision 2. The first four reference images provide ONLY the established rich warm natural-history watercolour/gouache medium, organism identity, painterly texture and quality; do not reuse their medium-shot frog-on-tank composition or oval silhouette. The specific scene and allowed cast BELOW take priority. Strongly differentiate this image's prescribed viewpoint, setting, lighting and painterly outline. Natural colours for organisms, mud, water and vegetation; brown-green spotted plains leopard frog when requested, blue-green hawker dragonfly with one segmented abdomen, four clear wings and six thin legs when requested. Never add a frog or dragonfly to a scene that excludes it. All tiny froglets similar size, no implied treatment outcome. Every visible cattle tank in THIS new image has exactly one painted rim band, either steel blue #2E6CA4 (never dried) or terracotta #C2613A (dried/refilled), no striped/multicoloured rims, no regular alternating pattern. Water and animals do not take the band colours. Purple only on a notebook, if a notebook is specified. One SMALL focus accent at most in orange #F2A516, as specified; not multiple scattered orange equipment patches. Grey raw pebbles/tags, graphite equipment outlines. No text, letters, numbers, axes, labels, arrows, charts, musical symbols, decorative glyphs, logos or watermarks. All notebook pages, paper strips and tags completely blank; heaps of worked pages may have only faint nonletter pen textures, never legible writing or numerical tallies. Rulers completely plain, WITHOUT graduations, ticks or numbers. No extra limbs, extra insect abdomens, human hands, human ears or floating punctuation. A frog hand must look like a brown-green amphibian forelimb, not a human hand. Keep true RGBA transparent pixels OUTSIDE the scene's distinct painterly silhouette, including a small clear margin, with no checkerboard or flat opaque backdrop. Interior mist, dusk sky or table surface may be painted ONLY where the scene calls for them. The seven scene briefs intentionally differ; follow the specific framing and scene below exactly.\n\nWarm storybook natural-history watercolour/gouache illustration, landscape 4:3, transparent RGBA background with a soft rectangular painterly edge. Close-up still life on a pale table, split into two halves by composition, not by a line. Left half: an open herbarium folder with exactly three carefully pressed, clearly different plant specimens (a grass, a clover and a buttercup), each fixed with a small paper strip; a frog's hand places the third specimen deliberately with tweezers. Right half: a plain grey cloth bag spilling many similar grey pebbles, with the blue-green dragonfly's leg drawing one pebble at random, the dragonfly's eyes playfully covered by one wing. One small orange (#F2A516) pin on the herbarium is the only focus accent. Soft north-window light. Natural colours; no treatment colours in this image. No text, letters, numbers, labels, arrows, charts, logos or watermarks; the paper strips are blank.\nFinal framing: landscape 4:3, approximately 1536 x 1152. Close-up table still life with soft rectangular painterly boundary, two compositional halves without a divider. Adult frog appears ONLY as ONE brown-green amphibian hand using tweezers; no frog head/body or extra hands. Herbarium contains EXACTLY THREE pressed specimens: grass, clover, buttercup, each secured by blank paper strips. On right, plain GREY bag and GREY pebbles; ONE blue-green dragonfly reaches blindly for one pebble with a leg while one wing partly obscures its eyes. Keep four wings and six legs, no human hand or ear. No steel-blue or terracotta pins, bag ties or treatment colours here. Only ONE tiny orange #F2A516 herbarium pin. No indigo notebook or other purple prop in this specific still life; no readable writing anywhere.",
+      "references": [
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_vysychajici_tun.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_pokusne_nadrze.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_tune_v_krajine.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/vazky_tune_les_pole.png"
+      ],
+      "ratio": "4:3",
+      "transparent_background": true,
+      "status": "generated candidate; author output review pending; not installed",
+      "result": {
+        "id": "G9",
+        "file": "zabky_pevny_nahodny.png",
+        "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-9dd7b8e0-f39f-4f60-aa2c-5a41edfbb222.png",
+        "pixel_size": [
+          1448,
+          1086
+        ],
+        "mode": "RGBA",
+        "alpha_range": [
+          0,
+          255
+        ],
+        "transparent_pixels": 168334,
+        "sha256": "7c06df0e1962e894a2481cb32559b6e2b36632a35bc4cfdd90d4dbe5e3245af6",
+        "status": "candidate saved; author review pending",
+        "edits": [
+          {
+            "reason": "Remove extra dragonfly wing while retaining the eye-covering gesture",
+            "prompt": "Precise insect anatomy correction to the supplied herbarium-and-pebbles still-life painting. Preserve the three pressed specimens (grass, clover, buttercup), blank paper strips, amphibian hand with tweezers, one orange pin, grey cloth bag and grey stones, pale table/window lighting, natural colours, painterly style and RGBA transparent border. Correct ONLY the blue-green dragonfly: it currently has FIVE wing sheets because the eye-covering folded wing was added as an extra. REMOVE the middle horizontal LEFT-pointing wing just underneath the long upper-left wing, the one extending toward the window at about ten o'clock behind the head. Preserve the existing folded translucent wing covering the eyes as one of the remaining FOUR wings. Final count: one upper-left extended wing, one folded eye-covering wing on the left, and TWO extended wings on the right = exactly FOUR wings, attached to one thorax. Repair the removed wing's area with the already-existing pale window/table background. Keep one long abdomen and six thin legs, including the leg drawing a pebble. Do not add wings, hands, limbs, symbols, text, labels or new props. All other scene details unchanged. Transparent RGBA PNG landscape 4:3, same canvas size.",
+            "references": [
+              "C:/Users/ondre/.codex/generated_images/01a15fdb-163b-7ce1-95f4-5864e4ad5189/exec-c91ee78e-03e3-4a00-a2a0-df2cfdbeff84.png"
+            ],
+            "input_sha256": "0368efc5252ffc6898730301f4c7b5ba4d69c1fb2d8a869c8b555ac334ffd89c",
+            "output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-9dd7b8e0-f39f-4f60-aa2c-5a41edfbb222.png"
+          }
+        ]
+      }
+    }
+  ],
+  "reference_sha256": {
+    "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_vysychajici_tun.png": "2023206f2e860b4572f27c52481a1134b25b606afdc165d5399d2c7ae2fc8d7b",
+    "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_pokusne_nadrze.png": "51b44b695f1d91502bf150fc6417add6038361d02ca066ddb0d31fa030c5fa7b",
+    "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_tune_v_krajine.png": "065a871ff501b6e25c65660742ce755487c0815f300cd28b35f41fc70a6660ba",
+    "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/vazky_tune_les_pole.png": "a5728456bec376fc52a7c0f85eddfeb75d78e653cf8e13f731b13d55ea3f334b",
+    "D:/GITHUB/CUNI-NATUR-Biostatistics/L10/Presentation/Materials/ostrovy_titulni.png": "2bfdd5f98300a9e52cfa73fc8052ad893c6934a106a12cc6843680572ec27458"
+  },
+  "validation": {
+    "seven_pngs_verified": true,
+    "aspect_ratios_verified": true,
+    "rgba_transparency_verified": true,
+    "saved_output_sha256_verified": true,
+    "reference_hashes_unchanged": true,
+    "active_image_and_deck_hashes_unchanged": true,
+    "installation": "Not performed: the brief requires author review of outputs first.",
+    "render": "No deck render: the candidate set is not installed."
+  }
+}

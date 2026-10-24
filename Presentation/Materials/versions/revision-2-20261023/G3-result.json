@@ -1,0 +1,17 @@
+{
+  "id": "G3",
+  "file": "zabky_jedna_nadrz_mnoho_zabek.png",
+  "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-610c7c6e-09d4-4413-89d6-735935490e8a.png",
+  "pixel_size": [
+    1774,
+    887
+  ],
+  "mode": "RGBA",
+  "alpha_range": [
+    0,
+    255
+  ],
+  "transparent_pixels": 136964,
+  "sha256": "56bcf1c6c7ba31c50b5f808947a55384ff0dff1c3b2c859998c4ba35a1b905ad",
+  "status": "candidate saved; author review pending"
+}

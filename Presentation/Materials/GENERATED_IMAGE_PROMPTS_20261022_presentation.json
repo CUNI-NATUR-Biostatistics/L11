@@ -1,0 +1,368 @@
+{
+  "date": "2026-10-22",
+  "tool": "OpenAI built-in image_gen",
+  "model": "Not exposed by the built-in tool",
+  "mode": "Built-in generation and targeted edits; no CLI/API fallback",
+  "style": "L11 V2 natural organisms and habitat, brand-coloured equipment, genuine transparent painterly vignettes",
+  "items": [
+    {
+      "id": "G3",
+      "file": "zabky_jedna_nadrz_mnoho_zabek.png",
+      "format": "4:3",
+      "planned_prompt": "Warm storybook natural-history watercolour/gouache illustration, landscape 4:3, transparent RGBA background with an irregular painterly vignette that fills most of the canvas. On a mown field-station meadow, the plains leopard frog field ecologist (brown-green frog with dark rounded spots and pale ridges along the back, small indigo notebook, plain measuring ruler) sits beside one round grey cattle tank filled with water and patiently measures a long queue of tiny froglets climbing out over the rim of that single tank, its notebook pages filling with blank lines of work. Behind it, a row of other identical round grey tanks stretches into the distance, untouched and quiet; the blue-green dragonfly assistant hovers above that row and gestures towards the other tanks. Gentle academic humour, natural anatomy, soft daylight. All froglets are the same size; the number of tanks in the row cannot be counted (the row fades into the distance). No text, letters, numbers, labels, arrows, charts, logos or watermarks; course colours only on the notebook and ruler.",
+      "submitted_prompt": "Use case: scientific-educational. NEW L11 university lecture illustration. The first four supplied reference images are the CURRENT V2 cast, medium, colour and transparency references, not edit targets. Match their friendly spotted plains leopard frog field ecologist with large curious eyes, brown-green skin, dark round spots, pale dorsolateral ridges and indigo field notebook, and their blue-green hawker dragonfly assistant with four clear wings and six legs. Match warm rich natural-history watercolour/gouache, expressive but recognisable animal anatomy, tactile painterly materials, gentle academic humour and the irregular transparent habitat vignette. Natural greens, browns and blue-green water remain biologically credible; course indigo #5D2890 on notebook covers and chosen equipment, parchment #F4F1EC blank pages, graphite #2E2E2E hardware and SMALL orange #F3A712 equipment accents ONLY. Never recolour organisms, vegetation or water purple. No purple colour wash. Keep subjects distinct and readable at slide-column width. Genuine RGBA transparent exterior: no background rectangle, sky fill, coloured halo, vignette backdrop, checkerboard or fake transparency. Scene fills most of the specified canvas within an organic painterly outline, with a small transparent margin. No humans, human hands, extra limbs, changed species or copied previous scenes. Notebook and tools unlabelled. Every ruler a plain wooden strip WITHOUT ticks, numbers, markings or graduations. No text, letters, numbers, labels, logos, watermarks, charts, axes or outcome cues. No froglet size comparison or exact experimental tank total. For a specifically requested metaphor, simple nonletter wavy scribbles/map contours are permitted as described, never readable writing or chart symbols.\n\nWarm storybook natural-history watercolour/gouache illustration, landscape 4:3, transparent RGBA background with an irregular painterly vignette that fills most of the canvas. On a mown field-station meadow, the plains leopard frog field ecologist (brown-green frog with dark rounded spots and pale ridges along the back, small indigo notebook, plain measuring ruler) sits beside one round grey cattle tank filled with water and patiently measures a long queue of tiny froglets climbing out over the rim of that single tank, its notebook pages filling with blank lines of work. Behind it, a row of other identical round grey tanks stretches into the distance, untouched and quiet; the blue-green dragonfly assistant hovers above that row and gestures towards the other tanks. Gentle academic humour, natural anatomy, soft daylight. All froglets are the same size; the number of tanks in the row cannot be counted (the row fades into the distance). No text, letters, numbers, labels, arrows, charts, logos or watermarks; course colours only on the notebook and ruler.\nOutput format: one finished PNG with genuine RGBA transparency. Landscape 4:3, 1536 x 1152 pixels.\nKeep all notebook pages blank (no legible writing or numerical tally). One foreground tank is the ONLY source of the long queue of similar-size froglets; show empty/quiet unvisited tanks beyond it, partly hidden in distance with no countable experimental total. The dragonfly indicates those distant tanks through body orientation and a leg gesture, no arrow.",
+      "references": [
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_vysychajici_tun.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_pokusne_nadrze.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_tune_v_krajine.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/vazky_tune_les_pole.png"
+      ],
+      "transparent_background": true,
+      "initial_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-a427d8d4-3c7b-49ce-9ec3-212f765401d4.png",
+      "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-a427d8d4-3c7b-49ce-9ec3-212f765401d4.png",
+      "edits": [],
+      "pixel_size": [
+        1448,
+        1086
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "fully_transparent_pixels": 341661,
+      "sha256": "1890591d796d6f062d8fe0bc66cdad65672584b61850273c67deb5ac12a81e6f"
+    },
+    {
+      "id": "G6",
+      "file": "zabky_planovani_studie.png",
+      "format": "1:1",
+      "planned_prompt": "Warm storybook natural-history watercolour/gouache illustration, square 1:1, transparent RGBA background with an irregular painterly vignette, designed to stay readable at about 220 px wide. The plains leopard frog field ecologist sits at a small folding field table at the edge of a meadow with a few small pools in the background, sketching in its indigo notebook beside an unfolded blank map that shows only simple outlines of several pools, with small pebbles placed on some of them as markers; the blue-green dragonfly assistant hovers over the map and points at one pool with a leg. A dip net with an indigo rim and a plain ruler lean against the table, still unused. Gentle academic humour, natural anatomy. No text, letters, numbers, labels, arrows, charts, logos or watermarks; the map carries only outlines.",
+      "submitted_prompt": "Use case: scientific-educational. NEW L11 university lecture illustration. The first four supplied reference images are the CURRENT V2 cast, medium, colour and transparency references, not edit targets. Match their friendly spotted plains leopard frog field ecologist with large curious eyes, brown-green skin, dark round spots, pale dorsolateral ridges and indigo field notebook, and their blue-green hawker dragonfly assistant with four clear wings and six legs. Match warm rich natural-history watercolour/gouache, expressive but recognisable animal anatomy, tactile painterly materials, gentle academic humour and the irregular transparent habitat vignette. Natural greens, browns and blue-green water remain biologically credible; course indigo #5D2890 on notebook covers and chosen equipment, parchment #F4F1EC blank pages, graphite #2E2E2E hardware and SMALL orange #F3A712 equipment accents ONLY. Never recolour organisms, vegetation or water purple. No purple colour wash. Keep subjects distinct and readable at slide-column width. Genuine RGBA transparent exterior: no background rectangle, sky fill, coloured halo, vignette backdrop, checkerboard or fake transparency. Scene fills most of the specified canvas within an organic painterly outline, with a small transparent margin. No humans, human hands, extra limbs, changed species or copied previous scenes. Notebook and tools unlabelled. Every ruler a plain wooden strip WITHOUT ticks, numbers, markings or graduations. No text, letters, numbers, labels, logos, watermarks, charts, axes or outcome cues. No froglet size comparison or exact experimental tank total. For a specifically requested metaphor, simple nonletter wavy scribbles/map contours are permitted as described, never readable writing or chart symbols.\n\nWarm storybook natural-history watercolour/gouache illustration, square 1:1, transparent RGBA background with an irregular painterly vignette, designed to stay readable at about 220 px wide. The plains leopard frog field ecologist sits at a small folding field table at the edge of a meadow with a few small pools in the background, sketching in its indigo notebook beside an unfolded blank map that shows only simple outlines of several pools, with small pebbles placed on some of them as markers; the blue-green dragonfly assistant hovers over the map and points at one pool with a leg. A dip net with an indigo rim and a plain ruler lean against the table, still unused. Gentle academic humour, natural anatomy. No text, letters, numbers, labels, arrows, charts, logos or watermarks; the map carries only outlines.\nOutput format: one finished PNG with genuine RGBA transparency. Square 1:1, 1536 x 1536 pixels. Simple bold planning action and map readable at 220 pixels; reduce incidental detail.",
+      "references": [
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_vysychajici_tun.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_pokusne_nadrze.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_tune_v_krajine.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/vazky_tune_les_pole.png"
+      ],
+      "transparent_background": true,
+      "initial_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-393f5d7c-fa11-4518-8873-e269477547d9.png",
+      "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-393f5d7c-fa11-4518-8873-e269477547d9.png",
+      "edits": [],
+      "pixel_size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "fully_transparent_pixels": 317453,
+      "sha256": "48b328962246a5da0b829d3418231f3e73452b2d27d2cfdbacb1598d444e4ed3"
+    },
+    {
+      "id": "G7",
+      "file": "zabky_jednotka_replikace.png",
+      "format": "4:3",
+      "planned_prompt": "Warm storybook natural-history watercolour/gouache illustration, landscape 4:3, transparent RGBA background with an irregular painterly vignette. At the rim of one round grey cattle tank filled with water, the plains leopard frog field ecologist holds a single tiny froglet gently and measures it with its plain ruler, notebook open beside it. Directly above, the blue-green dragonfly assistant hovers high and looks down at the whole tank as one object, its wings framing the tank from above; the composition makes the two scales obvious (one small animal close up, one whole tank from above). A few other froglets sit on the rim. Gentle academic humour, natural anatomy, natural colours; course colours only on the notebook and ruler. No text, letters, numbers, labels, arrows, charts, logos or watermarks.",
+      "submitted_prompt": "Use case: scientific-educational. NEW L11 university lecture illustration. The first four supplied reference images are the CURRENT V2 cast, medium, colour and transparency references, not edit targets. Match their friendly spotted plains leopard frog field ecologist with large curious eyes, brown-green skin, dark round spots, pale dorsolateral ridges and indigo field notebook, and their blue-green hawker dragonfly assistant with four clear wings and six legs. Match warm rich natural-history watercolour/gouache, expressive but recognisable animal anatomy, tactile painterly materials, gentle academic humour and the irregular transparent habitat vignette. Natural greens, browns and blue-green water remain biologically credible; course indigo #5D2890 on notebook covers and chosen equipment, parchment #F4F1EC blank pages, graphite #2E2E2E hardware and SMALL orange #F3A712 equipment accents ONLY. Never recolour organisms, vegetation or water purple. No purple colour wash. Keep subjects distinct and readable at slide-column width. Genuine RGBA transparent exterior: no background rectangle, sky fill, coloured halo, vignette backdrop, checkerboard or fake transparency. Scene fills most of the specified canvas within an organic painterly outline, with a small transparent margin. No humans, human hands, extra limbs, changed species or copied previous scenes. Notebook and tools unlabelled. Every ruler a plain wooden strip WITHOUT ticks, numbers, markings or graduations. No text, letters, numbers, labels, logos, watermarks, charts, axes or outcome cues. No froglet size comparison or exact experimental tank total. For a specifically requested metaphor, simple nonletter wavy scribbles/map contours are permitted as described, never readable writing or chart symbols.\n\nWarm storybook natural-history watercolour/gouache illustration, landscape 4:3, transparent RGBA background with an irregular painterly vignette. At the rim of one round grey cattle tank filled with water, the plains leopard frog field ecologist holds a single tiny froglet gently and measures it with its plain ruler, notebook open beside it. Directly above, the blue-green dragonfly assistant hovers high and looks down at the whole tank as one object, its wings framing the tank from above; the composition makes the two scales obvious (one small animal close up, one whole tank from above). A few other froglets sit on the rim. Gentle academic humour, natural anatomy, natural colours; course colours only on the notebook and ruler. No text, letters, numbers, labels, arrows, charts, logos or watermarks.\nOutput format: one finished PNG with genuine RGBA transparency. Landscape 4:3, 1536 x 1152 pixels.\nUse one coherent high-oblique viewpoint so the whole round water-filled tank reads as one complete object and the frog measuring one froglet at its near rim is also clear. Dragonfly hovers above the tank, looking down, wings clearly separate from tank rim. No diagram, separate inset, graphic frame or arrows.",
+      "references": [
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_vysychajici_tun.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_pokusne_nadrze.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_tune_v_krajine.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/vazky_tune_les_pole.png"
+      ],
+      "transparent_background": true,
+      "initial_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-dd27db3c-d667-427a-896b-75615742135b.png",
+      "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-e25ae9ed-59c2-42df-9b93-52e033545ff1.png",
+      "edits": [
+        {
+          "prompt": "Precise anatomy correction to the supplied L11 illustration; preserve the whole scene, painterly style, natural colours, indigo notebook, blank ruler, single froglet measurement, whole round tank, frog, other froglets, all composition and genuine RGBA transparent exterior. Correct ONLY the hovering blue-green dragonfly at the top. It currently has a short extra blue segmented abdomen projecting UPWARD behind the wing roots as well as the main long blue abdomen pointing down-right. REMOVE that extra upward-pointing blue segmented tail completely and repair its former area with transparency or the already-existing wing behind it. Retain exactly ONE dragonfly abdomen, the existing main long abdomen pointing down-right, attached to one thorax behind the head. Keep exactly four transparent wings and six plausible thin legs. Do not add antenna coils, symbols, text, arrows or other objects. No crop or framing change. Return transparent PNG landscape 4:3, preserve canvas size.",
+          "references": [
+            "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-dd27db3c-d667-427a-896b-75615742135b.png"
+          ],
+          "output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-e25ae9ed-59c2-42df-9b93-52e033545ff1.png",
+          "selected": true
+        }
+      ],
+      "pixel_size": [
+        1448,
+        1086
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "fully_transparent_pixels": 426390,
+      "sha256": "e4889799be836d31f1ff7fb9ff678a42bb393199ba7b208f482826b88586e7d4"
+    },
+    {
+      "id": "G8",
+      "file": "zabky_sbor_jedne_nadrze.png",
+      "format": "4:3",
+      "planned_prompt": "Warm storybook natural-history watercolour/gouache illustration, landscape 4:3, transparent RGBA background with an irregular painterly vignette. On the rim of one round grey cattle tank, a row of tiny froglets sings in unison like a small choir, mouths open in the same shape, all facing the same way. The plains leopard frog field ecologist stands in front of them like a reporter, writing in its indigo notebook, its pages showing the same short scribble repeated (no letters, just identical wavy marks). The blue-green dragonfly assistant hovers beside the frog, holding one wing to its ear with an amused expression, as if to say it hears just one voice. Gentle academic humour, natural anatomy, natural colours. All froglets are the same size. No text, letters, numbers, labels, musical notes with letters, charts, logos or watermarks.",
+      "submitted_prompt": "Use case: scientific-educational. NEW L11 university lecture illustration. The first four supplied reference images are the CURRENT V2 cast, medium, colour and transparency references, not edit targets. Match their friendly spotted plains leopard frog field ecologist with large curious eyes, brown-green skin, dark round spots, pale dorsolateral ridges and indigo field notebook, and their blue-green hawker dragonfly assistant with four clear wings and six legs. Match warm rich natural-history watercolour/gouache, expressive but recognisable animal anatomy, tactile painterly materials, gentle academic humour and the irregular transparent habitat vignette. Natural greens, browns and blue-green water remain biologically credible; course indigo #5D2890 on notebook covers and chosen equipment, parchment #F4F1EC blank pages, graphite #2E2E2E hardware and SMALL orange #F3A712 equipment accents ONLY. Never recolour organisms, vegetation or water purple. No purple colour wash. Keep subjects distinct and readable at slide-column width. Genuine RGBA transparent exterior: no background rectangle, sky fill, coloured halo, vignette backdrop, checkerboard or fake transparency. Scene fills most of the specified canvas within an organic painterly outline, with a small transparent margin. No humans, human hands, extra limbs, changed species or copied previous scenes. Notebook and tools unlabelled. Every ruler a plain wooden strip WITHOUT ticks, numbers, markings or graduations. No text, letters, numbers, labels, logos, watermarks, charts, axes or outcome cues. No froglet size comparison or exact experimental tank total. For a specifically requested metaphor, simple nonletter wavy scribbles/map contours are permitted as described, never readable writing or chart symbols.\n\nWarm storybook natural-history watercolour/gouache illustration, landscape 4:3, transparent RGBA background with an irregular painterly vignette. On the rim of one round grey cattle tank, a row of tiny froglets sings in unison like a small choir, mouths open in the same shape, all facing the same way. The plains leopard frog field ecologist stands in front of them like a reporter, writing in its indigo notebook, its pages showing the same short scribble repeated (no letters, just identical wavy marks). The blue-green dragonfly assistant hovers beside the frog, holding one wing to its ear with an amused expression, as if to say it hears just one voice. Gentle academic humour, natural anatomy, natural colours. All froglets are the same size. No text, letters, numbers, labels, musical notes with letters, charts, logos or watermarks.\nOutput format: one finished PNG with genuine RGBA transparency. Landscape 4:3, 1536 x 1152 pixels.\nThe unison metaphor is shown by similar-size froglets with matching open-mouth shapes and matching posture, all facing the ecologist. No music symbols, speech bubbles or text. A few identical nonletter wavy scribbles on the notebook are explicitly allowed; never readable letters or numeric tallies. Keep four dragonfly wings and six legs; one near wing may tilt towards the side of its head in a light listening gesture, with no human ear, extra limb or anthropomorphic hand.",
+      "references": [
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_vysychajici_tun.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_pokusne_nadrze.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_tune_v_krajine.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/vazky_tune_les_pole.png"
+      ],
+      "transparent_background": true,
+      "initial_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-cc3c7d39-2935-43fb-b1a9-1c20fa709a04.png",
+      "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-cc3c7d39-2935-43fb-b1a9-1c20fa709a04.png",
+      "edits": [],
+      "pixel_size": [
+        1448,
+        1086
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "fully_transparent_pixels": 379877,
+      "sha256": "b022106895e17d82c26941c51fda6fe239210ef6227a7efb1cb3385c1d0bec29"
+    },
+    {
+      "id": "G9",
+      "file": "zabky_pevny_nahodny.png",
+      "format": "4:3",
+      "planned_prompt": "Warm storybook natural-history watercolour/gouache illustration, landscape 4:3, transparent RGBA background with an irregular painterly vignette. On a meadow, the plains leopard frog field ecologist carefully picks three distinct, clearly different wildflowers (for example a poppy, a cornflower and a daisy) out of a colourful bouquet, deliberately choosing these exact ones. Next to it, the blue-green dragonfly assistant draws small grey pebbles at random from a plain cloth bag with its eyes closed, a few pebbles already on the grass. The contrast is deliberate choice of specific items versus a random draw from many. Gentle academic humour, natural anatomy, natural colours; course colours only on the bag tie and notebook. No text, letters, numbers, labels, charts, logos or watermarks.",
+      "submitted_prompt": "Use case: scientific-educational. NEW L11 university lecture illustration. The first four supplied reference images are the CURRENT V2 cast, medium, colour and transparency references, not edit targets. Match their friendly spotted plains leopard frog field ecologist with large curious eyes, brown-green skin, dark round spots, pale dorsolateral ridges and indigo field notebook, and their blue-green hawker dragonfly assistant with four clear wings and six legs. Match warm rich natural-history watercolour/gouache, expressive but recognisable animal anatomy, tactile painterly materials, gentle academic humour and the irregular transparent habitat vignette. Natural greens, browns and blue-green water remain biologically credible; course indigo #5D2890 on notebook covers and chosen equipment, parchment #F4F1EC blank pages, graphite #2E2E2E hardware and SMALL orange #F3A712 equipment accents ONLY. Never recolour organisms, vegetation or water purple. No purple colour wash. Keep subjects distinct and readable at slide-column width. Genuine RGBA transparent exterior: no background rectangle, sky fill, coloured halo, vignette backdrop, checkerboard or fake transparency. Scene fills most of the specified canvas within an organic painterly outline, with a small transparent margin. No humans, human hands, extra limbs, changed species or copied previous scenes. Notebook and tools unlabelled. Every ruler a plain wooden strip WITHOUT ticks, numbers, markings or graduations. No text, letters, numbers, labels, logos, watermarks, charts, axes or outcome cues. No froglet size comparison or exact experimental tank total. For a specifically requested metaphor, simple nonletter wavy scribbles/map contours are permitted as described, never readable writing or chart symbols.\n\nWarm storybook natural-history watercolour/gouache illustration, landscape 4:3, transparent RGBA background with an irregular painterly vignette. On a meadow, the plains leopard frog field ecologist carefully picks three distinct, clearly different wildflowers (for example a poppy, a cornflower and a daisy) out of a colourful bouquet, deliberately choosing these exact ones. Next to it, the blue-green dragonfly assistant draws small grey pebbles at random from a plain cloth bag with its eyes closed, a few pebbles already on the grass. The contrast is deliberate choice of specific items versus a random draw from many. Gentle academic humour, natural anatomy, natural colours; course colours only on the bag tie and notebook. No text, letters, numbers, labels, charts, logos or watermarks.\nOutput format: one finished PNG with genuine RGBA transparency. Landscape 4:3, 1536 x 1152 pixels.\nEnsure all THREE particular flower types are visible and distinct: a red poppy, blue cornflower and white-yellow daisy, selected deliberately by the frog from a mixed bouquet. Dragonfly's closed eyes and leg reaching blindly into the ordinary bag make random drawing clear. Pebbles are ordinary similar grey stones, no coded or numbered pieces. Keep indigo notebook visible beside frog and small indigo/orange bag tie. Flower and insect colours remain natural.",
+      "references": [
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_vysychajici_tun.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_pokusne_nadrze.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_tune_v_krajine.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/vazky_tune_les_pole.png"
+      ],
+      "transparent_background": true,
+      "initial_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-7df8cfb0-822a-4a6e-aae4-4603d8db00fc.png",
+      "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-a3e535d9-8468-4665-a6e4-41db77f8f2e3.png",
+      "edits": [
+        {
+          "prompt": "Precise frog anatomy correction to the supplied L11 flower-choice illustration; preserve its style, natural colours, friendly recurring cast, pebble bag with indigo/orange tie, closed-eyed dragonfly drawing pebbles, blank indigo notebook and transparent vignette. The frog currently has an EXTRA raised arm/hand behind its body on the far LEFT, holding the long stems of the red poppy. Remove that extra raised leftmost arm and hand completely, leaving natural meadow flowers in that area. The frog must have exactly TWO front arms/hands total, the two front forelimbs already near its chest and the bouquet, plus exactly TWO bent rear legs with webbed feet. The two remaining front hands handle the flowers: one supports a mixed bouquet, the other selects/holds a small group of exactly three distinct natural flowers: red poppy, blue cornflower, white-yellow daisy. Move the red poppy stem into that selected group near the existing front hands so it does not float. Ensure each hand connects along one visible anatomically plausible forelimb to the frog's body. Do not create additional hands behind stems or flowers. Keep anatomy natural with gentle storybook pose. No text, labels, charts, symbols, numbers, arrows or new props. Preserve full scene, all transparent margins and canvas. Transparent PNG landscape 4:3.",
+          "references": [
+            "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-7df8cfb0-822a-4a6e-aae4-4603d8db00fc.png"
+          ],
+          "output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-a3e535d9-8468-4665-a6e4-41db77f8f2e3.png",
+          "selected": true
+        }
+      ],
+      "pixel_size": [
+        1448,
+        1086
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "fully_transparent_pixels": 436537,
+      "sha256": "56041c2a76712be1031c5351e81eacdffeaea701662687db470d7adae4e53bb6"
+    },
+    {
+      "id": "G10",
+      "file": "povodi_vapnik.png",
+      "format": "4:3",
+      "planned_prompt": "Warm storybook natural-history watercolour/gouache illustration, landscape 4:3, transparent RGBA background with an irregular painterly vignette. From a hilltop, the plains leopard frog field ecologist scatters a cloud of white powder (calcium) from a large scoop over one entire forested valley with a small stream, which is dusted white; directly next to it lies a second, similar forested valley that stays untouched and green. The blue-green dragonfly assistant flies between the two valleys, looking back and forth with a puzzled expression. Tiny maple seedlings are visible on the valley floors. Gentle academic humour, natural colours; course colours only on the scoop handle. No text, letters, numbers, labels, arrows, charts, logos or watermarks.",
+      "submitted_prompt": "Use case: scientific-educational. NEW L11 university lecture illustration. The first four supplied reference images are the CURRENT V2 cast, medium, colour and transparency references, not edit targets. Match their friendly spotted plains leopard frog field ecologist with large curious eyes, brown-green skin, dark round spots, pale dorsolateral ridges and indigo field notebook, and their blue-green hawker dragonfly assistant with four clear wings and six legs. Match warm rich natural-history watercolour/gouache, expressive but recognisable animal anatomy, tactile painterly materials, gentle academic humour and the irregular transparent habitat vignette. Natural greens, browns and blue-green water remain biologically credible; course indigo #5D2890 on notebook covers and chosen equipment, parchment #F4F1EC blank pages, graphite #2E2E2E hardware and SMALL orange #F3A712 equipment accents ONLY. Never recolour organisms, vegetation or water purple. No purple colour wash. Keep subjects distinct and readable at slide-column width. Genuine RGBA transparent exterior: no background rectangle, sky fill, coloured halo, vignette backdrop, checkerboard or fake transparency. Scene fills most of the specified canvas within an organic painterly outline, with a small transparent margin. No humans, human hands, extra limbs, changed species or copied previous scenes. Notebook and tools unlabelled. Every ruler a plain wooden strip WITHOUT ticks, numbers, markings or graduations. No text, letters, numbers, labels, logos, watermarks, charts, axes or outcome cues. No froglet size comparison or exact experimental tank total. For a specifically requested metaphor, simple nonletter wavy scribbles/map contours are permitted as described, never readable writing or chart symbols.\n\nWarm storybook natural-history watercolour/gouache illustration, landscape 4:3, transparent RGBA background with an irregular painterly vignette. From a hilltop, the plains leopard frog field ecologist scatters a cloud of white powder (calcium) from a large scoop over one entire forested valley with a small stream, which is dusted white; directly next to it lies a second, similar forested valley that stays untouched and green. The blue-green dragonfly assistant flies between the two valleys, looking back and forth with a puzzled expression. Tiny maple seedlings are visible on the valley floors. Gentle academic humour, natural colours; course colours only on the scoop handle. No text, letters, numbers, labels, arrows, charts, logos or watermarks.\nOutput format: one finished PNG with genuine RGBA transparency. Landscape 4:3, 1536 x 1152 pixels.\nShow EXACTLY TWO entire adjacent comparable forested valleys separated by a clear ridge, each with one small stream. One whole catchment is receiving the frog's visible falling white powder and has a LIGHT dusting of calcium across its forest floor and foliage; the other remains untreated. Both have healthy similar trees/seedlings, the SAME season and similar sunlight; do not imply treatment improves or damages plant growth. Show tiny maple seedlings of comparable size in both, not a bare/snow-covered/dead valley. Scoop with small indigo/orange handle. No notebook needed in this specifically recorded scene. Neither valley is marked as better.",
+      "references": [
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_vysychajici_tun.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_pokusne_nadrze.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_tune_v_krajine.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/vazky_tune_les_pole.png"
+      ],
+      "transparent_background": true,
+      "initial_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-5bcce80b-4db8-4b80-806f-80d292038a7b.png",
+      "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-554864eb-c64c-49ba-b9b5-d5fab5936a5c.png",
+      "edits": [
+        {
+          "prompt": "Precise small cleanup of supplied L11 calcium-catchment illustration. Preserve ALL existing scene elements, anatomy, colours, the one white-dusted valley receiving falling calcium, the adjacent untreated green valley, streams, frog with scoop, dragonfly, maple seedlings, painterly style, layout and RGBA transparency. Remove ONLY the two small grey curly floating question-mark-like marks above the dragonfly's head between its upper wings. Their area should become fully transparent. The dragonfly has no large coiled antennae or floating punctuation. Keep its four clear wings, six legs and one abdomen unchanged. No glyphs, letters, punctuation, diagrams, labels, arrows, logos or watermark anywhere. Do not add objects, borders or backdrop, crop the scene or change the treated/untreated contrast. Return transparent PNG landscape 4:3 at same canvas size.",
+          "references": [
+            "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-5bcce80b-4db8-4b80-806f-80d292038a7b.png"
+          ],
+          "output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-015497c1-acca-4a99-99e7-96600e254ca8.png",
+          "selected": false
+        },
+        {
+          "prompt": "Edit the supplied calcium-catchment illustration. Preserve the two entire forest valleys, white calcium falling from the frog's scoop into the left valley, untreated green right valley, streams, seedlings, frog, all colours, painterly vignette, transparent background and composition. REPLACE ONLY THE DRAGONFLY AND THE TWO SMALL GREY FLOATING BLOBS ABOVE ITS HEAD. Remove that entire insect and every associated grey mark, then repaint a single clean natural-history blue-green hawker dragonfly hovering in the same place, with one head, short inconspicuous antennae, one thorax, one long segmented abdomen, six thin legs and four translucent wings. It has a curious sideways glance toward the valleys. Absolutely NO floating grey shapes, question marks, punctuation, curly antennae, thought bubbles, smoke, head aura, motion marks, symbols or detached painted marks around the insect. Leave a clean transparent gap above and around the insect's head between its wings. Keep its style and approximate size consistent with the frog. Everything outside that small insect region remains unchanged. Transparent RGBA PNG, landscape 4:3, same size as source. No text, chart, labels or watermarks.",
+          "references": [
+            "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-015497c1-acca-4a99-99e7-96600e254ca8.png"
+          ],
+          "output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-554864eb-c64c-49ba-b9b5-d5fab5936a5c.png",
+          "selected": true
+        }
+      ],
+      "pixel_size": [
+        1448,
+        1086
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "fully_transparent_pixels": 372486,
+      "sha256": "32f266ef560681bf30c76c1a8e93bea16b42d871dd046775d8f15b20db49f1ee"
+    },
+    {
+      "id": "T",
+      "file": "zabky_titulni.png",
+      "format": "3:4",
+      "planned_prompt": "Warm storybook natural-history watercolour/gouache illustration, portrait 3:4, compact and tall. In the lower foreground, the plains leopard frog field ecologist sits on the rim of a round grey cattle tank with its indigo notebook and ruler while a few tiny froglets climb out over the rim; the blue-green dragonfly assistant hovers beside it. Rising behind them in the upper half: a small meadow pool with a band of cracked, pale dried mud that is refilling with water, and above it a gentle landscape dotted with many small pools and a few more cattle tanks fading into the distance. All froglets are the same size. Gentle academic humour, natural anatomy, natural colours; course colours only on equipment. No text, letters, numbers, labels, arrows, charts, logos or watermarks.",
+      "submitted_prompt": "Use case: scientific-educational. NEW L11 university lecture illustration. The first four supplied reference images are the CURRENT V2 cast, medium, colour and transparency references, not edit targets. Match their friendly spotted plains leopard frog field ecologist with large curious eyes, brown-green skin, dark round spots, pale dorsolateral ridges and indigo field notebook, and their blue-green hawker dragonfly assistant with four clear wings and six legs. Match warm rich natural-history watercolour/gouache, expressive but recognisable animal anatomy, tactile painterly materials, gentle academic humour and the irregular transparent habitat vignette. Natural greens, browns and blue-green water remain biologically credible; course indigo #5D2890 on notebook covers and chosen equipment, parchment #F4F1EC blank pages, graphite #2E2E2E hardware and SMALL orange #F3A712 equipment accents ONLY. Never recolour organisms, vegetation or water purple. No purple colour wash. Keep subjects distinct and readable at slide-column width. Genuine RGBA transparent exterior: no background rectangle, sky fill, coloured halo, vignette backdrop, checkerboard or fake transparency. Scene fills most of the specified canvas within an organic painterly outline, with a small transparent margin. No humans, human hands, extra limbs, changed species or copied previous scenes. Notebook and tools unlabelled. Every ruler a plain wooden strip WITHOUT ticks, numbers, markings or graduations. No text, letters, numbers, labels, logos, watermarks, charts, axes or outcome cues. No froglet size comparison or exact experimental tank total. For a specifically requested metaphor, simple nonletter wavy scribbles/map contours are permitted as described, never readable writing or chart symbols.\n\nWarm storybook natural-history watercolour/gouache illustration, portrait 3:4, compact and tall. In the lower foreground, the plains leopard frog field ecologist sits on the rim of a round grey cattle tank with its indigo notebook and ruler while a few tiny froglets climb out over the rim; the blue-green dragonfly assistant hovers beside it. Rising behind them in the upper half: a small meadow pool with a band of cracked, pale dried mud that is refilling with water, and above it a gentle landscape dotted with many small pools and a few more cattle tanks fading into the distance. All froglets are the same size. Gentle academic humour, natural anatomy, natural colours; course colours only on equipment. No text, letters, numbers, labels, arrows, charts, logos or watermarks.\nOutput format: one finished PNG with genuine RGBA transparency. Portrait 3:4, 1152 x 1536 pixels, compact tall composition, fills almost all canvas and reads on the indigo title slide.\nThe FIFTH reference (L10 title) is ONLY a guide to tall stacked composition, painterly scene density and transparent outline. Do NOT copy turtle, birds, island, cacti, sea or mountains. Lower foreground: L11 cast/tank/froglets; middle: refilling cracked-mud pool; upper: many meadow pools and partial distant tanks. No large empty margins, top sky or floating disconnected panels.",
+      "references": [
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_vysychajici_tun.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_pokusne_nadrze.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_tune_v_krajine.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/vazky_tune_les_pole.png",
+        "D:/GITHUB/CUNI-NATUR-Biostatistics/L10/Presentation/Materials/ostrovy_titulni.png"
+      ],
+      "transparent_background": true,
+      "initial_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-aa6d992a-d903-4bb2-9cab-e932580e42e2.png",
+      "selected_output": "C:\\Users\\ondre\\.codex\\generated_images\\01a15fdb-163b-7ce1-95f4-5864e4ad5189\\exec-aa6d992a-d903-4bb2-9cab-e932580e42e2.png",
+      "edits": [],
+      "pixel_size": [
+        1086,
+        1448
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "fully_transparent_pixels": 178382,
+      "sha256": "d1953c2b09eb7f070ec1f5f410b7ccb291c7ce7840a733accabbb8db474d3b88"
+    }
+  ],
+  "reference_sha256": {
+    "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_vysychajici_tun.png": "2023206f2e860b4572f27c52481a1134b25b606afdc165d5399d2c7ae2fc8d7b",
+    "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_pokusne_nadrze.png": "51b44b695f1d91502bf150fc6417add6038361d02ca066ddb0d31fa030c5fa7b",
+    "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/zabky_tune_v_krajine.png": "065a871ff501b6e25c65660742ce755487c0815f300cd28b35f41fc70a6660ba",
+    "D:/GITHUB/CUNI-NATUR-Biostatistics/L11/Learning_materials/images/vazky_tune_les_pole.png": "a5728456bec376fc52a7c0f85eddfeb75d78e653cf8e13f731b13d55ea3f334b",
+    "D:/GITHUB/CUNI-NATUR-Biostatistics/L10/Presentation/Materials/ostrovy_titulni.png": "2bfdd5f98300a9e52cfa73fc8052ad893c6934a106a12cc6843680572ec27458"
+  },
+  "reuse_terms": "CC BY 4.0 educational-content terms in L11/LICENSE.md; retain the specified course attribution and AI disclosure.",
+  "source_qmd_sha256_before_render": "4ce920d34c5d571138b129d50e2dcbdbdde4b12c9c14e9caef7dab2ce9554db4",
+  "source_qmd_sha256_initial": "76e009ef0b72efba0288aa0702aaa510cf3b432dc0af1adbfff7ab296f6f18d7",
+  "layout_adjustment": "Only zobrazit-planovani-2: out-width 100 percent to 75 percent, restoring visible AI caption and footer clearance on slide 28.",
+  "render_validation": {
+    "render": "R/render_presentation.R with existing theme, POLLSLIVE_RENDER_MODE=offline",
+    "pdf_pages": 67,
+    "new_image_occurrences": [
+      {
+        "id": "T",
+        "attributes": [
+          "data-src"
+        ],
+        "alt": "Žába ekoložka sedí na okraji pokusné nádrže, ze které lezou drobné žabky, a vedle ní poletuje vážka; za nimi se plní vodou vyschlá tůň s rozpraskaným bahnem a v dálce je krajina s mnoha tůněmi. Ilustrace vytvořená pomocí AI.",
+        "section_id": "vylézají-z-tůní-které-vyschly-menší-žabky",
+        "pdf_page": 1
+      },
+      {
+        "id": "G7",
+        "attributes": [
+          "data-src"
+        ],
+        "alt": "Žába ekoložka měří pravítkem jednu žabku na okraji nádrže, zatímco vážka nad ní přehlíží celou nádrž shora. Ilustrace vytvořená pomocí AI.",
+        "section_id": "žabka-je-jednotka-pozorování-nádrž-jednotka-nezávislé-replikace",
+        "pdf_page": 18
+      },
+      {
+        "id": "G8",
+        "attributes": [
+          "data-src"
+        ],
+        "alt": "Žabky z jedné nádrže zpívají na jejím okraji jednohlasně jako sbor, zatímco vážka si přikládá křídlo k uchu a žába ekoložka si do zápisníku píše stále tutéž poznámku. Ilustrace vytvořená pomocí AI.",
+        "section_id": "proč-16-nádrží-nevydá-za-485-žabek",
+        "pdf_page": 24
+      },
+      {
+        "id": "G3",
+        "attributes": [
+          "data-src"
+        ],
+        "alt": "Žába ekoložka trpělivě měří dlouhou řadu žabek, které lezou z jediné nádrže, zatímco vážka nad ní ukazuje na řadu dalších nádrží, ke kterým se zatím nikdo nedostal. Ilustrace vytvořená pomocí AI.",
+        "section_id": "víc-žabek-zpřesní-nádrž-víc-nádrží-zpřesní-odpověď",
+        "pdf_page": 26
+      },
+      {
+        "id": "G6",
+        "attributes": [
+          "data-src"
+        ],
+        "alt": "Žába ekoložka u polního stolku plánuje studii nad prázdnou mapou s obrysy tůní. Ilustrace vytvořená pomocí AI.",
+        "section_id": "vaše-vlastní-studie-kolik-nezávislých-odpovědí",
+        "pdf_page": 28
+      },
+      {
+        "id": "G6",
+        "attributes": [
+          "data-src"
+        ],
+        "alt": "Žába ekoložka u polního stolku plánuje studii nad prázdnou mapou s obrysy tůní. Ilustrace vytvořená pomocí AI.",
+        "section_id": "vaše-vlastní-studie-co-se-mění-uvnitř-jednotek",
+        "pdf_page": 37
+      },
+      {
+        "id": "G6",
+        "attributes": [
+          "data-src"
+        ],
+        "alt": "Žába ekoložka u polního stolku plánuje studii nad prázdnou mapou s obrysy tůní. Ilustrace vytvořená pomocí AI.",
+        "section_id": "vaše-vlastní-studie-zápis-modelu",
+        "pdf_page": 56
+      },
+      {
+        "id": "G9",
+        "attributes": [
+          "data-src"
+        ],
+        "alt": "Žába ekoložka vybírá z kytice tři konkrétní květiny, zatímco vážka losuje oblázky z plátěného pytlíku. Ilustrace vytvořená pomocí AI.",
+        "section_id": "zajímají-nás-konkrétní-úrovně-nebo-celý-soubor-možných-úrovní",
+        "pdf_page": 58
+      },
+      {
+        "id": "G10",
+        "attributes": [
+          "data-src"
+        ],
+        "alt": "Žába ekoložka z vrcholku kopce sype bílý vápník na celé jedno lesní údolí; vedle leží druhé, neošetřené údolí a vážka mezi nimi přelétá. Ilustrace vytvořená pomocí AI.",
+        "section_id": "když-nepomůže-ani-model-jedno-ošetřené-povodí",
+        "pdf_page": 60
+      },
+      {
+        "id": "G6",
+        "attributes": [
+          "data-src"
+        ],
+        "alt": "Žába ekoložka u polního stolku plánuje studii nad prázdnou mapou s obrysy tůní. Ilustrace vytvořená pomocí AI.",
+        "section_id": "vaše-vlastní-studie-pevný-nebo-náhodný-faktor",
+        "pdf_page": 61
+      },
+      {
+        "id": "G6",
+        "attributes": [
+          "data-src"
+        ],
+        "alt": "Žába ekoložka u polního stolku plánuje studii nad prázdnou mapou s obrysy tůní. Ilustrace vytvořená pomocí AI.",
+        "section_id": "sedm-otázek-před-prvním-měřením",
+        "pdf_page": 65
+      }
+    ],
+    "html_equals_docs": true,
+    "source_unchanged_during_render": true,
+    "saved_embedded_hashes_match": true,
+    "alt_text_and_visible_ai_disclosures": true,
+    "visual_inspection": "Passed: affected-slide PDF overview, full-size title/replication/flower-choice/catchment slides, and corrected full-size slide 28. The planning icon was reduced only on slide 28 to retain the complete AI caption and footer clearance.",
+    "source_change_scope": "Only out-width for chunk zobrazit-planovani-2 changed, from 100% to 75%; original source hash is retained.",
+    "outputs_sha256": {
+      "Presentation/presentation.html": "2fa383ff6c5ba4f4992852ab5ecbd9f97409721dcb31df9fa71d66e11842567f",
+      "Presentation/presentation.pdf": "f5fbb1b563cf3ccf8134ade85686dacf8e7d71d6eef8cd66837e49b64794513c",
+      "docs/index.html": "2fa383ff6c5ba4f4992852ab5ecbd9f97409721dcb31df9fa71d66e11842567f"
+    }
+  }
+}
