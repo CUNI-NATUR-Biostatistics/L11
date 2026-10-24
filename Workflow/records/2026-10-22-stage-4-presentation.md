@@ -621,6 +621,30 @@ Images in place (2026-10-22): the title image, G1–G10 and the reused skripta i
 - Krok 3–5: each answer moved under its question in the left column, and the slide is vertically centred, removing the empty middle.
 - The deck now has 71 slides. Live-variant render exit 0; all slides re-shot and the changed ones inspected. The canonical render is still blocked by DeckTape timing out on any deck, including the minimal test deck, so `Presentation/presentation.html` and `presentation.pdf` remain the 09:00 versions.
 
+## Illustration revision 2 and skripta visuals (Ondřej Mottl, 2026-10-23)
+
+- **Deck illustrations.** The author found the first series too uniform and asked for the treatment colours in the pictures.
+  - New prompts for T, G2, G3, G6, G7, G8 and G9 are recorded in `Presentation/Materials/GENERATED_IMAGES.md` („Illustration revision 2“).
+  - An image-generation agent produced the candidates, and the author approved installing all seven. The first series is archived in `versions/revision-1-20261022/`.
+  - The Czech alt texts on the slides were updated (11 occurrences).
+- **Skripta visuals.** The author decided that the skripta carries only visuals with practical impact. After a review of all 26 skripta figures, with the author's approval of every recommendation:
+  - The four AI illustrations were removed, with `Learning_materials/images/`. Their provenance moved to `Presentation/Materials/versions/skripta-origin/`, because the deck still uses G1, G4 and G5.
+  - Two figures were added to „Vyschnutí a nádrž nesou stejnou informaci“: the model-column grid, which explains R's `NA` / singularities, and the hypothetical split-tank grid.
+  - A fitted mixed-model figure with visible base R code was added after the `Random effects` interpretation.
+  - Visible `stripchart()` code for checking grouped data was added in a collapsed box.
+  - Five figures were aligned with the deck: group means on the violin plot, treatment colours in the hierarchy diagram, residual segments in the three-layer figure, tank levels ordered by mean length with a new shift panel, and R² brackets on the variability bar.
+  - The random-slope figure and its model were removed; one sentence naming the random slope remains, as in the course outline.
+- **Independent review.** vision-corrector, Sonnet, read the full file and the extracted rendered figures. No must-fix items. All six should-fix items were applied:
+  - the invisible shifts in the tank-levels figure;
+  - the hidden tank mean in the three-tank figure;
+  - treatment colours and placement for the fitted-model figure;
+  - the locality of four setup objects;
+  - a sentence on the reference tank in the grid;
+  - a missing space.
+  - The two optional alt-text fixes were applied as well.
+- **Validation.** `R/render_skripta.R` exit 0, HTML and Typst PDF. Changed figures re-extracted from the HTML and inspected. The PDF pages have not been inspected visually.
+- **Still open.** The glossary placeholders (`nahodny-efekt`, `smiseny-model`, `blok`, `marginalni-r2` and others) need `slovnik` entries. The canonical deck render is still blocked by DeckTape timing out on any deck.
+
 ## Visual workflow checks
 
 - Story map completed and explicitly human-approved before full slide copy: [x] (Ondřej Mottl, 2026-10-22, revision 2)
