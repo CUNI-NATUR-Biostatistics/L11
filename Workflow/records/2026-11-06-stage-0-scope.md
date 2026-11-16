@@ -67,7 +67,7 @@ The current entry is thin compared with L10 and the hierarchical lesson, and out
 
 Title: **L11 – GLM: binární a početní odezva**
 
-Úvodní odstavec: Jednotná logika modelu pokračuje pro odezvy, u nichž normální rozdělení a přímá lineární predikce nedávají smysl: výskyt ano/ne a počty. Studenti uvidí, proč přímka s normálními residui u takových dat předpovídá nemožné hodnoty, a rozšíří lineární model o rozdělení odezvy a spojovací funkci. Logistický a Poissonův model fitují funkcí `glmmTMB()` (stejnou, kterou v L12 rozšíří o náhodné efekty) a výsledky čtou jako předpovězené pravděpodobnosti, počty a násobky.
+Úvodní odstavec: Jednotná logika modelu pokračuje pro odezvy, u nichž normální rozdělení a přímá lineární predikce nedávají smysl: výskyt ano/ne a počty. Studenti uvidí, proč přímka s normálními residui u takových dat předpovídá nemožné hodnoty, a rozšíří lineární model o rozdělení odezvy a spojovací funkci. Logistický a Poissonův model fitují funkcí `glm()` a výsledky čtou jako předpovězené pravděpodobnosti, počty a násobky.
 
 Modelové jádro lekce:
 
@@ -83,7 +83,7 @@ Výstupy z učení:
 
 1. Rozlišit spojitou, binární a početní odezvu a přiřadit jí vhodné rozdělení a typ modelu.
 2. Vysvětlit, proč lineární model s normálními residui není vhodný pro 0/1 data a pro počty.
-3. Fitovat logistický a Poissonův model funkcí `glmmTMB()` a interpretovat jeho efekt pomocí předpovězených pravděpodobností nebo počtů a jejich nejistoty.
+3. Fitovat logistický a Poissonův model funkcí `glm()` a interpretovat jeho efekt pomocí předpovězených pravděpodobností nebo počtů a jejich nejistoty.
 4. Interpretovat koeficient Poissonova modelu jako násobek očekávaného počtu a vysvětlit roli spojovací funkce slovy, bez odvozování.
 5. Posoudit, zda model odpovídá datům (předpovědi proti pozorovaným hodnotám, nadměrný rozptyl u počtů), a formulovat opatrný biologický závěr.
 
@@ -126,17 +126,17 @@ Sources: `_internal/moodle/knowledge/L01.yaml`–`L10.yaml` (all sections, extra
 - **Data handling:** `read.csv()`, `str()`, `table()`, `prop.table()`, `tapply()`, `aggregate()`.
 - **Plots:** `plot()`, `lines()`, `points()`, `abline()`, `legend()`, `hist()`, `boxplot()`, `barplot()`, `stripchart()`, `qqnorm()` / `qqline()`.
 - `deviance()` and `logLik()` appeared only in an L09 extension, where the deviance equals the RSS.
-- **New in L11:** `glmmTMB::glmmTMB()` (D1; `glm()` in an Extra box), `family = binomial`, `family = poisson`, `predict(type = "response")`, and `predict(type = "link", se.fit = TRUE)` for the confidence band. `predict(interval = ...)` does not work for GLMs, so the band needs a new but short recipe.
+- **New in L11:** `glm()` (D1), `family = binomial`, `family = poisson`, `predict(type = "response")`, and `predict(type = "link", se.fit = TRUE)` for the confidence band. `predict(interval = ...)` does not work for GLMs, so the band needs a new but short recipe.
 
 ### Readable output
 
 - `summary(lm)`: Estimate (L03), Std. Error and Residual standard error (L04), t value and Pr(>|t|) (L05), R² and adjusted R² (L09).
 - Also known: `confint()` output, `predict()` with fit, lwr and upr, `anova()` tables, and AIC/ΔAIC tables.
-- The model `summary()` (`glmmTMB`, D1) has a coefficient table like `summary(lm)` with `z value` and `Pr(>|z|)` instead of t, plus an AIC/BIC/logLik/deviance/df.resid line. Only the coefficient table, and AIC as known from L09, are read in the core; the `glm()` output appears in the Extra box.
+- `summary(glm)` (D1) has a coefficient table like `summary(lm)` with `z value` and `Pr(>|z|)` instead of t, plus the dispersion-parameter line, null and residual deviance, AIC and Fisher scoring iterations. Only the coefficient table, and AIC as known from L09, are read in the core.
 
 ### Standing practices this lesson triggers
 
-The CSV triggers match `\blm\(` and do not fire on `glmmTMB(` or `glm(`. They are extended in the `_internal` change that adds any L11 row, so that `check_prior_practices.R L11` works.
+The CSV triggers match `\blm\(` and do not fire on `glm(`. They are extended to `glm(` in the `_internal` change that adds any L11 row, so that `check_prior_practices.R L11` works.
 
 | Practice (lesson) | L11 handling |
 | --- | --- |
@@ -145,7 +145,7 @@ The CSV triggers match `\blm\(` and do not fire on `glmmTMB(` or `glm(`. They ar
 | `check_independence_from_design` (L03) | apply; also the bridge to L12 |
 | `plot_residuals_vs_fitted` (L03) | applied to the `lm()` on 0/1 data and counts, to show why it fails; replaced for the GLM by the observed-vs-predicted check (D4), with the reason stated to students |
 | `plot_residual_histogram`, `plot_residual_qq` (L03) | omitted for the GLM with the reason stated: normality of residuals is not an assumption of a binomial or Poisson model |
-| `check_influential_observations` (L03) | apply if the D1 probe finds a clean route (`cooks.distance()` on a `glm()` refit); otherwise omit with the reason recorded and stated |
+| `check_influential_observations` (L03) | apply: `cooks.distance()` works on the `glm()` object (D1 revision) |
 | `report_effect_in_original_units` (L03) | adapted: predicted probabilities and counts on the response scale; `exp(b)` for the Poisson model (D3 covers the logistic model) |
 | `stay_within_observed_range` (L03) | apply to every prediction |
 | `report_standard_error`, `report_confidence_interval` (L04) | apply; the interval for `exp(b)` comes from `exp(confint())` |
@@ -195,8 +195,8 @@ The CSV triggers match `\blm\(` and do not fire on `glmmTMB(` or `glm(`. They ar
 
 1. Recognise the response type in a short description of a study (spojitá, binární, počet) and choose the distribution and model.
 2. Fit `lm()` to 0/1 data and to counts, find predictions outside the possible range, and explain from the residual plot why the normal linear model does not fit.
-3. Fit a logistic model with `glmmTMB(..., family = binomial)`, compute predicted probabilities with `predict(type = "response")` for chosen predictor values, draw the fitted curve with its confidence band, and interpret the effect in biological terms.
-4. Fit a Poisson model with `glmmTMB(..., family = poisson)`, interpret `exp(b)` as a multiplicative change in the expected count with its interval, and check for overdispersion.
+3. Fit a logistic model with `glm(..., family = binomial)`, compute predicted probabilities with `predict(type = "response")` for chosen predictor values, draw the fitted curve with its confidence band, and interpret the effect in biological terms.
+4. Fit a Poisson model with `glm(..., family = poisson)`, interpret `exp(b)` as a multiplicative change in the expected count with its interval, and check for overdispersion.
 5. Write a cautious biological conclusion: the response type and model, the effect on the response scale with its uncertainty, and the main limitation.
 
 ## Proposed lesson spine (orientation only; not the Stage 2 story map)
@@ -225,7 +225,7 @@ The CSV triggers match `\blm\(` and do not fire on `glmmTMB(` or `glm(`. They ar
 
 - Response types and their distributions; the linear predictor as the familiar $\beta_0 + \beta_1 x$.
 - Link function in words and with one numerical example per model (from linear predictor to probability or count), no formula derivation.
-- `glmmTMB()` with `family = binomial` and `family = poisson` (D1); its coefficient table read like `summary(lm)` (estimate, SE, z, p); `confint()`; `predict(type = "response")`; fitted curve with a confidence band built on the link scale and back-transformed.
+- `glm()` with `family = binomial` and `family = poisson` (D1); its coefficient table read like `summary(lm)` (estimate, SE, z, p); `confint()`; `predict(type = "response")`; fitted curve with a confidence band built on the link scale and back-transformed.
 - `exp(b)` for the Poisson model.
 - AIC for candidate models with the same response.
 
@@ -247,31 +247,35 @@ The CSV triggers match `\blm\(` and do not fire on `glmmTMB(` or `glm(`. They ar
 
 ### Resolved (Ondřej Mottl, 2026-11-06)
 
-- **D1 – Function for the student-visible model: `glmmTMB::glmmTMB()`.**
-  - The skripta states that GLMs can be fitted with many functions, naming base `glm()` as the most common one. The course uses `glmmTMB()` so that L12 only adds a random effect to the same function and formula.
-  - An Extra box in the skripta shows the same model fitted with `glm()` and the matching `summary()`.
+- **D1 – Function for the student-visible model: base `glm()`** (revised by Ondřej Mottl, 2026-11-07; the original `glmmTMB()` decision of 2026-11-06 is kept below).
+  - The skripta states that GLMs can be fitted with many functions and uses base `glm()`, the most common one.
+  - L12 keeps `glmmTMB()` (not `lme4`) and introduces it as the same model as `glm()` plus a random effect, for example `(1 | strom)`. Without a random effect, `glmmTMB()` gives the same estimates as `glm()` (checked in the Stage 1 probe).
+  - Reason for the revision: `cooks.distance()` has no `glmmTMB` method, and the argument for `glmmTMB()` in this lesson ("L12 only adds a random effect to the same function") came from the old order, in which the hierarchical lesson preceded GLM. With `glm()`, every tool students know from `lm()` works unchanged: the `summary()` layout, `plot()`, `cooks.distance()`, `confint()`, `predict(se.fit = TRUE)` and `AIC()`. `lme4` was rejected for L12 because its draft is written with `glmmTMB()`, `lmer()` prints no p-values, and binary and count responses need a separate function there.
 
-  Consequences to carry into Stages 1–2:
-  - **Environment:** `glmmTMB` is not in the template `renv.lock`. It is added to the L11 environment with `renv::install()` and `renv::snapshot()` scoped to that change (as in the former L11, now L12). Stage 1 probes run in an untracked scratch library.
-  - **Installation for students:** students install the package in L11, not in L12. The skripta and the exercise need a `requireNamespace()` preflight with a commented installation command (`exercises.md`). L12's own preflight stays, as a check.
-  - **Visible call:** `glmmTMB::glmmTMB(formula = odezva ~ prediktor, family = binomial, data = ...)` and `family = poisson`.
-  - **Readable output:** `summary()` prints the conditional-model table with `z value` and `Pr(>|z|)`, plus AIC, BIC, logLik, deviance and df.resid. This replaces `summary(glm)` in the readable-output plan above.
-  - **Stage 1 probe, Cook's distance:** `cooks.distance()` has no `glmmTMB` method. Check alternatives: an Extra-box `glm()` refit, which gives identical estimates without random effects, or `influence.measures()` on that refit. The standing practice `check_influential_observations` is then applied or omitted with a recorded reason.
-  - **Stage 1 probe, overdispersion:** check the overdispersion ratio with `glmmTMB` objects. The ratio of the sum of squared Pearson residuals (`residuals(m, type = "pearson")`) to `df.residual(m)` works for both functions. `deviance()` on `glmmTMB` is not the residual deviance of `glm`.
-  - **Stage 1 probe, confidence band:** check `predict(m, newdata, type = "link", se.fit = TRUE)` for the band on the link scale, followed by back-transformation.
-  - **L12 continuity:** L12 `skripta.qmd` line 2226 ("V následující lekci budeme modelovat odezvy typu ano/ne a počty. `glmmTMB()` takové modely umí také…") becomes a backward reference: "V minulé lekci jsme stejnou funkcí modelovali odezvy typu ano/ne a počty…". This belongs to the L12 renumbering branch.
+  Consequences to carry into Stages 2–5:
+  - **Environment:** no new package; `glm()` is in base `stats`. `glmmTMB` is not added to the L11 `renv.lock`, and the planned `glm()` Extra box is dropped.
+  - **Installation for students:** none in L11. Students install `glmmTMB` in L12, whose preflight stays as written.
+  - **Visible call:** `glm(formula = odezva ~ prediktor, family = binomial, data = ...)` and `family = poisson`.
+  - **Readable output:** `summary(glm)` prints the coefficient table with `z value` and `Pr(>|z|)`, plus the dispersion-parameter line, null and residual deviance, AIC and the number of Fisher scoring iterations. Only the coefficient table and AIC are read in the core; the other lines are named, not interpreted.
+  - **Cook's distance:** `cooks.distance()` on the `glm()` object (largest values 0.05 for the binary model and 0.33 for the count model on the Stage 1 data).
+  - **Overdispersion:** the sum of squared Pearson residuals (`residuals(m, type = "pearson")`) divided by `df.residual(m)`.
+  - **Confidence band:** `predict(m, newdata, type = "link", se.fit = TRUE)` on the link scale, then back-transformed.
+  - **L12 continuity (renumbering branch):** L12 `skripta.qmd` line 2226 ("V následující lekci budeme modelovat odezvy typu ano/ne a počty. `glmmTMB()` takové modely umí také…") becomes a backward reference along the lines of "V minulé lekci jsme odezvy typu ano/ne a počty modelovali funkcí `glm()`. `glmmTMB()` takové modely umí také, a navíc s náhodnými efekty…". Line 2230 (`glmmTMB()` gives the same results as `lm()`) is extended to `glm()`.
+
+  Original D1 (2026-11-06, superseded): `glmmTMB::glmmTMB()` in the core, so that L12 only adds a random effect to the same function, with base `glm()` named in the text and shown in an Extra box; `glmmTMB` added to the L11 `renv`; Cook's distance from a `glm()` refit.
+
 - **D2 – One data story preferred.** Stage 1 searches first for one data story that supplies both a binary and a count response, for example presence/absence and abundance of a species across sites. Two datasets are accepted only if no single story serves both well. The L10 Galápagos species counts are assessed as a callback.
 - **D3 – Probabilities only in the core.** The logistic model is interpreted through predicted probabilities and differences in probability at chosen predictor values, with a confidence band. Odds and the odds ratio `exp(b)` go in an Extra box in the skripta only.
 - **D4 – Observed versus predicted.** The model checks are:
   - binned observed proportions against the fitted curve for the binary model;
   - observed versus fitted counts for the Poisson model;
   - the overdispersion ratio for the Poisson model;
-  - Cook's distance, subject to the D1 probe.
+  - Cook's distance with `cooks.distance()` on the `glm()` object.
 
   `DHARMa` and `performance::check_model()` are not used.
 
 - **D5 – Model comparison: AIC.** Candidate models with the same response are compared with AIC and ΔAIC, as in L09. No deviance or likelihood-ratio tests.
-- **D6 – Revised `osnova_lekci.md` entry: approved.** The proposed text above (with `glmmTMB()` after D1) is approved. It is applied in the `_internal` L11/L12 swap edit, which needs its own commit authorization.
+- **D6 – Revised `osnova_lekci.md` entry: approved.** The proposed text above is approved; after the D1 revision of 2026-11-07 it names `glm()` instead of `glmmTMB()`. It is applied in the `_internal` L11/L12 swap edit, which needs its own commit authorization.
 
 ### Original wording of D5 and D6 (as proposed)
 
@@ -307,4 +311,4 @@ The CSV triggers match `\blm\(` and do not fire on `glmmTMB(` or `glm(`. They ar
 - [x] Human reviewer approved this scope (Ondřej Mottl, 2026-11-06)
 - [x] Scope locked for implementation
 - [x] Continue Stage 1 research on the planning branch
-- Notes: Ondřej Mottl resolved D1-D6 and locked the scope on 2026-11-06. The approved `osnova_lekci.md` entry and the L10 forward-reference fix are separate repository changes.
+- Notes: Ondřej Mottl resolved D1-D6 and locked the scope on 2026-11-06. On 2026-11-07 he revised D1 to base `glm()` (with `glmmTMB()` kept for L12), after the Stage 1 probe showed that `cooks.distance()` has no `glmmTMB` method; the outcome wording in the proposed `osnova_lekci.md` entry follows. The approved `osnova_lekci.md` entry and the L10 forward-reference fix are separate repository changes.
